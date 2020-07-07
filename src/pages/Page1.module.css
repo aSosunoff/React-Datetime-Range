@@ -1,0 +1,18 @@
+.btn {
+	outline: none;
+	border: 1px solid #7d7d7d;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: #fff;
+	transition: all 0.2s linear;
+	-webkit-transition: all 0.2s linear;
+	-moz-transition: all 0.2s linear;
+	-ms-transition: all 0.2s linear;
+	-o-transition: all 0.2s linear;
+}
+
+.btn:hover,
+.btn:active {
+	border: 1px solid #0e4eff;
+	cursor: pointer;
+}

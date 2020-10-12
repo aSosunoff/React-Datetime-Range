@@ -1,7 +1,8 @@
 import React from "react";
+import Calendar from "../RangePicker/Calendar";
 
 const App = () => {
-	return <div></div>;
-}
+	return <Calendar />;
+};
 
 export default App;

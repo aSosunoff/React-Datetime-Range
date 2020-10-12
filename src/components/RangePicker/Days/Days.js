@@ -2,12 +2,7 @@ import React, { useCallback, useMemo } from "react";
 import cn from "classnames";
 import styles from "./Days.module.css";
 
-export const Days = ({
-	date = new Date(),
-	from = new Date(2020, 9, 12),
-	to = new Date(2020, 9, 13),
-	onSetDay = () => {},
-} = {}) => {
+const Days = ({ date = new Date(), from, to, onSetDay = () => {} } = {}) => {
 	const monthDayCount = useMemo(
 		() => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate(),
 		[date]
@@ -93,3 +88,5 @@ export const Days = ({
 		</div>
 	);
 };
+
+export default Days;

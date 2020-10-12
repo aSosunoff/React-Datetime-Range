@@ -1,7 +1,6 @@
 import React from "react";
-import { compose } from "./utils/compose";
-import { Page1 } from "./pages/Page1";
+/* import { compose } from "./utils/compose"; */
 
-const root = <Page1 />;
-
-export const App = () => compose((e) => <>{e}</>)(root);
+export const App = () => {
+	return <div></div>;
+};

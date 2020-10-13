@@ -12,11 +12,8 @@ const App = () => {
 	const targetButton = useRef(null);
 
 	const [isOpen, setOpen] = useState(false);
-	const [range, setRange] = useState({ from: null, to: null });
 
-	const setRangeHandler = ({ from, to }) => {
-		setRange({ from, to });
-	};
+	const [range, setRange] = useState({ from: null, to: null });
 
 	const displayRange = useMemo(
 		() =>
@@ -26,15 +23,15 @@ const App = () => {
 		[range.from, range.to]
 	);
 
+	const setRangeHandler = ({ from, to }) => setRange({ from, to });
+
+	const toggleRangePicker = () => setOpen(!isOpen);
+
+	const closeRangePicker = () => setOpen(false);
+
 	return (
 		<>
-			<button
-				ref={targetButton}
-				id="button-open"
-				onClick={() => {
-					setOpen(!isOpen);
-				}}
-			>
+			<button ref={targetButton} id="button-open" onClick={toggleRangePicker}>
 				{displayRange || "Открыть"}
 			</button>
 
@@ -43,7 +40,7 @@ const App = () => {
 				{...range}
 				onRangeSelected={setRangeHandler}
 				target={targetButton.current}
-				onClose={() => setOpen(false)}
+				onClose={closeRangePicker}
 			/>
 		</>
 	);

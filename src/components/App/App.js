@@ -18,13 +18,13 @@ const App = () => {
 		setRange({ from, to });
 	};
 
-	const displayRange = useMemo(() => {
-		if (range.from && range.to) {
-			return `${format(range.from)} - ${format(range.to)}`;
-		}
-
-		return null;
-	}, [range.from, range.to]);
+	const displayRange = useMemo(
+		() =>
+			range.from && range.to
+				? `${format(range.from)} - ${format(range.to)}`
+				: null,
+		[range.from, range.to]
+	);
 
 	return (
 		<>

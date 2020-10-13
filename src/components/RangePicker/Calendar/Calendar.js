@@ -3,7 +3,7 @@ import Days from "../Days";
 import styles from "./Calendar.module.css";
 
 const Calendar = ({
-	date = new Date(),
+	date,
 	from,
 	to,
 	onSetDay = () => {},

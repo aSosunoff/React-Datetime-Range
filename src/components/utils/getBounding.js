@@ -1,4 +1,8 @@
 export const getBounding = (target, source) => {
+	if (!target || !source) {
+		return { top: 0, left: 0 };
+	}
+
 	const boundingTarget = target.getBoundingClientRect();
 	const boundingSource = source.getBoundingClientRect();
 

@@ -1,6 +1,13 @@
 import React, { useMemo, useRef, useState } from "react";
 import RangePicker from "../RangePicker/RangePicker";
 
+const format = (date) =>
+	date.toLocaleString("ru", {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	});
+
 const App = () => {
 	const targetButton = useRef(null);
 
@@ -12,13 +19,6 @@ const App = () => {
 	};
 
 	const displayRange = useMemo(() => {
-		const format = (date) =>
-			date.toLocaleString("ru", {
-				year: "numeric",
-				month: "long",
-				day: "numeric",
-			});
-
 		if (range.from && range.to) {
 			return `${format(range.from)} - ${format(range.to)}`;
 		}

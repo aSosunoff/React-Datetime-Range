@@ -6,6 +6,7 @@ import React, {
 	useState,
 } from "react";
 import cn from "classnames";
+
 import styles from "./RangePicker.module.css";
 import { getBounding } from "../utils/getBounding";
 import Calendar from "./Calendar";
@@ -49,6 +50,7 @@ const RangePicker = ({
 	const _handleDocumentClick = useCallback(
 		(event) => {
 			if (
+				rangepicker.current &&
 				!rangepicker.current.contains(event.target) &&
 				isOpen &&
 				!target.contains(event.target)
@@ -98,12 +100,10 @@ const RangePicker = ({
 		setRange({ from, to });
 	};
 
-	return (
+	return isOpen ? (
 		<div
 			ref={rangepicker}
-			className={cn(styles.rangepicker, {
-				[styles.rangepicker__open]: isOpen,
-			})}
+			className={cn(styles.rangepicker)}
 			style={{
 				left: `${bounding.left}px`,
 				top: `${bounding.top}px`,
@@ -135,7 +135,7 @@ const RangePicker = ({
 				</div>
 			</div>
 		</div>
-	);
+	) : null;
 };
 
 export default RangePicker;

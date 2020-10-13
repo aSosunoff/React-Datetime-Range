@@ -10,6 +10,7 @@ import cn from "classnames";
 import styles from "./RangePicker.module.css";
 import { getBounding } from "../utils/getBounding";
 import Calendar from "./Calendar";
+import Animation from "./Animation";
 
 const DateHalper = {
 	getNextMonthFromDate: (startDate, index) =>
@@ -78,64 +79,87 @@ const RangePicker = ({
 		return date.toLocaleString("ru", { year: "numeric" });
 	}, [showDateFrom]);
 
-	const nextHandler = () => setShowDateFrom(DateHalper.nextMonth(showDateFrom));
+	const nextHandler = useCallback(
+		() => setShowDateFrom(DateHalper.nextMonth(showDateFrom)),
+		[showDateFrom]
+	);
 
-	const prevHandler = () => setShowDateFrom(DateHalper.prevMonth(showDateFrom));
+	const prevHandler = useCallback(
+		() => setShowDateFrom(DateHalper.prevMonth(showDateFrom)),
+		[showDateFrom]
+	);
 
-	const setDayHandler = (date) => {
-		let from = null;
-		let to = null;
-		if (!range.from || range.to) {
-			from = date;
-		} else {
-			const current = date.getTime();
-			to = new Date(Math.max(current, range.from.getTime()));
-			from = new Date(Math.min(current, range.from.getTime()));
-			onRangeSelected({ from, to });
-			onClose();
-			/* document.removeEventListener("click", this.onClose, true); */
-			/* this.$emit("onClose"); */
-			/* this.isOpen = false; */
-		}
-		setRange({ from, to });
-	};
+	const setDayHandler = useCallback(
+		(date) => {
+			let from = null;
+			let to = null;
+			if (!range.from || range.to) {
+				from = date;
+			} else {
+				const current = date.getTime();
+				to = new Date(Math.max(current, range.from.getTime()));
+				from = new Date(Math.min(current, range.from.getTime()));
+				onRangeSelected({ from, to });
+				onClose();
+				/* document.removeEventListener("click", this.onClose, true); */
+				/* this.$emit("onClose"); */
+				/* this.isOpen = false; */
+			}
+			setRange({ from, to });
+		},
+		[onClose, onRangeSelected, range.from, range.to]
+	);
 
-	return isOpen ? (
-		<div
-			ref={rangepicker}
-			className={cn(styles.rangepicker)}
-			style={{
-				left: `${bounding.left}px`,
-				top: `${bounding.top}px`,
-			}}
-		>
-			<div className={styles.rangepicker__selector}>
-				<div
-					className={styles["rangepicker__selector-control-left"]}
-					onClick={prevHandler}
-				></div>
+	const RangePicker = useCallback(
+		(style) => (
+			<div ref={rangepicker} className={cn(styles.rangepicker)} style={style}>
+				<div className={styles.rangepicker__selector}>
+					<div
+						className={styles["rangepicker__selector-control-left"]}
+						onClick={prevHandler}
+					></div>
 
-				<div
-					className={styles["rangepicker__selector-control-right"]}
-					onClick={nextHandler}
-				></div>
+					<div
+						className={styles["rangepicker__selector-control-right"]}
+						onClick={nextHandler}
+					></div>
 
-				<div className={styles["rangepicker_year"]}>{year} год</div>
+					<div className={styles["rangepicker_year"]}>{year} год</div>
 
-				<div className={styles.rangepicker_calendar}>
-					{calendars.map((calendar) => (
-						<Calendar
-							key={calendar.key}
-							date={calendar.date}
-							from={range.from}
-							to={range.to}
-							onSetDay={setDayHandler}
-						/>
-					))}
+					<div className={styles.rangepicker_calendar}>
+						{calendars.map((calendar) => (
+							<Calendar
+								key={calendar.key}
+								date={calendar.date}
+								from={range.from}
+								to={range.to}
+								onSetDay={setDayHandler}
+							/>
+						))}
+					</div>
 				</div>
 			</div>
-		</div>
-	) : null;
+		),
+		[
+			calendars,
+			nextHandler,
+			prevHandler,
+			range.from,
+			range.to,
+			setDayHandler,
+			year,
+		]
+	);
+
+	return (
+		<Animation
+			inProp={isOpen}
+			top={bounding.top}
+			left={bounding.left}
+		>
+			{RangePicker}
+		</Animation>
+	);
 };
 
 export default RangePicker;

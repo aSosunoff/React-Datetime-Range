@@ -1,31 +1,10 @@
-/* @keyframes show {
-	0% {
-		opacity: 0;
-		transform: translateY(25px);
-	}
-	100% {
-		opacity: 1;
-		transform: translateY(0px);
-	}
-} */
-
 .rangepicker {
 	box-shadow: var(--box-shadow);
-	transition: box-shadow 0.2s linear;
 	position: fixed;
-	/* opacity: 0; */
-	/* z-index: -1000; */
-	/* display: none; */
 }
 
 .rangepicker:hover {
 	box-shadow: var(--box-shadow-hover);
-}
-
-.rangepicker.rangepicker__open {
-	/* z-index: 1000; */
-	/* animation: show 0.3s ease-out forwards; */
-	display: block;
 }
 
 .rangepicker .rangepicker__selector {

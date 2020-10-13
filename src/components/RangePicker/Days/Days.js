@@ -64,9 +64,8 @@ const Days = ({ date = new Date(), from, to, onSetDay = () => {} } = {}) => {
 		[date, firsDayOfWeekByMonth, isBetween, isFrom, isTo, monthDayCount]
 	);
 
-	const setDayHandler = (numberMonth) => {
+	const setDayHandler = (numberMonth) =>
 		onSetDay(new Date(date.getFullYear(), date.getMonth(), numberMonth));
-	};
 
 	return (
 		<div className={styles["rangepicker__date-grid"]}>

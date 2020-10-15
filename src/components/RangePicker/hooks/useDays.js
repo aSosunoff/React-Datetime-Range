@@ -36,11 +36,36 @@ export default function useDays(date, from, to) {
 		[fromLocal, toLocal]
 	);
 
+	const dayList = useMemo(
+		() =>
+			new Array(monthDayCount).fill(null).map((_, index) => {
+				const dayNumber = index + 1;
+
+				const dateWithoutTime = new Date(
+					date.getFullYear(),
+					date.getMonth(),
+					dayNumber
+				);
+
+				return {
+					dayNumber,
+					date: dateWithoutTime,
+					style: {
+						gridColumnStart: dayNumber === 1 ? firsDayOfWeekByMonth : null,
+					},
+					type: isFrom(dateWithoutTime)
+						? "from"
+						: isBetween(dateWithoutTime)
+						? "between"
+						: isTo(dateWithoutTime)
+						? "to"
+						: "",
+				};
+			}),
+		[date, firsDayOfWeekByMonth, isBetween, isFrom, isTo, monthDayCount]
+	);
+
 	return {
-		monthDayCount,
-		firsDayOfWeekByMonth,
-		isFrom,
-		isTo,
-		isBetween,
+		dayList,
 	};
 }

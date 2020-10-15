@@ -1,18 +1,15 @@
 import React, { useMemo } from "react";
+import useDays from "../../hooks/useDays";
 import Days from "../Days";
 import styles from "./Calendar.module.css";
 
-// TODO: onSetDay - вынести context на родителе
-const Calendar = ({
-	date,
-	from,
-	to,
-	onSetDay = () => {},
-} = {}) => {
+const Calendar = ({ date, from, to } = {}) => {
 	const localeString = useMemo(
 		() => date.toLocaleString("ru", { month: "long" }),
 		[date]
 	);
+
+	const { dayList } = useDays(date, from, to);
 
 	return (
 		<div className={styles.rangepicker__calendar}>
@@ -30,7 +27,11 @@ const Calendar = ({
 				<div>Вс</div>
 			</div>
 
-			<Days date={date} from={from} to={to} onSetDay={onSetDay} />
+			<div className={styles["rangepicker__date-grid"]}>
+				{dayList.map(({ dayNumber, style, type, date }) => (
+					<Days key={dayNumber} number={dayNumber} style={style} type={type} />
+				))}
+			</div>
 		</div>
 	);
 };

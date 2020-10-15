@@ -25,3 +25,9 @@
 	color: var(--grey);
 	text-align: center;
 }
+
+.rangepicker__date-grid {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	margin-top: 16px;
+}

@@ -8,7 +8,7 @@ import React, {
 import cn from "classnames";
 
 import styles from "./RangePicker.module.css";
-import { getBounding } from "../utils/getBounding";
+import { getBounding } from "./utils/getBounding";
 import Calendar from "./Calendar";
 import Animation from "./Animation";
 

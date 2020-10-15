@@ -1,5 +1,5 @@
 import React, { useMemo, useRef, useState } from "react";
-import RangePicker from "../RangePicker/RangePicker";
+import RangePicker from "../RangePicker";
 
 const format = (date) =>
 	date.toLocaleString("ru", {

@@ -8,16 +8,10 @@ import React, {
 import cn from "classnames";
 
 import styles from "./RangePicker.module.css";
-import { getBounding } from "./utils/getBounding";
+import { getNextMonthFromDate, getNextMonth, getPrevMonth } from '../utils/dateHalper';
+import { getBounding } from "../utils/getBounding";
 import Calendar from "./Calendar";
 import Animation from "./Animation";
-
-const DateHalper = {
-	getNextMonthFromDate: (startDate, index) =>
-		new Date(startDate.getFullYear(), startDate.getMonth() + index, 1),
-	nextMonth: (date) => new Date(date.getFullYear(), date.getMonth() + 1, 1),
-	prevMonth: (date) => new Date(date.getFullYear(), date.getMonth() - 1, 1),
-};
 
 const RangePicker = ({
 	isOpen = false,
@@ -38,7 +32,7 @@ const RangePicker = ({
 		() =>
 			new Array(calendarVisibleCount).fill(null).map((_, index) => ({
 				key: index,
-				date: DateHalper.getNextMonthFromDate(showDateFrom, index),
+				date: getNextMonthFromDate(showDateFrom, index),
 			})),
 		[calendarVisibleCount, showDateFrom]
 	);
@@ -80,12 +74,12 @@ const RangePicker = ({
 	}, [showDateFrom]);
 
 	const nextHandler = useCallback(
-		() => setShowDateFrom(DateHalper.nextMonth(showDateFrom)),
+		() => setShowDateFrom(getNextMonth(showDateFrom)),
 		[showDateFrom]
 	);
 
 	const prevHandler = useCallback(
-		() => setShowDateFrom(DateHalper.prevMonth(showDateFrom)),
+		() => setShowDateFrom(getPrevMonth(showDateFrom)),
 		[showDateFrom]
 	);
 

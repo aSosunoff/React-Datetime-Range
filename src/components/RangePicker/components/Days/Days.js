@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import cn from "classnames";
 import styles from "./Days.module.css";
+import { DayContext } from "../../contexts/day";
 
-const Days = ({ number, style, type, onClickHandler }) => {
+const Days = ({ number, style, type, date }) => {
+	const { setDay } = useContext(DayContext);
+
 	const typeButton = {
 		from: styles["rangepicker__selected-from"],
 		between: styles["rangepicker__selected-between"],
@@ -16,6 +19,7 @@ const Days = ({ number, style, type, onClickHandler }) => {
 			type="button"
 			style={style}
 			className={cn(styles.rangepicker__cell, className)}
+			onClick={setDay.bind(this, date)}
 		>
 			{number}
 		</button>

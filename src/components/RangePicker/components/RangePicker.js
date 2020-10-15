@@ -8,10 +8,15 @@ import React, {
 import cn from "classnames";
 
 import styles from "./RangePicker.module.css";
-import { getNextMonthFromDate, getNextMonth, getPrevMonth } from '../utils/dateHalper';
+import {
+	getNextMonthFromDate,
+	getNextMonth,
+	getPrevMonth,
+} from "../utils/dateHalper";
 import { getBounding } from "../utils/getBounding";
 import Calendar from "./Calendar";
 import Animation from "./Animation";
+import { DayProvider } from "../contexts/day";
 
 const RangePicker = ({
 	isOpen = false,
@@ -106,33 +111,34 @@ const RangePicker = ({
 
 	const RangePicker = useCallback(
 		(style) => (
-			<div ref={rangepicker} className={cn(styles.rangepicker)} style={style}>
-				<div className={styles.rangepicker__selector}>
-					<div
-						className={styles["rangepicker__selector-control-left"]}
-						onClick={prevHandler}
-					></div>
+			<DayProvider setDayHandler={setDayHandler}>
+				<div ref={rangepicker} className={cn(styles.rangepicker)} style={style}>
+					<div className={styles.rangepicker__selector}>
+						<div
+							className={styles["rangepicker__selector-control-left"]}
+							onClick={prevHandler}
+						></div>
 
-					<div
-						className={styles["rangepicker__selector-control-right"]}
-						onClick={nextHandler}
-					></div>
+						<div
+							className={styles["rangepicker__selector-control-right"]}
+							onClick={nextHandler}
+						></div>
 
-					<div className={styles["rangepicker_year"]}>{year} год</div>
+						<div className={styles["rangepicker_year"]}>{year} год</div>
 
-					<div className={styles.rangepicker_calendar}>
-						{calendars.map((calendar) => (
-							<Calendar
-								key={calendar.key}
-								date={calendar.date}
-								from={range.from}
-								to={range.to}
-								onSetDay={setDayHandler}
-							/>
-						))}
+						<div className={styles.rangepicker_calendar}>
+							{calendars.map((calendar) => (
+								<Calendar
+									key={calendar.key}
+									date={calendar.date}
+									from={range.from}
+									to={range.to}
+								/>
+							))}
+						</div>
 					</div>
 				</div>
-			</div>
+			</DayProvider>
 		),
 		[
 			calendars,
@@ -146,11 +152,7 @@ const RangePicker = ({
 	);
 
 	return (
-		<Animation
-			inProp={isOpen}
-			top={bounding.top}
-			left={bounding.left}
-		>
+		<Animation inProp={isOpen} top={bounding.top} left={bounding.left}>
 			{RangePicker}
 		</Animation>
 	);

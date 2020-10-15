@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import Days from "../Days";
 import styles from "./Calendar.module.css";
 
+// TODO: onSetDay - вынести context на родителе
 const Calendar = ({
 	date,
 	from,

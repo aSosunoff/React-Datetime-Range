@@ -2,6 +2,7 @@ import React, { useCallback, useMemo } from "react";
 import cn from "classnames";
 import styles from "./Days.module.css";
 
+// TODO: Вынести в useDays все вычисления.
 const Days = ({ date = new Date(), from, to, onSetDay = () => {} } = {}) => {
 	const monthDayCount = useMemo(
 		() => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate(),

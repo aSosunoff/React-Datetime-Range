@@ -2,6 +2,12 @@
 	padding: 5px 15px;
 	outline: none;
 	cursor: pointer;
-	border: 1px solid black;
+	border: 1px solid #90a0b7;
 	background-color: #fff;
+	box-shadow: var(--box-shadow);
+	transition: box-shadow .2s linear;
+}
+
+.button:hover {
+	box-shadow: var(--box-shadow-hover);
 }

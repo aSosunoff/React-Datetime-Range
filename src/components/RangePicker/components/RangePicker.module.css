@@ -1,6 +1,9 @@
 .rangepicker {
 	box-shadow: var(--box-shadow);
 	position: fixed;
+	border: 1px solid #90a0b7;
+	border-radius: 3px;
+	overflow: hidden;
 }
 
 .rangepicker:hover {

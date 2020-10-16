@@ -28,11 +28,11 @@ const Calendar = ({ date, from, to } = {}) => {
 			</div>
 
 			<div className={styles["rangepicker__date-grid"]}>
-				{dayList.map(({ dayNumber, style, type, date }) => (
+				{dayList.map(({ dayNumber, gridColumnStart, type, date }) => (
 					<Days
 						key={dayNumber}
 						number={dayNumber}
-						style={style}
+						gridColumnStart={gridColumnStart}
 						type={type}
 						date={date}
 					/>

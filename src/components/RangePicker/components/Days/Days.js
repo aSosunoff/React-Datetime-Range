@@ -3,7 +3,7 @@ import cn from "classnames";
 import styles from "./Days.module.css";
 import { DayContext } from "../../contexts/day";
 
-const Days = ({ number, style, type, date }) => {
+const Days = ({ number, gridColumnStart, type, date }) => {
 	const { setDay } = useContext(DayContext);
 
 	const typeButton = {
@@ -17,7 +17,7 @@ const Days = ({ number, style, type, date }) => {
 	return (
 		<button
 			type="button"
-			style={style}
+			style={{ gridColumnStart }}
 			className={cn(styles.rangepicker__cell, className)}
 			onClick={setDay.bind(this, date)}
 		>

@@ -50,9 +50,7 @@ export default function useDays(date, from, to) {
 				return {
 					dayNumber,
 					date: dateWithoutTime,
-					style: {
-						gridColumnStart: dayNumber === 1 ? firsDayOfWeekByMonth : null,
-					},
+					gridColumnStart: dayNumber === 1 ? firsDayOfWeekByMonth : null,
 					type: isFrom(dateWithoutTime)
 						? "from"
 						: isBetween(dateWithoutTime)

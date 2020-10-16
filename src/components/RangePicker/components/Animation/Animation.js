@@ -5,7 +5,10 @@ const Animation = ({ inProp, top, left, children }) => {
 	const duration = 500;
 
 	const defaultStyle = {
-		transition: `opacity ${duration}ms ease-in-out, transform ${duration}ms ease-in-out`,
+		transition: `
+			opacity ${duration}ms ease-in-out,
+			transform ${duration}ms ease-in-out,
+			box-shadow .2s ease-out`,
 		opacity: 0,
 		transform: "translateY(50px)",
 		left: "-10000px",

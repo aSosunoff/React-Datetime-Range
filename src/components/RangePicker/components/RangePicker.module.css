@@ -16,7 +16,7 @@
 .rangepicker .rangepicker__selector .rangepicker__selector-control-left,
 .rangepicker .rangepicker__selector .rangepicker__selector-control-right {
 	position: absolute;
-	top: 32px;
+	top: 42px;
 	width: 15px;
 	height: 24px;
 	display: flex;
@@ -49,17 +49,18 @@
 }
 
 .rangepicker .rangepicker__selector .rangepicker__selector-control-left {
-	left: 26px;
+	left: 12px;
 }
 
 .rangepicker .rangepicker__selector .rangepicker__selector-control-right {
-	right: 26px;
+	right: 12px;
 	transform: rotate(180deg);
 }
 
 .rangepicker .rangepicker__selector .rangepicker_calendar {
 	flex-direction: row;
 	display: flex;
+	gap: 5px;
 }
 
 .rangepicker .rangepicker__selector .rangepicker_year {
@@ -67,6 +68,6 @@
 	font-weight: 600;
 	font-size: 20px;
 	line-height: 24px;
-	padding: 10px;
+	padding-top: 10px;
 	color: var(--dark-blue);
 }

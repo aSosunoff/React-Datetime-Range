@@ -1,4 +1,5 @@
 import React, { useMemo, useRef, useState } from "react";
+import Button from "../Button/Button";
 import RangePicker from "../RangePicker";
 
 const format = (date) =>
@@ -31,9 +32,9 @@ const App = () => {
 
 	return (
 		<>
-			<button ref={targetButton} id="button-open" onClick={toggleRangePicker}>
+			<Button ref={targetButton} onClick={toggleRangePicker}>
 				{displayRange || "Открыть"}
-			</button>
+			</Button>
 
 			<RangePicker
 				isOpen={isOpen}

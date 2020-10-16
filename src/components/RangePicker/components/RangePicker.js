@@ -13,7 +13,7 @@ import { getBounding } from "../utils/getBounding";
 import Calendar from "./Calendar";
 import Animation from "./Animation";
 import { DayProvider } from "../contexts/day";
-import useShowDate from "../hooks/useShowDate";
+import useShowMonth from "../hooks/useShowMonth";
 
 const RangePicker = ({
 	isOpen = false,
@@ -29,19 +29,19 @@ const RangePicker = ({
 	const [range, setRange] = useState({ from, to });
 
 	const {
-		showDate,
+		showMonth,
 		yearName,
 		nextMonthHandler,
 		prevMonthHandler,
-	} = useShowDate(from);
+	} = useShowMonth(from);
 
 	const calendars = useMemo(
 		() =>
 			new Array(calendarVisibleCount).fill(null).map((_, index) => ({
 				key: index,
-				date: getNextMonthFromDate(showDate, index),
+				date: getNextMonthFromDate(showMonth, index),
 			})),
-		[calendarVisibleCount, showDate]
+		[calendarVisibleCount, showMonth]
 	);
 
 	const [bounding, setBounding] = useState({

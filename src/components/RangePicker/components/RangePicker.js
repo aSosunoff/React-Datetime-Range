@@ -8,15 +8,12 @@ import React, {
 import cn from "classnames";
 
 import styles from "./RangePicker.module.css";
-import {
-	getNextMonthFromDate,
-	getNextMonth,
-	getPrevMonth,
-} from "../utils/dateHalper";
+import { getNextMonthFromDate } from "../utils/dateHalper";
 import { getBounding } from "../utils/getBounding";
 import Calendar from "./Calendar";
 import Animation from "./Animation";
 import { DayProvider } from "../contexts/day";
+import useShowDate from "../hooks/useShowDate";
 
 const RangePicker = ({
 	isOpen = false,
@@ -31,15 +28,20 @@ const RangePicker = ({
 
 	const [range, setRange] = useState({ from, to });
 
-	const [showDateFrom, setShowDateFrom] = useState(from ?? new Date());
+	const {
+		showDate,
+		yearName,
+		nextMonthHandler,
+		prevMonthHandler,
+	} = useShowDate(from);
 
 	const calendars = useMemo(
 		() =>
 			new Array(calendarVisibleCount).fill(null).map((_, index) => ({
 				key: index,
-				date: getNextMonthFromDate(showDateFrom, index),
+				date: getNextMonthFromDate(showDate, index),
 			})),
-		[calendarVisibleCount, showDateFrom]
+		[calendarVisibleCount, showDate]
 	);
 
 	const [bounding, setBounding] = useState({
@@ -48,20 +50,12 @@ const RangePicker = ({
 	});
 
 	const _handleDocumentClick = useCallback(
-		(event) => {
-			if (
-				rangepicker.current &&
-				!rangepicker.current.contains(event.target) &&
-				isOpen &&
-				!target.contains(event.target)
-			) {
-				/* if (!range.to) {
-					onRangeSelected({ from: range.from, to: range.from });
-				} */
-
-				onClose();
-			}
-		},
+		(event) =>
+			rangepicker.current &&
+			!rangepicker.current.contains(event.target) &&
+			isOpen &&
+			!target.contains(event.target) &&
+			onClose(),
 		[isOpen, target, onClose]
 	);
 
@@ -72,21 +66,6 @@ const RangePicker = ({
 			document.removeEventListener("click", _handleDocumentClick, true);
 		};
 	}, [target, _handleDocumentClick]);
-
-	const year = useMemo(() => {
-		const date = showDateFrom ?? new Date();
-		return date.toLocaleString("ru", { year: "numeric" });
-	}, [showDateFrom]);
-
-	const nextHandler = useCallback(
-		() => setShowDateFrom(getNextMonth(showDateFrom)),
-		[showDateFrom]
-	);
-
-	const prevHandler = useCallback(
-		() => setShowDateFrom(getPrevMonth(showDateFrom)),
-		[showDateFrom]
-	);
 
 	const setDayHandler = useCallback(
 		(date) => {
@@ -100,9 +79,6 @@ const RangePicker = ({
 				from = new Date(Math.min(current, range.from.getTime()));
 				onRangeSelected({ from, to });
 				onClose();
-				/* document.removeEventListener("click", this.onClose, true); */
-				/* this.$emit("onClose"); */
-				/* this.isOpen = false; */
 			}
 			setRange({ from, to });
 		},
@@ -116,15 +92,15 @@ const RangePicker = ({
 					<div className={styles.rangepicker__selector}>
 						<div
 							className={styles["rangepicker__selector-control-left"]}
-							onClick={prevHandler}
+							onClick={prevMonthHandler}
 						></div>
 
 						<div
 							className={styles["rangepicker__selector-control-right"]}
-							onClick={nextHandler}
+							onClick={nextMonthHandler}
 						></div>
 
-						<div className={styles["rangepicker_year"]}>{year} год</div>
+						<div className={styles["rangepicker_year"]}>{yearName} год</div>
 
 						<div className={styles.rangepicker_calendar}>
 							{calendars.map((calendar) => (
@@ -142,12 +118,12 @@ const RangePicker = ({
 		),
 		[
 			calendars,
-			nextHandler,
-			prevHandler,
+			nextMonthHandler,
+			prevMonthHandler,
 			range.from,
 			range.to,
 			setDayHandler,
-			year,
+			yearName,
 		]
 	);
 

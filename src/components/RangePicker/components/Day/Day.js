@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import cn from "classnames";
-import styles from "./Day.module.css";
+import styles from "./Day.module.scss";
 import { DayContext } from "../../contexts/day";
 
 const Day = ({ number, gridColumnStart, type, date }) => {

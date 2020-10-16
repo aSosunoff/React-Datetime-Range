@@ -21,7 +21,7 @@ const Calendar = ({ date, from, to } = {}) => {
 
       <div className={styles["rangepicker__day-of-week"]}>
         {dayOfWeekName.map((name) => (
-          <div>{name}</div>
+          <div key={name}>{name}</div>
         ))}
       </div>
 

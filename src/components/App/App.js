@@ -24,7 +24,7 @@ const App = () => {
     [range.from, range.to]
   );
 
-  const toggleRangePicker = useCallback(() => setOpen(!isOpen), [isOpen]);
+  const toggleRangePicker = useCallback(() => setOpen((isOpen) => !isOpen), []);
 
   const closeRangePicker = useCallback(() => setOpen(false), []);
 

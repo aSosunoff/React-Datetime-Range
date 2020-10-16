@@ -4,10 +4,10 @@
   cursor: pointer;
   border: 1px solid #90a0b7;
   background-color: #fff;
-  box-shadow: var(--box-shadow);
+  box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.2s linear;
 
   &:hover {
-    box-shadow: var(--box-shadow-hover);
+    box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.6);
   }
 }

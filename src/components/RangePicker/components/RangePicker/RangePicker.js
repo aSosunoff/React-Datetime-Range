@@ -15,6 +15,7 @@ import Calendar from "../Calendar";
 import Animation from "../Animation";
 import { DayProvider } from "../../contexts/day";
 import useShowMonth from "../../hooks/useShowMonth";
+import useRange from "../../hooks/useRange";
 
 const RangePicker = ({
   isOpen = false,
@@ -27,7 +28,7 @@ const RangePicker = ({
 } = {}) => {
   const rangepicker = useRef();
 
-  const [range, setRange] = useState({ from, to });
+  const { range, setRange } = useRange(from, to);
 
   const {
     showMonth,
@@ -83,7 +84,7 @@ const RangePicker = ({
       }
       setRange({ from, to });
     },
-    [onClose, onRangeSelected, range.from, range.to]
+    [onClose, onRangeSelected, range.from, range.to, setRange]
   );
 
   const RangePicker = useCallback(

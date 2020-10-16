@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import cn from "classnames";
-import styles from "./Days.module.css";
+import styles from "./Day.module.css";
 import { DayContext } from "../../contexts/day";
 
-const Days = ({ number, gridColumnStart, type, date }) => {
+const Day = ({ number, gridColumnStart, type, date }) => {
 	const { setDay } = useContext(DayContext);
 
 	const typeButton = {
@@ -26,4 +26,4 @@ const Days = ({ number, gridColumnStart, type, date }) => {
 	);
 };
 
-export default Days;
+export default Day;

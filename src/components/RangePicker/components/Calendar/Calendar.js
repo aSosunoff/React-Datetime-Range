@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import useDays from "../../hooks/useDays";
-import Days from "../Days";
+import Day from "../Day";
 import styles from "./Calendar.module.css";
 
 const Calendar = ({ date, from, to } = {}) => {
@@ -9,7 +9,7 @@ const Calendar = ({ date, from, to } = {}) => {
 		[date]
 	);
 
-	const { dayList } = useDays(date, from, to);
+	const { days } = useDays(date, from, to);
 
 	return (
 		<div className={styles.rangepicker__calendar}>
@@ -28,8 +28,8 @@ const Calendar = ({ date, from, to } = {}) => {
 			</div>
 
 			<div className={styles["rangepicker__date-grid"]}>
-				{dayList.map(({ dayNumber, gridColumnStart, type, date }) => (
-					<Days
+				{days.map(({ dayNumber, gridColumnStart, type, date }) => (
+					<Day
 						key={dayNumber}
 						number={dayNumber}
 						gridColumnStart={gridColumnStart}

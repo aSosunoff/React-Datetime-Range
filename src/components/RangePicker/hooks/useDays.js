@@ -36,7 +36,7 @@ export default function useDays(date, from, to) {
 		[fromLocal, toLocal]
 	);
 
-	const dayList = useMemo(
+	const days = useMemo(
 		() =>
 			new Array(monthDayCount).fill(null).map((_, index) => {
 				const dayNumber = index + 1;
@@ -64,6 +64,6 @@ export default function useDays(date, from, to) {
 	);
 
 	return {
-		dayList,
+		days,
 	};
 }

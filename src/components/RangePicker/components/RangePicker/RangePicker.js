@@ -8,12 +8,13 @@ import React, {
 import cn from "classnames";
 
 import styles from "./RangePicker.module.css";
-import { getNextMonthFromDate } from "../utils/dateHalper";
-import { getBounding } from "../utils/getBounding";
-import Calendar from "./Calendar";
-import Animation from "./Animation";
-import { DayProvider } from "../contexts/day";
-import useShowMonth from "../hooks/useShowMonth";
+import variable from "./variable.module.css";
+import { getNextMonthFromDate } from "../../utils/dateHalper";
+import { getBounding } from "../../utils/getBounding";
+import Calendar from "../Calendar";
+import Animation from "../Animation";
+import { DayProvider } from "../../contexts/day";
+import useShowMonth from "../../hooks/useShowMonth";
 
 const RangePicker = ({
 	isOpen = false,
@@ -88,7 +89,11 @@ const RangePicker = ({
 	const RangePicker = useCallback(
 		(style) => (
 			<DayProvider setDayHandler={setDayHandler}>
-				<div ref={rangepicker} className={cn(styles.rangepicker)} style={style}>
+				<div
+					ref={rangepicker}
+					className={cn(styles.rangepicker, variable["range-picker-variable"])}
+					style={style}
+				>
 					<div className={styles.rangepicker__selector}>
 						<div
 							className={styles["rangepicker__selector-control-left"]}

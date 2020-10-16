@@ -1,0 +1,68 @@
+.rangepicker {
+  position: fixed;
+
+  &:hover {
+    box-shadow: var(--box-shadow-hover);
+  }
+
+  & .rangepicker__selector {
+    background-color: var(--white);
+    box-shadow: var(--box-shadow);
+    border: 1px solid #90a0b7;
+    border-radius: 3px;
+    overflow: hidden;
+
+    & .rangepicker__selector-control-left,
+    & .rangepicker__selector-control-right {
+      position: absolute;
+      top: 42px;
+      width: 15px;
+      height: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      cursor: pointer;
+      transition: 0.3s all;
+      overflow: hidden;
+    }
+
+    & .rangepicker__selector-control-left::after,
+    & .rangepicker__selector-control-right::after {
+      transition: 0.3s all;
+      content: "";
+      background-color: var(--grey);
+      width: 14px;
+      height: 14px;
+      transform: translateX(9px) rotate(45deg);
+    }
+
+    & .rangepicker__selector-control-left:hover::after,
+    & .rangepicker__selector-control-right:hover::after {
+      background-color: var(--dark-blue);
+    }
+
+    & .rangepicker__selector-control-left {
+      left: 12px;
+    }
+
+    & .rangepicker__selector-control-right {
+      right: 12px;
+      transform: rotate(180deg);
+    }
+
+    & .rangepicker_calendar {
+      flex-direction: row;
+      display: flex;
+      gap: 5px;
+    }
+
+    & .rangepicker_year {
+      text-align: center;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 24px;
+      padding-top: 10px;
+      color: var(--dark-blue);
+    }
+  }
+}

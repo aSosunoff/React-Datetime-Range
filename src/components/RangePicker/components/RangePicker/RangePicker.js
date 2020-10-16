@@ -7,8 +7,8 @@ import React, {
 } from "react";
 import cn from "classnames";
 
-import styles from "./RangePicker.module.css";
-import variable from "./variable.module.css";
+import styles from "./RangePicker.module.scss";
+import variable from "./variable.module.scss";
 import { getNextMonthFromDate } from "../../utils/dateHalper";
 import { getBounding } from "../../utils/getBounding";
 import Calendar from "../Calendar";

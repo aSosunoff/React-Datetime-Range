@@ -1,0 +1,13 @@
+.button {
+  padding: 5px 15px;
+  outline: none;
+  cursor: pointer;
+  border: 1px solid #90a0b7;
+  background-color: #fff;
+  box-shadow: var(--box-shadow);
+  transition: box-shadow 0.2s linear;
+
+  &:hover {
+    box-shadow: var(--box-shadow-hover);
+  }
+}

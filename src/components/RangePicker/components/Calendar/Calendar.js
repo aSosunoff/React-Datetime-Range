@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import useDays from "../../hooks/useDays";
 import Day from "../Day";
-import styles from "./Calendar.module.css";
+import styles from "./Calendar.module.scss";
 
 const Calendar = ({ date, from, to } = {}) => {
 	const localeString = useMemo(

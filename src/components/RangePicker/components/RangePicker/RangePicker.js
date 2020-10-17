@@ -16,6 +16,7 @@ import Animation from "../Animation";
 import { DayProvider } from "../../contexts/day";
 import useShowMonth from "../../hooks/useShowMonth";
 import useRange from "../../hooks/useRange";
+import useAddListener from "../../hooks/useAddListener";
 
 const RangePicker = ({
   isOpen = false,
@@ -46,6 +47,10 @@ const RangePicker = ({
     left: 0,
   });
 
+  useEffect(() => {
+    setBounding(getBounding(target, rangepicker.current));
+  }, [target]);
+
   const _handleDocumentClick = useCallback(
     (event) =>
       rangepicker.current &&
@@ -56,13 +61,20 @@ const RangePicker = ({
     [isOpen, target, onClose]
   );
 
-  useEffect(() => {
-    document.addEventListener("click", _handleDocumentClick, true);
-    setBounding(getBounding(target, rangepicker.current));
-    return () => {
-      document.removeEventListener("click", _handleDocumentClick, true);
-    };
-  }, [target, _handleDocumentClick]);
+  useAddListener("pointerdown", _handleDocumentClick, isOpen);
+
+  const _handleDocumentLeftRightClick = useCallback(
+    (event) => {
+      if (event.key === "ArrowLeft") {
+        prevMonthHandler();
+      } else if (event.key === "ArrowRight") {
+        nextMonthHandler();
+      }
+    },
+    [nextMonthHandler, prevMonthHandler]
+  );
+
+  useAddListener("keydown", _handleDocumentLeftRightClick, isOpen);
 
   const setDayHandler = useCallback(
     (date) => {

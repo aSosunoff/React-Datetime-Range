@@ -1,6 +1,6 @@
 .rangepicker__calendar {
   display: grid;
-  grid-template-rows: 30px 40px min-content;
+  grid-template-rows: 30px auto min-content;
 }
 
 .rangepicker__month-indicator {
@@ -16,9 +16,7 @@
 .rangepicker__day-of-week {
   display: grid;
   grid-template-columns: repeat(7, 40px);
-  grid-template-rows: 40px;
-  justify-items: center;
-  align-items: center;
+  align-items: self-start;
 
   & > * {
     font-weight: 400;
@@ -26,7 +24,6 @@
     line-height: 20px;
     color: var(--grey);
     text-align: center;
-    height: fit-content;
   }
 }
 

@@ -42,4 +42,9 @@
     border: 1px solid #90a0b7;
     border-radius: 100%;
   }
+
+  &.rangepicker__free {
+    background-color: var(--grey);
+    color: var(--white);
+  }
 }

@@ -26,16 +26,28 @@ const Calendar = ({ date, from, to } = {}) => {
       </div>
 
       <div className={styles["rangepicker__date-grid"]}>
-        {days.map(({ dayNumber, gridColumnStart, type, date, isCurrent }) => (
-          <Day
-            key={dayNumber}
-            isCurrent={isCurrent}
-            number={dayNumber}
-            gridColumnStart={gridColumnStart}
-            type={type}
-            date={date}
-          />
-        ))}
+        {days.map(
+          ({
+            dayNumber,
+            gridColumnStart,
+            type,
+            date,
+            isCurrent,
+            isSaturday,
+            isSunday,
+          }) => (
+            <Day
+              key={dayNumber}
+              isCurrent={isCurrent}
+              isSaturday={isSaturday}
+              isSunday={isSunday}
+              number={dayNumber}
+              gridColumnStart={gridColumnStart}
+              type={type}
+              date={date}
+            />
+          )
+        )}
       </div>
     </div>
   );

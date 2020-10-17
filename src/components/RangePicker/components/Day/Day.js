@@ -3,7 +3,15 @@ import cn from "classnames";
 import styles from "./Day.module.scss";
 import { DayContext } from "../../contexts/day";
 
-const Day = ({ number, gridColumnStart, type, date, isCurrent }) => {
+const Day = ({
+  number,
+  gridColumnStart,
+  type,
+  date,
+  isCurrent = false,
+  isSaturday = false,
+  isSunday = false,
+}) => {
   const { setDay } = useContext(DayContext);
 
   const typeButton = {
@@ -19,7 +27,8 @@ const Day = ({ number, gridColumnStart, type, date, isCurrent }) => {
       type="button"
       style={{ gridColumnStart }}
       className={cn(styles.rangepicker__cell, className, {
-        [styles["rangepicker__current"]]: isCurrent,
+        [styles.rangepicker__current]: isCurrent,
+        [styles.rangepicker__free]: isSaturday || isSunday,
       })}
       onClick={setDay.bind(this, date)}
     >

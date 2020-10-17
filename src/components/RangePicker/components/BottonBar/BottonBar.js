@@ -13,7 +13,7 @@ const BottonBar = ({ children }) => {
 
   return (
     <div className={styles.container_button}>
-      {React.Children.map(children, (child) => modifyChildren(child))}
+      {React.Children.map(children, modifyChildren)}
     </div>
   );
 };

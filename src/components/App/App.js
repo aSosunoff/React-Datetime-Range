@@ -20,6 +20,8 @@ const App = () => {
     () =>
       range.from && range.to
         ? `${format(range.from)} - ${format(range.to)}`
+        : range.from
+        ? `${format(range.from)}`
         : null,
     [range.from, range.to]
   );

@@ -3,6 +3,8 @@
   flex-direction: row;
   gap: 5px;
   justify-content: flex-end;
+  color: var(--grey);
+  border-top: 1px solid var(--grey);
 
   .button {
     &:hover {

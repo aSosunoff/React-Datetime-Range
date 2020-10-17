@@ -43,6 +43,8 @@ export default function useDays(month, from, to) {
     []
   );
 
+  // const week = () => Math.ceil((index + firsDayOfWeekByMonth) / 7)
+
   const days = useMemo(
     () =>
       new Array(monthDayCount).fill(null).map((_, index) => {

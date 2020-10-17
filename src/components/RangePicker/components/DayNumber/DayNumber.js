@@ -28,7 +28,8 @@ const DayNumber = ({
       style={{ gridColumnStart }}
       className={cn(styles.rangepicker__cell, className, {
         [styles.rangepicker__current]: isCurrent,
-        [styles.rangepicker__free]: isSaturday || isSunday,
+        [styles.rangepicker__free]:
+          !isCurrent && !className && (isSaturday || isSunday),
       })}
       onClick={setDay.bind(this, date)}
     >

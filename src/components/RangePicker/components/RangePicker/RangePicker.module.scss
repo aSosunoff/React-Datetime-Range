@@ -13,13 +13,14 @@
     overflow: hidden;
     font-family: system-ui;
     font-size: 12px;
+    padding: 5px;
 
     & .rangepicker__selector-control-left,
     & .rangepicker__selector-control-right {
       position: absolute;
-      top: 6px;
-      width: 15px;
-      height: 24px;
+      top: 13px;
+      width: 10px;
+      height: 20px;
       display: flex;
       flex-direction: column;
       justify-content: center;

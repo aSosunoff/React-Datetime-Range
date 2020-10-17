@@ -38,4 +38,9 @@
   &.rangepicker__selected-between {
     background-color: var(--light-blue);
   }
+
+  &.rangepicker__current {
+    border: 1px solid #90a0b7;
+    border-radius: 100%;
+  }
 }

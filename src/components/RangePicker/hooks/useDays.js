@@ -1,69 +1,85 @@
 import { useCallback, useMemo } from "react";
 import {
-	getDateWithoutTime,
-	getMonthDayCount,
-	getNumberFirsDayOfWeekByMonth,
+  getDateWithoutTime,
+  getMonthDayCount,
+  getNumberFirsDayOfWeekByMonth,
 } from "../utils/dateHalper";
 
-export default function useDays(date, from, to) {
-	const monthDayCount = useMemo(() => getMonthDayCount(date), [date]);
+export default function useDays(month, from, to) {
+  const monthDayCount = useMemo(() => getMonthDayCount(month), [month]);
 
-	const firsDayOfWeekByMonth = useMemo(
-		() => getNumberFirsDayOfWeekByMonth(date),
-		[date]
-	);
+  const firsDayOfWeekByMonth = useMemo(
+    () => getNumberFirsDayOfWeekByMonth(month),
+    [month]
+  );
 
-	const fromLocal = useMemo(() => from && getDateWithoutTime(from), [from]);
+  const fromLocal = useMemo(() => from && getDateWithoutTime(from), [from]);
 
-	const toLocal = useMemo(() => to && getDateWithoutTime(to), [to]);
+  const toLocal = useMemo(() => to && getDateWithoutTime(to), [to]);
 
-	const isFrom = useCallback(
-		(date) => Boolean(fromLocal) && fromLocal.getTime() === date.getTime(),
-		[fromLocal]
-	);
+  const isFrom = useCallback(
+    (date) => Boolean(fromLocal) && fromLocal.getTime() === date.getTime(),
+    [fromLocal]
+  );
 
-	const isTo = useCallback(
-		(date) => Boolean(toLocal) && toLocal.getTime() === date.getTime(),
-		[toLocal]
-	);
+  const isTo = useCallback(
+    (date) => Boolean(toLocal) && toLocal.getTime() === date.getTime(),
+    [toLocal]
+  );
 
-	const isBetween = useCallback(
-		(date) =>
-			Boolean(fromLocal) &&
-			Boolean(toLocal) &&
-			fromLocal.getTime() < date.getTime() &&
-			date.getTime() < toLocal.getTime(),
-		[fromLocal, toLocal]
-	);
+  const isBetween = useCallback(
+    (date) =>
+      Boolean(fromLocal) &&
+      Boolean(toLocal) &&
+      fromLocal.getTime() < date.getTime() &&
+      date.getTime() < toLocal.getTime(),
+    [fromLocal, toLocal]
+  );
 
-	const days = useMemo(
-		() =>
-			new Array(monthDayCount).fill(null).map((_, index) => {
-				const dayNumber = index + 1;
+  const isCurrent = useCallback(
+    (date) =>
+      getDateWithoutTime(new Date()).getTime() ===
+      getDateWithoutTime(date).getTime(),
+    []
+  );
 
-				const dateWithoutTime = new Date(
-					date.getFullYear(),
-					date.getMonth(),
-					dayNumber
-				);
+  const days = useMemo(
+    () =>
+      new Array(monthDayCount).fill(null).map((_, index) => {
+        const dayNumber = index + 1;
 
-				return {
-					dayNumber,
-					date: dateWithoutTime,
-					gridColumnStart: dayNumber === 1 ? firsDayOfWeekByMonth : null,
-					type: isFrom(dateWithoutTime)
-						? "from"
-						: isBetween(dateWithoutTime)
-						? "between"
-						: isTo(dateWithoutTime)
-						? "to"
-						: "",
-				};
-			}),
-		[date, firsDayOfWeekByMonth, isBetween, isFrom, isTo, monthDayCount]
-	);
+        const dateWithoutTime = new Date(
+          month.getFullYear(),
+          month.getMonth(),
+          dayNumber
+        );
 
-	return {
-		days,
-	};
+        return {
+          dayNumber,
+          date: dateWithoutTime,
+          gridColumnStart: dayNumber === 1 ? firsDayOfWeekByMonth : null,
+          type: isFrom(dateWithoutTime)
+            ? "from"
+            : isBetween(dateWithoutTime)
+            ? "between"
+            : isTo(dateWithoutTime)
+            ? "to"
+            : "",
+          isCurrent: isCurrent(dateWithoutTime),
+        };
+      }),
+    [
+      month,
+      firsDayOfWeekByMonth,
+      isBetween,
+      isFrom,
+      isTo,
+      monthDayCount,
+      isCurrent,
+    ]
+  );
+
+  return {
+    days,
+  };
 }

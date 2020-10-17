@@ -1,11 +1,12 @@
 .rangepicker__calendar {
   display: grid;
-  grid-template-rows: 30px auto min-content;
+  grid-template-rows: 30px min-content min-content;
+  grid-gap: 5px;
 }
 
 .rangepicker__month-indicator {
   font-weight: 600;
-  font-size: 20px;
+  font-size: 1.1em;
   line-height: 24px;
   color: var(--dark-blue);
   display: flex;

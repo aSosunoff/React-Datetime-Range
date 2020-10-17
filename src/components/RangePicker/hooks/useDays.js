@@ -54,22 +54,12 @@ export default function useDays(month, from, to) {
           dayNumber
         );
 
-        /* if (index === 3 && firsDayOfWeekByMonth === 4) {
-          debugger;
-        } */
-
         const isDay = (numberDay) => {
           const correctNumber = index + firsDayOfWeekByMonth;
           return (
             numberDay === correctNumber - Math.floor(correctNumber / 8) * 7
           );
         };
-        /* index +
-            firsDayOfWeekByMonth -
-            Math.floor((index + firsDayOfWeekByMonth) / 7) * 7 ===
-          numberDay; */
-
-        // const week = () => Math.ceil((index + firsDayOfWeekByMonth) / 7)
 
         return {
           dayNumber,

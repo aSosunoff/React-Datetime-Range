@@ -12,10 +12,17 @@ const Calendar = ({ date, from, to } = {}) => {
 
   const { days } = useDays(date, from, to);
 
+  const yearName = useMemo(
+    () => date.toLocaleString("ru", { year: "numeric" }),
+    [date]
+  );
+
   return (
     <div className={styles.rangepicker__calendar}>
       <div className={styles["rangepicker__month-indicator"]}>
-        <time dateTime={localeString}>{localeString}</time>
+        <time dateTime={localeString}>
+          {localeString} {yearName} год
+        </time>
       </div>
 
       <WeekLine />

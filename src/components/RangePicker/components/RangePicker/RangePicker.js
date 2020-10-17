@@ -30,12 +30,7 @@ const RangePicker = ({
 
   const { range, setRange } = useRange(from, to);
 
-  const {
-    showMonth,
-    yearName,
-    nextMonthHandler,
-    prevMonthHandler,
-  } = useShowMonth(from);
+  const { showMonth, nextMonthHandler, prevMonthHandler } = useShowMonth(from);
 
   const calendars = useMemo(
     () =>
@@ -106,8 +101,6 @@ const RangePicker = ({
               onClick={nextMonthHandler}
             />
 
-            <div className={styles.rangepicker_year}>{yearName} год</div>
-
             <div className={styles.rangepicker_calendar}>
               {calendars.map((calendar) => (
                 <Calendar
@@ -129,7 +122,6 @@ const RangePicker = ({
       range.from,
       range.to,
       setDayHandler,
-      yearName,
     ]
   );
 

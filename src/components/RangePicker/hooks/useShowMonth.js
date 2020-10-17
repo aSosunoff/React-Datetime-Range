@@ -1,13 +1,8 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { getNextMonth, getPrevMonth } from "../utils/dateHalper";
 
 export default function useShowMonth(date) {
 	const [showMonth, setShowMonth] = useState(date ?? new Date());
-
-	const yearName = useMemo(() => {
-		const date = showMonth ?? new Date();
-		return date.toLocaleString("ru", { year: "numeric" });
-	}, [showMonth]);
 
 	const nextMonthHandler = useCallback(
 		() => setShowMonth(getNextMonth(showMonth)),
@@ -21,7 +16,6 @@ export default function useShowMonth(date) {
 
 	return {
 		showMonth,
-		yearName,
 		nextMonthHandler,
 		prevMonthHandler,
 	};

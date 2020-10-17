@@ -17,6 +17,7 @@ import { DayProvider } from "../../contexts/day";
 import useShowMonth from "../../hooks/useShowMonth";
 import useRange from "../../hooks/useRange";
 import useAddListener from "../../hooks/useAddListener";
+import BottonBar from "../BottonBar/BottonBar";
 
 const RangePicker = ({
   isOpen = false,
@@ -30,7 +31,12 @@ const RangePicker = ({
 } = {}) => {
   const rangepicker = useRef();
 
-  const { range, setRange } = useRange(from, to);
+  const { range, setRange, rangeResetHandler } = useRange(from, to);
+
+  const rangeApplyHandler = useCallback(() => {
+    onRangeSelected(range);
+    onClose();
+  }, [onClose, onRangeSelected, range]);
 
   const { showMonth, nextMonthHandler, prevMonthHandler } = useShowMonth(from);
 
@@ -87,12 +93,10 @@ const RangePicker = ({
         const current = date.getTime();
         to = new Date(Math.max(current, range.from.getTime()));
         from = new Date(Math.min(current, range.from.getTime()));
-        onRangeSelected({ from, to });
-        onClose();
       }
       setRange({ from, to });
     },
-    [onClose, onRangeSelected, range.from, range.to, setRange]
+    [range.from, range.to, setRange]
   );
 
   const RangePicker = useCallback(
@@ -125,17 +129,24 @@ const RangePicker = ({
                 />
               ))}
             </div>
+
+            <BottonBar>
+              <div onClick={rangeApplyHandler}>применить</div>
+              <div onClick={rangeResetHandler}>очистить</div>
+            </BottonBar>
           </div>
         </div>
       </DayProvider>
     ),
     [
-      calendars,
-      nextMonthHandler,
+      setDayHandler,
       prevMonthHandler,
+      nextMonthHandler,
+      calendars,
+      rangeApplyHandler,
+      rangeResetHandler,
       range.from,
       range.to,
-      setDayHandler,
       locales,
     ]
   );

@@ -1,0 +1,13 @@
+.container_button {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  justify-content: flex-end;
+
+  .button {
+    &:hover {
+      cursor: pointer;
+      text-decoration: underline;
+    }
+  }
+}

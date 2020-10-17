@@ -54,9 +54,10 @@
     }
 
     & .rangepicker_calendar {
-      flex-direction: row;
-      display: flex;
+      grid-gap: 5px;
       gap: 5px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 }

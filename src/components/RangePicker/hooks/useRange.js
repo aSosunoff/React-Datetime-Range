@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export default function useRange(from, to) {
   const [range, setRange] = useState({ from, to });
@@ -7,8 +7,14 @@ export default function useRange(from, to) {
     setRange({ from, to });
   }, [from, to]);
 
+  const rangeResetHandler = useCallback(
+    () => setRange({ from: null, to: null }),
+    [setRange]
+  );
+
   return {
     range,
     setRange,
+    rangeResetHandler,
   };
 }

@@ -4,28 +4,21 @@ import DayNumber from "../DayNumber";
 import WeekLine from "../WeekLine";
 import styles from "./Calendar.module.scss";
 
-const Calendar = ({ date, from, to } = {}) => {
+const Calendar = ({ date, from, to, locales } = {}) => {
   const localeString = useMemo(
-    () => date.toLocaleString("ru", { month: "long" }),
-    [date]
+    () => date.toLocaleString(locales, { month: "long", year: "numeric" }),
+    [date, locales]
   );
 
   const { days } = useDays(date, from, to);
 
-  const yearName = useMemo(
-    () => date.toLocaleString("ru", { year: "numeric" }),
-    [date]
-  );
-
   return (
     <div className={styles.rangepicker__calendar}>
       <div className={styles["rangepicker__month-indicator"]}>
-        <time dateTime={localeString}>
-          {localeString} {yearName} год
-        </time>
+        <time dateTime={localeString}>{localeString}</time>
       </div>
 
-      <WeekLine />
+      <WeekLine locales={locales} />
 
       <div className={styles["rangepicker__date-grid"]}>
         {days.map(

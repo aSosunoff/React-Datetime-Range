@@ -33,14 +33,13 @@ const App = () => {
   return (
     <>
       <div ref={targetButton}>
-        <Button onClick={toggleRangePicker}>
-          {displayRange || "Открыть"}
-        </Button>
+        <Button onClick={toggleRangePicker}>{displayRange || "Открыть"}</Button>
 
         <Button onClick={rangeReset}>Сбросить</Button>
       </div>
 
       <RangePicker
+        locales="ru"
         isOpen={isOpen}
         {...range}
         onRangeSelected={setRange}

@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import styles from "./WeekLine.module.scss";
+import { getWeeksNameLocales } from "../../utils/dateHalper";
 
-const WeekLine = () => {
-  const dayOfWeekName = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+const WeekLine = ({ locales }) => {
+  const dayOfWeekName = useMemo(() => getWeeksNameLocales(locales), [locales]);
 
   return (
     <div className={styles["rangepicker__day-of-week"]}>

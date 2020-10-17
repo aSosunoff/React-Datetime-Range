@@ -26,6 +26,7 @@ const RangePicker = ({
   onClose = () => {},
   onRangeSelected = () => {},
   calendarVisibleCount = 2,
+  locales,
 } = {}) => {
   const rangepicker = useRef();
 
@@ -120,6 +121,7 @@ const RangePicker = ({
                   date={calendar.date}
                   from={range.from}
                   to={range.to}
+                  locales={locales}
                 />
               ))}
             </div>
@@ -134,6 +136,7 @@ const RangePicker = ({
       range.from,
       range.to,
       setDayHandler,
+      locales,
     ]
   );
 

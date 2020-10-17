@@ -8,12 +8,12 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
-  transition: var(--transition);
   outline: none;
 
   &:hover {
     background-color: var(--grey) !important;
     color: var(--white);
+    transition: var(--transition);
   }
 
   &:active,

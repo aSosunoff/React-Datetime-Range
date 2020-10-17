@@ -28,15 +28,11 @@ const App = () => {
 
   const closeRangePicker = useCallback(() => setOpen(false), []);
 
-  const rangeReset = useCallback(() => setRange({ from: null, to: null }), []);
-
   return (
     <>
-      <div ref={targetButton}>
-        <Button onClick={toggleRangePicker}>{displayRange || "Открыть"}</Button>
-
-        <Button onClick={rangeReset}>Сбросить</Button>
-      </div>
+      <Button ref={targetButton} onClick={toggleRangePicker}>
+        {displayRange || "Открыть"}
+      </Button>
 
       <RangePicker
         locales="ru"

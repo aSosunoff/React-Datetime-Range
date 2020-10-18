@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import cn from "classnames";
 import styles from "./BottonBar.module.scss";
 
-const BottonBar = ({ children }) => {
+const BottonBar = ({ title, children }) => {
   const modifyChildren = useCallback(
     (child) =>
       React.cloneElement(child, {
@@ -13,6 +13,7 @@ const BottonBar = ({ children }) => {
 
   return (
     <div className={styles.container_button}>
+      <div className={styles.title}>{title}</div>
       {React.Children.map(children, modifyChildren)}
     </div>
   );

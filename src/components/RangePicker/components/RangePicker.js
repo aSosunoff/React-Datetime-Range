@@ -20,6 +20,16 @@ import useAddListener from "../hooks/useAddListener";
 import BottonBar from "./BottonBar/BottonBar";
 import TimePicker from "./TimePicker/TimePicker";
 
+const format = (locales, date) =>
+  date.toLocaleString(locales, {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+  });
+
 const RangePicker = ({
   isOpen = false,
   target,
@@ -48,6 +58,16 @@ const RangePicker = ({
     });
     onClose();
   }, [_startDate, _endDate, onClose, onRangeSelected]);
+
+  const rangeString = useMemo(
+    () =>
+      _startDate && _endDate
+        ? `${format(locales, _startDate)} - ${format(locales, _endDate)}`
+        : _startDate
+        ? `${format(locales, _startDate)}`
+        : "",
+    [_endDate, _startDate, locales]
+  );
 
   const { showMonth, nextMonthHandler, prevMonthHandler } = useShowMonth(
     startDate
@@ -155,7 +175,7 @@ const RangePicker = ({
               setTimeToHandler={setTimeToHandler}
             />
 
-            <BottonBar>
+            <BottonBar title={rangeString}>
               <div onClick={rangeApplyHandler}>применить</div>
               <div onClick={rangeResetHandler}>очистить</div>
             </BottonBar>
@@ -173,6 +193,7 @@ const RangePicker = ({
       _endDate,
       setTimeFromHandler,
       setTimeToHandler,
+      rangeString,
       rangeApplyHandler,
       rangeResetHandler,
       locales,

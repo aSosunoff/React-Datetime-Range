@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { getNextMonthFromDate } from "../../utils/dateHalper";
-import Calendar from "../Calendar/Calendar";
+import Calendar from "./Calendar";
 import styles from "./CalendarContainer.module.scss";
 
 const CalendarContainer = ({

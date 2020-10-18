@@ -22,8 +22,8 @@ import BottonBar from "../BottonBar/BottonBar";
 const RangePicker = ({
   isOpen = false,
   target,
-  from,
-  to,
+  startDate,
+  endDate,
   onClose = () => {},
   onRangeSelected = () => {},
   calendarVisibleCount = 2,
@@ -31,14 +31,36 @@ const RangePicker = ({
 } = {}) => {
   const rangepicker = useRef();
 
-  const { range, setRange, rangeResetHandler } = useRange(from, to);
+  const {
+    startDate: _startDate,
+    endDate: _endDate,
+    setRangeHandler,
+    rangeResetHandler,
+    setTimeFromHandler,
+    setTimeToHandler,
+  } = useRange(startDate, endDate);
 
   const rangeApplyHandler = useCallback(() => {
-    onRangeSelected(range);
+    onRangeSelected({
+      startDate: _startDate,
+      endDate: _endDate,
+    });
     onClose();
-  }, [onClose, onRangeSelected, range]);
+  }, [_startDate, _endDate, onClose, onRangeSelected]);
 
-  const { showMonth, nextMonthHandler, prevMonthHandler } = useShowMonth(from);
+  const timeFrom = useMemo(
+    () => (_startDate ? _startDate.toLocaleTimeString() : ""),
+    [_startDate]
+  );
+
+  const timeTo = useMemo(
+    () => (_endDate ? _endDate.toLocaleTimeString() : ""),
+    [_endDate]
+  );
+
+  const { showMonth, nextMonthHandler, prevMonthHandler } = useShowMonth(
+    startDate
+  );
 
   const calendars = useMemo(
     () =>
@@ -87,16 +109,16 @@ const RangePicker = ({
     (date) => {
       let from = null;
       let to = null;
-      if (!range.from || range.to) {
+      if (!_startDate || _endDate) {
         from = date;
       } else {
         const current = date.getTime();
-        to = new Date(Math.max(current, range.from.getTime()));
-        from = new Date(Math.min(current, range.from.getTime()));
+        to = new Date(Math.max(current, _startDate.getTime()));
+        from = new Date(Math.min(current, _startDate.getTime()));
       }
-      setRange({ from, to });
+      setRangeHandler(from, to);
     },
-    [range.from, range.to, setRange]
+    [_startDate, _endDate, setRangeHandler]
   );
 
   const RangePicker = useCallback(
@@ -123,11 +145,37 @@ const RangePicker = ({
                 <Calendar
                   key={calendar.key}
                   date={calendar.date}
-                  from={range.from}
-                  to={range.to}
+                  from={_startDate}
+                  to={_endDate}
                   locales={locales}
                 />
               ))}
+            </div>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)",
+                gridGap: "5px",
+                justifyItems: "center",
+              }}
+            >
+              <input
+                type="time"
+                step="2"
+                onChange={({ target }) =>
+                  setTimeFromHandler(...target.value.split(":"))
+                }
+                value={timeFrom}
+              />
+              <input
+                type="time"
+                step="2"
+                onChange={({ target }) =>
+                  setTimeToHandler(...target.value.split(":"))
+                }
+                value={timeTo}
+              />
             </div>
 
             <BottonBar>
@@ -143,10 +191,14 @@ const RangePicker = ({
       prevMonthHandler,
       nextMonthHandler,
       calendars,
+      setTimeFromHandler,
+      timeFrom,
+      setTimeToHandler,
+      timeTo,
       rangeApplyHandler,
       rangeResetHandler,
-      range.from,
-      range.to,
+      _startDate,
+      _endDate,
       locales,
     ]
   );

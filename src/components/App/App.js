@@ -7,6 +7,9 @@ const format = (date) =>
     year: "numeric",
     month: "long",
     day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
   });
 
 const App = () => {
@@ -14,16 +17,16 @@ const App = () => {
 
   const [isOpen, setOpen] = useState(false);
 
-  const [range, setRange] = useState({ from: null, to: null });
+  const [range, setRange] = useState({ startDate: null, endDate: null });
 
   const displayRange = useMemo(
     () =>
-      range.from && range.to
-        ? `${format(range.from)} - ${format(range.to)}`
-        : range.from
-        ? `${format(range.from)}`
+      range.startDate && range.endDate
+        ? `${format(range.startDate)} - ${format(range.endDate)}`
+        : range.startDate
+        ? `${format(range.startDate)}`
         : null,
-    [range.from, range.to]
+    [range.startDate, range.endDate]
   );
 
   const toggleRangePicker = useCallback(() => setOpen((isOpen) => !isOpen), []);

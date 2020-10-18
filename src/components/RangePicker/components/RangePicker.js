@@ -19,6 +19,7 @@ import useRange from "../hooks/useRange";
 import useAddListener from "../hooks/useAddListener";
 import BottonBar from "./BottomBar/BottomBar";
 import TimePicker from "./TimePicker/TimePicker";
+import Control from "./Control";
 
 const format = (locales, date) =>
   date.toLocaleString(locales, {
@@ -140,40 +141,39 @@ const RangePicker = ({
           className={cn(styles.rangepicker, variable["range-picker-variable"])}
           style={style}
         >
-          <div className={styles.selector}>
-            <div className={styles.control_left} onClick={prevMonthHandler} />
+          <Control
+            prevHandler={prevMonthHandler}
+            nextHandler={nextMonthHandler}
+          />
 
-            <div className={styles.control_right} onClick={nextMonthHandler} />
-
-            <div
-              className={styles.calendar_container}
-              style={{
-                gridTemplateColumns: `repeat(${calendarVisibleCount}, 1fr)`,
-              }}
-            >
-              {calendars.map((calendar) => (
-                <Calendar
-                  key={calendar.key}
-                  date={calendar.date}
-                  from={_startDate}
-                  to={_endDate}
-                  locales={locales}
-                />
-              ))}
-            </div>
-
-            <TimePicker
-              startDate={_startDate}
-              endDate={_endDate}
-              setTimeFromHandler={setTimeFromHandler}
-              setTimeToHandler={setTimeToHandler}
-            />
-
-            <BottonBar title={rangeString}>
-              <div onClick={rangeApplyHandler}>применить</div>
-              <div onClick={rangeResetHandler}>очистить</div>
-            </BottonBar>
+          <div
+            className={styles.calendar_container}
+            style={{
+              gridTemplateColumns: `repeat(${calendarVisibleCount}, 1fr)`,
+            }}
+          >
+            {calendars.map((calendar) => (
+              <Calendar
+                key={calendar.key}
+                date={calendar.date}
+                from={_startDate}
+                to={_endDate}
+                locales={locales}
+              />
+            ))}
           </div>
+
+          <TimePicker
+            startDate={_startDate}
+            endDate={_endDate}
+            setTimeFromHandler={setTimeFromHandler}
+            setTimeToHandler={setTimeToHandler}
+          />
+
+          <BottonBar title={rangeString}>
+            <div onClick={rangeApplyHandler}>применить</div>
+            <div onClick={rangeResetHandler}>очистить</div>
+          </BottonBar>
         </div>
       </DayProvider>
     ),

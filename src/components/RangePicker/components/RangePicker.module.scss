@@ -1,64 +1,23 @@
 .rangepicker {
   position: fixed;
+  background-color: var(--white);
+  box-shadow: var(--box-shadow);
+  border: 1px solid #90a0b7;
+  border-radius: 3px;
+  overflow: hidden;
+  font-family: system-ui;
+  font-size: 12px;
+  padding: 5px;
+  display: grid;
+  grid-gap: 5px;
 
   &:hover {
     box-shadow: var(--box-shadow-hover);
   }
 
-  & .selector {
-    background-color: var(--white);
-    box-shadow: var(--box-shadow);
-    border: 1px solid #90a0b7;
-    border-radius: 3px;
-    overflow: hidden;
-    font-family: system-ui;
-    font-size: 12px;
-    padding: 5px;
-    display: grid;
+  & .calendar_container {
     grid-gap: 5px;
-
-    & .control_left,
-    & .control_right {
-      position: absolute;
-      top: 13px;
-      width: 10px;
-      height: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      cursor: pointer;
-      transition: 0.3s all;
-      overflow: hidden;
-    }
-
-    & .control_left::after,
-    & .control_right::after {
-      transition: 0.3s all;
-      content: "";
-      background-color: var(--grey);
-      width: 14px;
-      height: 14px;
-      transform: translateX(9px) rotate(45deg);
-    }
-
-    & .control_left:hover::after,
-    & .control_right:hover::after {
-      background-color: var(--dark-blue);
-    }
-
-    & .control_left {
-      left: 15px;
-    }
-
-    & .control_right {
-      right: 15px;
-      transform: rotate(180deg);
-    }
-
-    & .calendar_container {
-      grid-gap: 5px;
-      gap: 5px;
-      display: grid;
-    }
+    gap: 5px;
+    display: grid;
   }
 }

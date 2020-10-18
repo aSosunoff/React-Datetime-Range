@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import cn from "classnames";
 import styles from "./DayNumber.module.scss";
-import { DayContext } from "../../contexts/day";
+import { DayContext } from "../../../../contexts/day";
 
 const DayNumber = ({
   number,

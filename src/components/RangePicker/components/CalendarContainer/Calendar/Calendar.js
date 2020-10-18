@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import useDays from "../../../hooks/useDays";
-import DayNumber from "../../DayNumber";
-import WeekLine from "../../WeekLine";
+import DayNumber from "./DayNumber";
+import WeekLine from "./WeekLine";
 import styles from "./Calendar.module.scss";
 
 const Calendar = ({ date, from, to, locales } = {}) => {

@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import useDays from "../../../hooks/useDays";
-import DayNumber from "./DayNumber";
+import Day from "./Day";
 import WeekLine from "./WeekLine";
 import styles from "./Calendar.module.scss";
 
@@ -31,7 +31,7 @@ const Calendar = ({ date, from, to, locales } = {}) => {
             isSaturday,
             isSunday,
           }) => (
-            <DayNumber
+            <Day
               key={dayNumber}
               isCurrent={isCurrent}
               isSaturday={isSaturday}

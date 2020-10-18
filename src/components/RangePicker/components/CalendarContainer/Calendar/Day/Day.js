@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import cn from "classnames";
-import styles from "./DayNumber.module.scss";
+import styles from "./Day.module.scss";
 import { DayContext } from "../../../../contexts/day";
 
-const DayNumber = ({
+const Day = ({
   number,
   gridColumnStart,
   type,
@@ -38,4 +38,4 @@ const DayNumber = ({
   );
 };
 
-export default DayNumber;
+export default Day;

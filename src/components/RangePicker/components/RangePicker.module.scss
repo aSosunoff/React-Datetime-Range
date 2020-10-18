@@ -14,10 +14,4 @@
   &:hover {
     box-shadow: var(--box-shadow-hover);
   }
-
-  & .calendar_container {
-    grid-gap: 5px;
-    gap: 5px;
-    display: grid;
-  }
 }

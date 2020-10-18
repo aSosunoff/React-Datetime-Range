@@ -20,6 +20,7 @@ import useAddListener from "../hooks/useAddListener";
 import BottonBar from "./BottomBar/BottomBar";
 import TimePicker from "./TimePicker/TimePicker";
 import Control from "./Control";
+import CalendarContainer from "./CalendarContainer";
 
 const format = (locales, date) =>
   date.toLocaleString(locales, {
@@ -72,15 +73,6 @@ const RangePicker = ({
 
   const { showMonth, nextMonthHandler, prevMonthHandler } = useShowMonth(
     startDate
-  );
-
-  const calendars = useMemo(
-    () =>
-      new Array(calendarVisibleCount).fill(null).map((_, index) => ({
-        key: index,
-        date: getNextMonthFromDate(showMonth, index),
-      })),
-    [calendarVisibleCount, showMonth]
   );
 
   const [bounding, setBounding] = useState({
@@ -146,22 +138,13 @@ const RangePicker = ({
             nextHandler={nextMonthHandler}
           />
 
-          <div
-            className={styles.calendar_container}
-            style={{
-              gridTemplateColumns: `repeat(${calendarVisibleCount}, 1fr)`,
-            }}
-          >
-            {calendars.map((calendar) => (
-              <Calendar
-                key={calendar.key}
-                date={calendar.date}
-                from={_startDate}
-                to={_endDate}
-                locales={locales}
-              />
-            ))}
-          </div>
+          <CalendarContainer
+            calendarVisibleCount={calendarVisibleCount}
+            startDate={_startDate}
+            endDate={_endDate}
+            locales={locales}
+            showMonth={showMonth}
+          />
 
           <TimePicker
             startDate={_startDate}
@@ -182,15 +165,15 @@ const RangePicker = ({
       prevMonthHandler,
       nextMonthHandler,
       calendarVisibleCount,
-      calendars,
       _startDate,
       _endDate,
+      locales,
+      showMonth,
       setTimeFromHandler,
       setTimeToHandler,
       rangeString,
       rangeApplyHandler,
       rangeResetHandler,
-      locales,
     ]
   );
 

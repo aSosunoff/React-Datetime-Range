@@ -18,6 +18,7 @@ import useShowMonth from "../../hooks/useShowMonth";
 import useRange from "../../hooks/useRange";
 import useAddListener from "../../hooks/useAddListener";
 import BottonBar from "../BottonBar/BottonBar";
+import TimePicker from "../TimePicker/TimePicker";
 
 const RangePicker = ({
   isOpen = false,
@@ -47,16 +48,6 @@ const RangePicker = ({
     });
     onClose();
   }, [_startDate, _endDate, onClose, onRangeSelected]);
-
-  const timeFrom = useMemo(
-    () => (_startDate ? _startDate.toLocaleTimeString() : ""),
-    [_startDate]
-  );
-
-  const timeTo = useMemo(
-    () => (_endDate ? _endDate.toLocaleTimeString() : ""),
-    [_endDate]
-  );
 
   const { showMonth, nextMonthHandler, prevMonthHandler } = useShowMonth(
     startDate
@@ -152,31 +143,12 @@ const RangePicker = ({
               ))}
             </div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(2, 1fr)",
-                gridGap: "5px",
-                justifyItems: "center",
-              }}
-            >
-              <input
-                type="time"
-                step="2"
-                onChange={({ target }) =>
-                  setTimeFromHandler(...target.value.split(":"))
-                }
-                value={timeFrom}
-              />
-              <input
-                type="time"
-                step="2"
-                onChange={({ target }) =>
-                  setTimeToHandler(...target.value.split(":"))
-                }
-                value={timeTo}
-              />
-            </div>
+            <TimePicker
+              startDate={_startDate}
+              endDate={_endDate}
+              setTimeFromHandler={setTimeFromHandler}
+              setTimeToHandler={setTimeToHandler}
+            />
 
             <BottonBar>
               <div onClick={rangeApplyHandler}>применить</div>
@@ -192,9 +164,7 @@ const RangePicker = ({
       nextMonthHandler,
       calendars,
       setTimeFromHandler,
-      timeFrom,
       setTimeToHandler,
-      timeTo,
       rangeApplyHandler,
       rangeResetHandler,
       _startDate,

@@ -1,1 +1,1 @@
-export { default } from './components/RangePicker/RangePicker';
+export { default } from './components/RangePicker';

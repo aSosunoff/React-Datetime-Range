@@ -9,16 +9,16 @@ import cn from "classnames";
 
 import styles from "./RangePicker.module.scss";
 import variable from "./variable.module.scss";
-import { getNextMonthFromDate } from "../../utils/dateHalper";
-import { getBounding } from "../../utils/getBounding";
-import Calendar from "../Calendar";
-import Animation from "../Animation";
-import { DayProvider } from "../../contexts/day";
-import useShowMonth from "../../hooks/useShowMonth";
-import useRange from "../../hooks/useRange";
-import useAddListener from "../../hooks/useAddListener";
-import BottonBar from "../BottonBar/BottonBar";
-import TimePicker from "../TimePicker/TimePicker";
+import { getNextMonthFromDate } from "../utils/dateHalper";
+import { getBounding } from "../utils/getBounding";
+import Calendar from "./Calendar";
+import Animation from "./Animation";
+import { DayProvider } from "../contexts/day";
+import useShowMonth from "../hooks/useShowMonth";
+import useRange from "../hooks/useRange";
+import useAddListener from "../hooks/useAddListener";
+import BottonBar from "./BottonBar/BottonBar";
+import TimePicker from "./TimePicker/TimePicker";
 
 const RangePicker = ({
   isOpen = false,

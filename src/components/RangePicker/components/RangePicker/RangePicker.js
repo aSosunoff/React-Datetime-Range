@@ -131,7 +131,12 @@ const RangePicker = ({
               onClick={nextMonthHandler}
             />
 
-            <div className={styles.rangepicker_calendar}>
+            <div
+              className={styles.rangepicker_calendar}
+              style={{
+                gridTemplateColumns: `repeat(${calendarVisibleCount}, 1fr)`,
+              }}
+            >
               {calendars.map((calendar) => (
                 <Calendar
                   key={calendar.key}
@@ -162,13 +167,14 @@ const RangePicker = ({
       setDayHandler,
       prevMonthHandler,
       nextMonthHandler,
+      calendarVisibleCount,
       calendars,
+      _startDate,
+      _endDate,
       setTimeFromHandler,
       setTimeToHandler,
       rangeApplyHandler,
       rangeResetHandler,
-      _startDate,
-      _endDate,
       locales,
     ]
   );

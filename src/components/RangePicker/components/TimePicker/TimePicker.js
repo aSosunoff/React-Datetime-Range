@@ -22,6 +22,7 @@ const TimePicker = ({
       <input
         type="time"
         step="2"
+        disabled={!Boolean(timeFrom)}
         onChange={({ target }) =>
           setTimeFromHandler(...target.value.split(":"))
         }
@@ -30,6 +31,7 @@ const TimePicker = ({
       <input
         type="time"
         step="2"
+        disabled={!Boolean(timeTo)}
         onChange={({ target }) => setTimeToHandler(...target.value.split(":"))}
         value={timeTo}
       />

@@ -37,7 +37,8 @@
   }
 
   &.rangepicker__current {
-    border: 1px solid #90a0b7;
+    background-color: var(--blue);
+    color: var(--white);
     border-radius: 100%;
   }
 

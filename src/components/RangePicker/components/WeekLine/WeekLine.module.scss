@@ -11,5 +11,9 @@
     line-height: 20px;
     color: var(--grey);
     text-align: center;
+
+    &:nth-last-child(-n + 2) {
+      font-weight: bold;
+    }
   }
 }

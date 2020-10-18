@@ -15,9 +15,9 @@ const DayNumber = ({
   const { setDay } = useContext(DayContext);
 
   const typeButton = {
-    from: styles["rangepicker__selected-from"],
-    between: styles["rangepicker__selected-between"],
-    to: styles["rangepicker__selected-to"],
+    from: styles.start,
+    between: styles.between,
+    to: styles.end,
   };
 
   const className = typeButton[type] || null;
@@ -26,9 +26,9 @@ const DayNumber = ({
     <button
       type="button"
       style={{ gridColumnStart }}
-      className={cn(styles.rangepicker__cell, className, {
-        [styles.rangepicker__current]: isCurrent,
-        [styles.rangepicker__free]:
+      className={cn(styles.cell, className, {
+        [styles.current]: isCurrent,
+        [styles.free]:
           !isCurrent && !className && (isSaturday || isSunday),
       })}
       onClick={setDay.bind(this, date)}

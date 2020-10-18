@@ -1,8 +1,8 @@
 import React, { useCallback } from "react";
 import cn from "classnames";
-import styles from "./BottonBar.module.scss";
+import styles from "./BottomBar.module.scss";
 
-const BottonBar = ({ title, children }) => {
+const BottomBar = ({ title, children }) => {
   const modifyChildren = useCallback(
     (child) =>
       React.cloneElement(child, {
@@ -12,11 +12,11 @@ const BottonBar = ({ title, children }) => {
   );
 
   return (
-    <div className={styles.container_button}>
+    <div className={styles.bottom_bar}>
       <div className={styles.title}>{title}</div>
       {React.Children.map(children, modifyChildren)}
     </div>
   );
 };
 
-export default BottonBar;
+export default BottomBar;

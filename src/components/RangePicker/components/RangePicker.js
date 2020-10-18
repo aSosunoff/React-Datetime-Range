@@ -17,7 +17,7 @@ import { DayProvider } from "../contexts/day";
 import useShowMonth from "../hooks/useShowMonth";
 import useRange from "../hooks/useRange";
 import useAddListener from "../hooks/useAddListener";
-import BottonBar from "./BottonBar/BottonBar";
+import BottonBar from "./BottomBar/BottomBar";
 import TimePicker from "./TimePicker/TimePicker";
 
 const format = (locales, date) =>
@@ -140,19 +140,13 @@ const RangePicker = ({
           className={cn(styles.rangepicker, variable["range-picker-variable"])}
           style={style}
         >
-          <div className={styles.rangepicker__selector}>
-            <div
-              className={styles["rangepicker__selector-control-left"]}
-              onClick={prevMonthHandler}
-            />
+          <div className={styles.selector}>
+            <div className={styles.control_left} onClick={prevMonthHandler} />
+
+            <div className={styles.control_right} onClick={nextMonthHandler} />
 
             <div
-              className={styles["rangepicker__selector-control-right"]}
-              onClick={nextMonthHandler}
-            />
-
-            <div
-              className={styles.rangepicker_calendar}
+              className={styles.calendar_container}
               style={{
                 gridTemplateColumns: `repeat(${calendarVisibleCount}, 1fr)`,
               }}

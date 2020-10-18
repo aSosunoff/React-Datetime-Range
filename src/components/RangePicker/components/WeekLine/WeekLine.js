@@ -6,7 +6,7 @@ const WeekLine = ({ locales }) => {
   const dayOfWeekName = useMemo(() => getWeeksNameLocales(locales), [locales]);
 
   return (
-    <div className={styles["rangepicker__day-of-week"]}>
+    <div className={styles.day_of_week}>
       {dayOfWeekName.map((name) => (
         <div key={name}>{name}</div>
       ))}

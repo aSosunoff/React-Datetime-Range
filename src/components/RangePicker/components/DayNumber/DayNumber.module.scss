@@ -1,4 +1,4 @@
-.rangepicker__cell {
+.cell {
   cursor: pointer;
   position: relative;
   border: 0;
@@ -15,34 +15,31 @@
   }
 
   &:active,
-  &.rangepicker__selected,
-  &.rangepicker__selected-from,
-  &.rangepicker__selected-to {
+  &.start,
+  &.end {
     background-color: var(--blue);
     color: var(--white);
   }
 
-  &.rangepicker__selected:hover,
-  &.rangepicker__selected-from:hover,
-  &.rangepicker__selected-to:hover,
-  &.rangepicker__selected:focus,
-  &.rangepicker__selected-from:focus,
-  &.rangepicker__selected-to:focus {
+  &.start:hover,
+  &.end:hover,
+  &.start:focus,
+  &.end:focus {
     background-color: var(--middle-blue);
     color: var(--dark-blue);
   }
 
-  &.rangepicker__selected-between {
+  &.between {
     background-color: var(--light-blue);
   }
 
-  &.rangepicker__current {
+  &.current {
     background-color: var(--blue);
     color: var(--white);
     border-radius: 100%;
   }
 
-  &.rangepicker__free {
+  &.free {
     background-color: var(--grey);
     color: var(--white);
   }

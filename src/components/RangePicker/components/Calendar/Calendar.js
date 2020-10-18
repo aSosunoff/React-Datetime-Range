@@ -13,14 +13,14 @@ const Calendar = ({ date, from, to, locales } = {}) => {
   const { days } = useDays(date, from, to);
 
   return (
-    <div className={styles.rangepicker__calendar}>
-      <div className={styles["rangepicker__month-indicator"]}>
+    <div className={styles.calendar}>
+      <div className={styles.title}>
         <time dateTime={localeString}>{localeString}</time>
       </div>
 
       <WeekLine locales={locales} />
 
-      <div className={styles["rangepicker__date-grid"]}>
+      <div className={styles.grid}>
         {days.map(
           ({
             dayNumber,

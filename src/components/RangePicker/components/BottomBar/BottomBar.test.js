@@ -7,7 +7,6 @@ describe("BottomBar", () => {
   let component;
 
   const getByDataId = (dataId) => component.find(`[data-id="${dataId}"]`);
-
   const getTitle = () => getByDataId("bottom-bar-title");
 
   beforeEach(() => {

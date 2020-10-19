@@ -23,20 +23,24 @@ describe("Control", () => {
   });
 
   it("should render", () => {
-    expect(component.length).toBe(1);
+    expect(component).toHaveLength(1);
   });
+
   it("should render left control", () => {
-    expect(getControlLeft().length).toBe(1);
+    expect(getControlLeft()).toHaveLength(1);
   });
+
   it("should render right control", () => {
-    expect(getControlRight().length).toBe(1);
+    expect(getControlRight()).toHaveLength(1);
   });
+
   it("should run handler to left control", () => {
     runHandlerLeftControl();
-    expect(prevHandler).toBeCalled();
+    expect(prevHandler).toHaveBeenCalled();
   });
+
   it("should run handler to right control", () => {
     runHandlerRightControl();
-    expect(nextHandler).toBeCalled();
+    expect(nextHandler).toHaveBeenCalled();
   });
 });

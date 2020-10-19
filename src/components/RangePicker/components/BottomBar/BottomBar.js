@@ -13,7 +13,11 @@ const BottomBar = ({ title, children }) => {
 
   return (
     <div className={styles.bottom_bar}>
-      <div className={styles.title}>{title}</div>
+      {title ? (
+        <div className={styles.title} data-id="bottom-bar-title">
+          {title}
+        </div>
+      ) : null}
       {React.Children.map(children, modifyChildren)}
     </div>
   );

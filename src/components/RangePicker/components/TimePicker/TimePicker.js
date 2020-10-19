@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-/* import cn from "classnames"; */
 import styles from "./TimePicker.module.scss";
 
 const TimePicker = ({
@@ -18,10 +17,10 @@ const TimePicker = ({
   ]);
 
   return (
-    <div className={styles.time_picker}>
+    <div className={styles.time_picker} data-id="time-picker">
       <input
         type="time"
-        step="2"
+        step="1"
         disabled={!Boolean(timeFrom)}
         onChange={({ target }) =>
           setTimeFromHandler(...target.value.split(":"))
@@ -30,7 +29,7 @@ const TimePicker = ({
       />
       <input
         type="time"
-        step="2"
+        step="1"
         disabled={!Boolean(timeTo)}
         onChange={({ target }) => setTimeToHandler(...target.value.split(":"))}
         value={timeTo}

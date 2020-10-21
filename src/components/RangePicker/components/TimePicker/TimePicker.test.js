@@ -87,8 +87,7 @@ describe("TimePicker", () => {
 
     expect(callback).toHaveBeenCalled();
 
-    const [result] = callback.mock.calls;
-    const [h, m, s] = result;
+    const [[h, m, s]] = callback.mock.calls;
     const [hV, mV, sV] = timeValue;
 
     expect(h).toBe(hV);
@@ -108,8 +107,7 @@ describe("TimePicker", () => {
 
     expect(callback).toHaveBeenCalled();
 
-    const [result] = callback.mock.calls;
-    const [h, m, s] = result;
+    const [[h, m, s]] = callback.mock.calls;
     const [hV, mV, sV] = timeValue;
 
     expect(h).toBe(hV);

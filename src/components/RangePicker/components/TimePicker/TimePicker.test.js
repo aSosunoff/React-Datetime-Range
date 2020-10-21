@@ -4,7 +4,7 @@ import { mount } from "enzyme";
 import TimePicker from "./TimePicker";
 
 describe("TimePicker", () => {
-  let component, props;
+  let component;
 
   const getByDataId = (dataId) => component.find(`[data-id="${dataId}"]`);
   const getProp = (prop) => component.prop(prop);
@@ -13,12 +13,12 @@ describe("TimePicker", () => {
   beforeEach(() => {
     component = mount(<TimePicker />);
 
-    props = {
+    /* props = {
       startDate: new Date(2020, 0, 1),
       endDate: new Date(2020, 1, 1),
       setTimeFromHandler: jest.fn(),
       setTimeToHandler: jest.fn(),
-    };
+    }; */
   });
 
   it("should render", () => {
@@ -30,6 +30,10 @@ describe("TimePicker", () => {
   });
 
   it("should contain props", () => {
+    const props = {
+      startDate: new Date(2020, 0, 1),
+      endDate: new Date(2020, 1, 1),
+    };
     component = mount(<TimePicker {...props} />);
     expect(getProp("startDate")).toBe(props.startDate);
     expect(getProp("endDate")).toBe(props.endDate);
@@ -55,5 +59,19 @@ describe("TimePicker", () => {
     expect(getByDataId("time-picker-end").prop("disabled")).toBeTruthy();
     setProp("endDate", new Date());
     expect(getByDataId("time-picker-end").prop("disabled")).toBeFalsy();
+  });
+
+  it("should be set value startDate", () => {
+    setProp("startDate", new Date(0, 0, 0, 10, 10, 10));
+    expect(getByDataId("time-picker-start").prop('value')).toBe('10:10:10');
+    setProp("startDate", new Date(0, 0, 0, 20, 10, 10));
+    expect(getByDataId("time-picker-start").prop('value')).toBe('20:10:10');
+  });
+
+  it("should be set value endDate", () => {
+    setProp("endDate", new Date(0, 0, 0, 10, 10, 10));
+    expect(getByDataId("time-picker-end").prop('value')).toBe('10:10:10');
+    setProp("endDate", new Date(0, 0, 0, 20, 10, 10));
+    expect(getByDataId("time-picker-end").prop('value')).toBe('20:10:10');
   });
 });

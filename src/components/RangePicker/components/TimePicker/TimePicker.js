@@ -16,6 +16,12 @@ const TimePicker = ({
     endDate,
   ]);
 
+  const getFormatTime = (value) => {
+    const [hour = 0, minute = 0, second = 0] = value.split(":").map(Number);
+
+    return [hour, minute, second];
+  };
+
   return (
     <div className={styles.time_picker} data-id="time-picker">
       <input
@@ -24,7 +30,7 @@ const TimePicker = ({
         step="1"
         disabled={!Boolean(timeFrom)}
         onChange={({ target }) =>
-          setTimeFromHandler(...target.value.split(":").map(Number))
+          setTimeFromHandler(...getFormatTime(target.value))
         }
         value={timeFrom}
       />
@@ -34,7 +40,7 @@ const TimePicker = ({
         step="1"
         disabled={!Boolean(timeTo)}
         onChange={({ target }) =>
-          setTimeToHandler(...target.value.split(":").map(Number))
+          setTimeToHandler(...getFormatTime(target.value))
         }
         value={timeTo}
       />

@@ -7,20 +7,8 @@ describe("TimePicker", () => {
   let component, props;
 
   const getByDataId = (dataId) => component.find(`[data-id="${dataId}"]`);
-
-  const getValue = (prop) => component.props()[prop];
-  const getStartDateValue = () => getValue("startDate");
-  const getEndDateValue = () => getValue("endDate");
-
-  const setValue = (prop, value) => component.setProps({ [prop]: value });
-  const setStartDateValue = (value) => setValue("startDate", value);
-  const setEndDateValue = (value) => setValue("endDate", value);
-
-  const getTimePicker = () => getByDataId("time-picker");
-  const getChildrensComponent = () =>
-    getTimePicker().children('input[type="time"]');
-  const getStartDateComponent = () => getChildrensComponent().childAt(0);
-  const getEndDateComponent = () => getChildrensComponent().childAt(1);
+  const getProp = (prop) => component.prop(prop);
+  const setProp = (prop, value) => component.setProps({ [prop]: value });
 
   beforeEach(() => {
     component = mount(<TimePicker />);
@@ -38,22 +26,34 @@ describe("TimePicker", () => {
   });
 
   it("should contain two input type time", () => {
-    expect(getChildrensComponent()).toHaveLength(2);
+    expect(component.find('input[type="time"]')).toHaveLength(2);
   });
 
   it("should contain props", () => {
     component = mount(<TimePicker {...props} />);
-    expect(getStartDateValue()).toBe(props.startDate);
-    expect(getEndDateValue()).toBe(props.endDate);
+    expect(getProp("startDate")).toBe(props.startDate);
+    expect(getProp("endDate")).toBe(props.endDate);
   });
 
   it("should set props", () => {
     const date = new Date();
 
-    setStartDateValue(date);
-    expect(getStartDateValue()).toBe(date);
+    setProp("startDate", date);
+    expect(getProp("startDate")).toBe(date);
 
-    setEndDateValue(date);
-    expect(getEndDateValue()).toBe(date);
+    setProp("endDate", date);
+    expect(getProp("endDate")).toBe(date);
+  });
+
+  it("should be toggle disabled prop startDate", () => {
+    expect(getByDataId("time-picker-start").prop("disabled")).toBeTruthy();
+    setProp("startDate", new Date());
+    expect(getByDataId("time-picker-start").prop("disabled")).toBeFalsy();
+  });
+
+  it("should be toggle disabled prop endDate", () => {
+    expect(getByDataId("time-picker-end").prop("disabled")).toBeTruthy();
+    setProp("endDate", new Date());
+    expect(getByDataId("time-picker-end").prop("disabled")).toBeFalsy();
   });
 });

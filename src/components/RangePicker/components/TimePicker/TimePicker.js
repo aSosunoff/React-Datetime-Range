@@ -19,6 +19,7 @@ const TimePicker = ({
   return (
     <div className={styles.time_picker} data-id="time-picker">
       <input
+        data-id="time-picker-start"
         type="time"
         step="1"
         disabled={!Boolean(timeFrom)}
@@ -28,6 +29,7 @@ const TimePicker = ({
         value={timeFrom}
       />
       <input
+        data-id="time-picker-end"
         type="time"
         step="1"
         disabled={!Boolean(timeTo)}

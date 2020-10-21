@@ -10,6 +10,9 @@ describe("TimePicker", () => {
   const getProp = (prop) => component.prop(prop);
   const setProp = (prop, value) => component.setProps({ [prop]: value });
 
+  const timePickerStart = () => getByDataId("time-picker-start");
+  const timePickerEnd = () => getByDataId("time-picker-end");
+
   beforeEach(() => {
     component = mount(<TimePicker />);
   });
@@ -43,29 +46,29 @@ describe("TimePicker", () => {
   });
 
   it("should be toggle disabled prop startDate", () => {
-    expect(getByDataId("time-picker-start").prop("disabled")).toBeTruthy();
+    expect(timePickerStart().prop("disabled")).toBeTruthy();
     setProp("startDate", new Date());
-    expect(getByDataId("time-picker-start").prop("disabled")).toBeFalsy();
+    expect(timePickerStart().prop("disabled")).toBeFalsy();
   });
 
   it("should be toggle disabled prop endDate", () => {
-    expect(getByDataId("time-picker-end").prop("disabled")).toBeTruthy();
+    expect(timePickerEnd().prop("disabled")).toBeTruthy();
     setProp("endDate", new Date());
-    expect(getByDataId("time-picker-end").prop("disabled")).toBeFalsy();
+    expect(timePickerEnd().prop("disabled")).toBeFalsy();
   });
 
   it("should be set value startDate", () => {
     setProp("startDate", new Date(0, 0, 0, 10, 10, 10));
-    expect(getByDataId("time-picker-start").prop("value")).toBe("10:10:10");
+    expect(timePickerStart().prop("value")).toBe("10:10:10");
     setProp("startDate", new Date(0, 0, 0, 20, 10, 10));
-    expect(getByDataId("time-picker-start").prop("value")).toBe("20:10:10");
+    expect(timePickerStart().prop("value")).toBe("20:10:10");
   });
 
   it("should be set value endDate", () => {
     setProp("endDate", new Date(0, 0, 0, 10, 10, 10));
-    expect(getByDataId("time-picker-end").prop("value")).toBe("10:10:10");
+    expect(timePickerEnd().prop("value")).toBe("10:10:10");
     setProp("endDate", new Date(0, 0, 0, 20, 10, 10));
-    expect(getByDataId("time-picker-end").prop("value")).toBe("20:10:10");
+    expect(timePickerEnd().prop("value")).toBe("20:10:10");
   });
 
   it("should be call onSetTimeStart", () => {
@@ -74,7 +77,7 @@ describe("TimePicker", () => {
     const callback = jest.fn();
     setProp("onSetTimeStart", callback);
 
-    getByDataId("time-picker-start").invoke("onChange")({
+    timePickerStart().invoke("onChange")({
       target: { value: timeValue.join(":") },
     });
 
@@ -94,7 +97,7 @@ describe("TimePicker", () => {
     const callback = jest.fn();
     setProp("onSetTimeEnd", callback);
 
-    getByDataId("time-picker-end").invoke("onChange")({
+    timePickerEnd().invoke("onChange")({
       target: { value: timeValue.join(":") },
     });
 
@@ -111,7 +114,7 @@ describe("TimePicker", () => {
   it("should be call onSetFocus after call onFocus on inputStart with true value", () => {
     const callback = jest.fn();
     setProp("onSetFocus", callback);
-    getByDataId("time-picker-start").invoke("onFocus")();
+    timePickerStart().invoke("onFocus")();
     const [[result]] = callback.mock.calls;
     expect(result).toBe(true);
   });
@@ -119,7 +122,7 @@ describe("TimePicker", () => {
   it("should be call onSetFocus after call onBlur on inputStart with false value", () => {
     const callback = jest.fn();
     setProp("onSetFocus", callback);
-    getByDataId("time-picker-start").invoke("onBlur")();
+    timePickerStart().invoke("onBlur")();
     const [[result]] = callback.mock.calls;
     expect(result).toBe(false);
   });
@@ -127,7 +130,7 @@ describe("TimePicker", () => {
   it("should be call onSetFocus after call onFocus on inputEnd with true value", () => {
     const callback = jest.fn();
     setProp("onSetFocus", callback);
-    getByDataId("time-picker-end").invoke("onFocus")();
+    timePickerEnd().invoke("onFocus")();
     const [[result]] = callback.mock.calls;
     expect(result).toBe(true);
   });
@@ -135,7 +138,7 @@ describe("TimePicker", () => {
   it("should be call onSetFocus after call onBlur on inputEnd with false value", () => {
     const callback = jest.fn();
     setProp("onSetFocus", callback);
-    getByDataId("time-picker-end").invoke("onBlur")();
+    timePickerEnd().invoke("onBlur")();
     const [[result]] = callback.mock.calls;
     expect(result).toBe(false);
   });

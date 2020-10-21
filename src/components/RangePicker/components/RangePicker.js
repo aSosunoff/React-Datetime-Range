@@ -94,15 +94,21 @@ const RangePicker = ({
 
   useAddListener("pointerdown", _handleDocumentClick, isOpen);
 
+  const [isFocus, setFocusHandler] = useState(false);
+
   const _handleDocumentLeftRightClick = useCallback(
     (event) => {
+      if (isFocus) {
+        return;
+      }
+
       if (event.key === "ArrowLeft") {
         prevMonthHandler();
       } else if (event.key === "ArrowRight") {
         nextMonthHandler();
       }
     },
-    [nextMonthHandler, prevMonthHandler]
+    [isFocus, nextMonthHandler, prevMonthHandler]
   );
 
   useAddListener("keydown", _handleDocumentLeftRightClick, isOpen);
@@ -147,8 +153,9 @@ const RangePicker = ({
           <TimePicker
             startDate={_startDate}
             endDate={_endDate}
-            setTimeFromHandler={setTimeFromHandler}
-            setTimeToHandler={setTimeToHandler}
+            onSetTimeStart={setTimeFromHandler}
+            onSetTimeEnd={setTimeToHandler}
+            onSetFocus={setFocusHandler}
           />
 
           <BottonBar title={rangeString}>

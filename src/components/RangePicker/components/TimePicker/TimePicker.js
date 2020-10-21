@@ -24,7 +24,7 @@ const TimePicker = ({
         step="1"
         disabled={!Boolean(timeFrom)}
         onChange={({ target }) =>
-          setTimeFromHandler(...target.value.split(":"))
+          setTimeFromHandler(...target.value.split(":").map(Number))
         }
         value={timeFrom}
       />
@@ -33,7 +33,9 @@ const TimePicker = ({
         type="time"
         step="1"
         disabled={!Boolean(timeTo)}
-        onChange={({ target }) => setTimeToHandler(...target.value.split(":"))}
+        onChange={({ target }) =>
+          setTimeToHandler(...target.value.split(":").map(Number))
+        }
         value={timeTo}
       />
     </div>

@@ -63,15 +63,57 @@ describe("TimePicker", () => {
 
   it("should be set value startDate", () => {
     setProp("startDate", new Date(0, 0, 0, 10, 10, 10));
-    expect(getByDataId("time-picker-start").prop('value')).toBe('10:10:10');
+    expect(getByDataId("time-picker-start").prop("value")).toBe("10:10:10");
     setProp("startDate", new Date(0, 0, 0, 20, 10, 10));
-    expect(getByDataId("time-picker-start").prop('value')).toBe('20:10:10');
+    expect(getByDataId("time-picker-start").prop("value")).toBe("20:10:10");
   });
 
   it("should be set value endDate", () => {
     setProp("endDate", new Date(0, 0, 0, 10, 10, 10));
-    expect(getByDataId("time-picker-end").prop('value')).toBe('10:10:10');
+    expect(getByDataId("time-picker-end").prop("value")).toBe("10:10:10");
     setProp("endDate", new Date(0, 0, 0, 20, 10, 10));
-    expect(getByDataId("time-picker-end").prop('value')).toBe('20:10:10');
+    expect(getByDataId("time-picker-end").prop("value")).toBe("20:10:10");
+  });
+
+  it("should be call setTimeFromHandler", () => {
+    const timeValue = [10, 10, 10];
+
+    const callback = jest.fn();
+    setProp("setTimeFromHandler", callback);
+
+    getByDataId("time-picker-start").invoke("onChange")({
+      target: { value: timeValue.join(":") },
+    });
+
+    expect(callback).toHaveBeenCalled();
+
+    const [result] = callback.mock.calls;
+    const [h, m, s] = result;
+    const [hV, mV, sV] = timeValue;
+
+    expect(h).toBe(hV);
+    expect(m).toBe(mV);
+    expect(s).toBe(sV);
+  });
+
+  it("should be call setTimeToHandler", () => {
+    const timeValue = [10, 10, 10];
+
+    const callback = jest.fn();
+    setProp("setTimeToHandler", callback);
+
+    getByDataId("time-picker-end").invoke("onChange")({
+      target: { value: timeValue.join(":") },
+    });
+
+    expect(callback).toHaveBeenCalled();
+
+    const [result] = callback.mock.calls;
+    const [h, m, s] = result;
+    const [hV, mV, sV] = timeValue;
+
+    expect(h).toBe(hV);
+    expect(m).toBe(mV);
+    expect(s).toBe(sV);
   });
 });

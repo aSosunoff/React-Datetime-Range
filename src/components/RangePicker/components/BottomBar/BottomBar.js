@@ -1,4 +1,5 @@
 import React, { useCallback } from "react";
+import PropTypes from "prop-types";
 import cn from "classnames";
 import styles from "./BottomBar.module.scss";
 
@@ -21,6 +22,16 @@ const BottomBar = ({ title, children }) => {
       {React.Children.map(children, modifyChildren)}
     </div>
   );
+};
+
+BottomBar.defaultProps = {
+  title: '',
+  children: [],
+};
+
+BottomBar.propTypes = {
+  title: PropTypes.string,
+  children: PropTypes.array,
 };
 
 export default BottomBar;

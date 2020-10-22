@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styles from "./Control.module.scss";
 
 const Control = ({ prevHandler, nextHandler }) => (
@@ -15,5 +16,15 @@ const Control = ({ prevHandler, nextHandler }) => (
     />
   </>
 );
+
+Control.defaultProps = {
+  prevHandler: () => {},
+  nextHandler: () => {},
+};
+
+Control.propTypes = {
+  prevHandler: PropTypes.func,
+  nextHandler: PropTypes.func,
+};
 
 export default Control;

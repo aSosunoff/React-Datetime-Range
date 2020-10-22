@@ -31,10 +31,10 @@ describe("WeekLine", () => {
     }
   });
 
-  it("should contain 7 div with name week - locales (eu)", () => {
-    setProp("locales", "eu");
+  it("should contain 7 div with name week - locales (en)", () => {
+    setProp("locales", "en");
 
-    const weekLine = getWeeksNameLocales("eu");
+    const weekLine = getWeeksNameLocales("en");
     const children = getByDataId("week-line").children();
 
     expect(children).toHaveLength(7);

@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import cn from "classnames";
 import styles from "./Day.module.scss";
 import { DayContext } from "../../../../contexts/day";
@@ -8,19 +9,13 @@ const Day = ({
   gridColumnStart,
   type,
   date,
-  isCurrent = false,
-  isSaturday = false,
-  isSunday = false,
+  isCurrent,
+  isSaturday,
+  isSunday,
 }) => {
   const { setDay } = useContext(DayContext);
 
-  const typeButton = {
-    from: styles.start,
-    between: styles.between,
-    to: styles.end,
-  };
-
-  const className = typeButton[type] || null;
+  const className = styles[type] || null;
 
   return (
     <button
@@ -28,14 +23,41 @@ const Day = ({
       style={{ gridColumnStart }}
       className={cn(styles.cell, className, {
         [styles.current]: isCurrent,
-        [styles.free]:
-          !isCurrent && !className && (isSaturday || isSunday),
+        [styles.free]: !isCurrent && !className && (isSaturday || isSunday),
       })}
       onClick={setDay.bind(this, date)}
     >
       {number}
     </button>
   );
+};
+
+Day.defaultProps = {
+  isCurrent: false,
+  isSaturday: false,
+  isSunday: false,
+};
+
+Day.propTypes = {
+  number: (props, propName, componentName) => {
+    if (!props[propName]) {
+      return new Error(
+        `Prop ${propName} of ${componentName} should be required`
+      );
+    }
+
+    if (props[propName] <= 0) {
+      return new Error(
+        `Prop ${propName} of ${componentName} should be above zero`
+      );
+    }
+  },
+  gridColumnStart: PropTypes.number,
+  type: PropTypes.string,
+  date: PropTypes.instanceOf(Date).isRequired,
+  isCurrent: PropTypes.bool,
+  isSaturday: PropTypes.bool,
+  isSunday: PropTypes.bool,
 };
 
 export default Day;

@@ -11,7 +11,7 @@ import { DayProvider } from "../../contexts/day";
 import useShowMonth from "../../hooks/useShowMonth";
 import useRange from "../../hooks/useRange";
 import useAddListener from "../../hooks/useAddListener";
-import BottonBar from "./../BottomBar/BottomBar";
+import BottomBar from "./../BottomBar/BottomBar";
 import TimePicker from "./../TimePicker/TimePicker";
 import Control from "./../Control";
 import CalendarContainer from "./../CalendarContainer";
@@ -131,10 +131,10 @@ const RangePicker = React.forwardRef(
             onSetFocus={setFocusHandler}
           />
 
-          <BottonBar title={rangeString}>
+          <BottomBar title={rangeString}>
             <div onClick={rangeApplyHandler}>применить</div>
             <div onClick={rangeResetHandler}>очистить</div>
-          </BottonBar>
+          </BottomBar>
         </div>
       </DayProvider>
     );

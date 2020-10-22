@@ -77,7 +77,7 @@ describe("TimePicker", () => {
     const callback = jest.fn();
     setProp("onSetTimeStart", callback);
 
-    timePickerStart().invoke("onChange")({
+    timePickerStart().simulate("change", {
       target: { value: timeValue.join(":") },
     });
 
@@ -97,7 +97,7 @@ describe("TimePicker", () => {
     const callback = jest.fn();
     setProp("onSetTimeEnd", callback);
 
-    timePickerEnd().invoke("onChange")({
+    timePickerEnd().simulate("change", {
       target: { value: timeValue.join(":") },
     });
 
@@ -114,7 +114,7 @@ describe("TimePicker", () => {
   it("should be call onSetFocus after call onFocus on inputStart with true value", () => {
     const callback = jest.fn();
     setProp("onSetFocus", callback);
-    timePickerStart().invoke("onFocus")();
+    timePickerStart().simulate("focus");
     const [[result]] = callback.mock.calls;
     expect(result).toBe(true);
   });
@@ -122,7 +122,7 @@ describe("TimePicker", () => {
   it("should be call onSetFocus after call onBlur on inputStart with false value", () => {
     const callback = jest.fn();
     setProp("onSetFocus", callback);
-    timePickerStart().invoke("onBlur")();
+    timePickerStart().simulate("blur");
     const [[result]] = callback.mock.calls;
     expect(result).toBe(false);
   });
@@ -130,7 +130,7 @@ describe("TimePicker", () => {
   it("should be call onSetFocus after call onFocus on inputEnd with true value", () => {
     const callback = jest.fn();
     setProp("onSetFocus", callback);
-    timePickerEnd().invoke("onFocus")();
+    timePickerEnd().simulate("focus");
     const [[result]] = callback.mock.calls;
     expect(result).toBe(true);
   });
@@ -138,7 +138,7 @@ describe("TimePicker", () => {
   it("should be call onSetFocus after call onBlur on inputEnd with false value", () => {
     const callback = jest.fn();
     setProp("onSetFocus", callback);
-    timePickerEnd().invoke("onBlur")();
+    timePickerEnd().simulate("blur");
     const [[result]] = callback.mock.calls;
     expect(result).toBe(false);
   });

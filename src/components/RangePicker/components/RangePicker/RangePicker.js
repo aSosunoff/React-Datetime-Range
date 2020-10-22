@@ -1,8 +1,5 @@
-import React, {
-  useCallback,
-  useMemo,
-  useState,
-} from "react";
+import React, { useCallback, useMemo, useState } from "react";
+import PropTypes from "prop-types";
 import cn from "classnames";
 
 import styles from "./RangePicker.module.scss";
@@ -27,26 +24,29 @@ const format = (locales, date) =>
   });
 
 const RangePicker = React.forwardRef(
-  ({
-    isOpen = false,
-    startDate,
-    endDate,
-    onClose = () => {},
-    onRangeSelected = () => {},
-    calendarVisibleCount = 2,
-    locales,
-    style,
-  }, ref) => {
+  (
+    {
+      isOpen,
+      startDate,
+      endDate,
+      onClose,
+      onRangeSelected,
+      calendarVisibleCount,
+      locales,
+      style,
+    },
+    ref
+  ) => {
     const {
       startDate: _startDate,
       endDate: _endDate,
       setRangeHandler,
-      rangeResetHandler,
+      resetHandler,
       setTimeFromHandler,
       setTimeToHandler,
     } = useRange(startDate, endDate);
 
-    const rangeApplyHandler = useCallback(() => {
+    const applyHandler = useCallback(() => {
       onRangeSelected({
         startDate: _startDate,
         endDate: _endDate,
@@ -132,13 +132,32 @@ const RangePicker = React.forwardRef(
           />
 
           <BottomBar title={rangeString}>
-            <div onClick={rangeApplyHandler}>применить</div>
-            <div onClick={rangeResetHandler}>очистить</div>
+            <div onClick={applyHandler} data-id="apply-button">применить</div>
+            <div onClick={resetHandler} data-id="clear-button">очистить</div>
           </BottomBar>
         </div>
       </DayProvider>
     );
   }
 );
+
+RangePicker.defaultProps = {
+  isOpen: false,
+  onClose: () => {},
+  onRangeSelected: () => {},
+  calendarVisibleCount: 2,
+  locales: "ru",
+};
+
+RangePicker.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  startDate: PropTypes.instanceOf(Date),
+  endDate: PropTypes.instanceOf(Date),
+  onClose: PropTypes.func,
+  onRangeSelected: PropTypes.func,
+  calendarVisibleCount: PropTypes.number.isRequired,
+  locales: PropTypes.string,
+  style: PropTypes.object,
+};
 
 export default RangePicker;

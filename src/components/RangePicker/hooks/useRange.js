@@ -23,7 +23,7 @@ export default function useRange(startDate, endDate) {
     [range.startDate]
   );
 
-  const rangeResetHandler = useCallback(
+  const resetHandler = useCallback(
     () => setRange({ startDate: null, endDate: null }),
     [setRange]
   );
@@ -64,7 +64,7 @@ export default function useRange(startDate, endDate) {
   return {
     ...range,
     setRangeHandler,
-    rangeResetHandler,
+    resetHandler,
     setTimeFromHandler,
     setTimeToHandler,
   };

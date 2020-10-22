@@ -53,7 +53,7 @@ describe("Day", () => {
     provider.setProps({ setDayHandler: callback });
 
     setProp("date", date);
-    button().invoke("onClick")();
+    button().simulate("click");
 
     const [[result]] = callback.mock.calls;
     expect(result.getTime()).toBe(date.getTime());

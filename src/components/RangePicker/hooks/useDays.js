@@ -17,12 +17,12 @@ export default function useDays(month, from, to) {
 
   const toLocal = useMemo(() => to && getDateWithoutTime(to), [to]);
 
-  const isFrom = useCallback(
+  const isStart = useCallback(
     (date) => Boolean(fromLocal) && fromLocal.getTime() === date.getTime(),
     [fromLocal]
   );
 
-  const isTo = useCallback(
+  const isEnd = useCallback(
     (date) => Boolean(toLocal) && toLocal.getTime() === date.getTime(),
     [toLocal]
   );
@@ -67,12 +67,12 @@ export default function useDays(month, from, to) {
           dayNumber,
           date: dateWithoutTime,
           gridColumnStart: dayNumber === 1 ? firsDayOfWeekByMonth : null,
-          type: isFrom(dateWithoutTime)
-            ? "from"
+          type: isStart(dateWithoutTime)
+            ? "start"
             : isBetween(dateWithoutTime)
             ? "between"
-            : isTo(dateWithoutTime)
-            ? "to"
+            : isEnd(dateWithoutTime)
+            ? "end"
             : "",
           isCurrent: isCurrent(dateWithoutTime),
           isSaturday: isDay(6),
@@ -80,12 +80,12 @@ export default function useDays(month, from, to) {
         };
       }),
     [
+      monthDayCount,
       month,
       firsDayOfWeekByMonth,
+      isStart,
       isBetween,
-      isFrom,
-      isTo,
-      monthDayCount,
+      isEnd,
       isCurrent,
     ]
   );

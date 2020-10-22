@@ -4,7 +4,7 @@ import { mount } from "enzyme";
 import Day from "./Day";
 import { DayProvider } from "../../../../contexts/day";
 
-describe("WeekLine", () => {
+describe("Day", () => {
   let component;
 
   const getByDataId = (dataId) => component.find(`[data-id="${dataId}"]`);

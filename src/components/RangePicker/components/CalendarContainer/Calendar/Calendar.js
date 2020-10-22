@@ -50,9 +50,6 @@ const Calendar = ({ date, from, to, locales }) => {
 };
 
 Calendar.defaultProps = {
-  /* date,
-  from,
-  to, */
   locales: "ru",
 };
 

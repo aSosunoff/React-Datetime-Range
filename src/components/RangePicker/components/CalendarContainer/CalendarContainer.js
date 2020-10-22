@@ -1,4 +1,5 @@
 import React, { useMemo } from "react";
+import PropTypes from "prop-types";
 import { getNextMonthFromDate } from "../../utils/dateHalper";
 import Calendar from "./Calendar";
 import styles from "./CalendarContainer.module.scss";
@@ -9,7 +10,7 @@ const CalendarContainer = ({
   endDate,
   locales,
   showMonth,
-} = {}) => {
+}) => {
   const calendars = useMemo(
     () =>
       new Array(calendarVisibleCount).fill(null).map((_, index) => ({
@@ -37,6 +38,22 @@ const CalendarContainer = ({
       ))}
     </div>
   );
+};
+
+CalendarContainer.defaultProps = {
+  calendarVisibleCount: 1,
+  /* startDate,
+  endDate, */
+  locales: "ru",
+  /* showMonth, */
+};
+
+CalendarContainer.propTypes = {
+  calendarVisibleCount: PropTypes.number.isRequired,
+  startDate: PropTypes.instanceOf(Date),
+  endDate: PropTypes.instanceOf(Date),
+  locales: PropTypes.string,
+  showMonth: PropTypes.instanceOf(Date).isRequired,
 };
 
 export default CalendarContainer;

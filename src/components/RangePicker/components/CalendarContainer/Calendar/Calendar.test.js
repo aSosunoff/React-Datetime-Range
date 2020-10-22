@@ -28,6 +28,18 @@ describe("WeekLine", () => {
     expect(component).toHaveLength(1);
   });
 
+  it("should contain title", () => {
+    expect(title()).toHaveLength(1);
+  });
+
+  it("should contain WeekLine", () => {
+    expect(component.find("WeekLine")).toHaveLength(1);
+  });
+
+  it("should contain container", () => {
+    expect(container()).toHaveLength(1);
+  });
+
   it("should contain title (default)", () => {
     const localesDefault = getProp("locales");
     let localeString = props.date.toLocaleString(localesDefault, {

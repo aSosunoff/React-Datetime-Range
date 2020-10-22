@@ -1,8 +1,7 @@
 import React from "react";
-import { mount } from "enzyme";
+import { shallow } from "enzyme";
 
 import Calendar from "./Calendar";
-import { DayProvider } from "../../../contexts/day";
 
 describe("Calendar", () => {
   let component;
@@ -19,9 +18,7 @@ describe("Calendar", () => {
   };
 
   beforeEach(() => {
-    component = mount(<Calendar {...props} />, {
-      wrappingComponent: DayProvider,
-    });
+    component = shallow(<Calendar {...props} />);
   });
 
   it("should render", () => {

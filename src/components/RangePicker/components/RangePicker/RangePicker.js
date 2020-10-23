@@ -1,17 +1,17 @@
-import React, { useCallback, useMemo, useState } from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 
 import styles from "./RangePicker.module.scss";
 import variable from "./variable.module.scss";
 import { DayProvider } from "../../contexts/day";
-import useMonth from "../../hooks/useMonth";
 import useRange from "../../hooks/useRange";
-import useAddListener from "../../hooks/useAddListener";
 import BottomBar from "./../BottomBar/BottomBar";
 import TimePicker from "./../TimePicker/TimePicker";
-import Control from "./../Control";
 import CalendarContainer from "./../CalendarContainer";
+import withControl from "../../HOC/withControl";
+import withAnimation from "../../HOC/withAnimation";
+import withTimePickerContext from "../../HOC/withTimePickerContext";
 
 const format = (locales, date) =>
   date.toLocaleString(locales, {
@@ -26,7 +26,7 @@ const format = (locales, date) =>
 const RangePicker = React.forwardRef(
   (
     {
-      isOpen,
+      month,
       startDate,
       endDate,
       onClose,
@@ -34,6 +34,7 @@ const RangePicker = React.forwardRef(
       calendarVisibleCount,
       locales,
       style,
+      Control,
     },
     ref
   ) => {
@@ -64,31 +65,6 @@ const RangePicker = React.forwardRef(
       [_endDate, _startDate, locales]
     );
 
-    const {
-      month,
-      nextHandler: nextMonthHandler,
-      prevHandler: prevMonthHandler,
-    } = useMonth(startDate);
-
-    const [isFocus, setFocusHandler] = useState(false);
-
-    const _handleDocumentLeftRightClick = useCallback(
-      (event) => {
-        if (isFocus) {
-          return;
-        }
-
-        if (event.key === "ArrowLeft") {
-          prevMonthHandler();
-        } else if (event.key === "ArrowRight") {
-          nextMonthHandler();
-        }
-      },
-      [isFocus, nextMonthHandler, prevMonthHandler]
-    );
-
-    useAddListener("keydown", _handleDocumentLeftRightClick, isOpen);
-
     const setDayHandler = useCallback(
       (date) => {
         let from = null;
@@ -112,10 +88,7 @@ const RangePicker = React.forwardRef(
           className={cn(styles.rangepicker, variable["range-picker-variable"])}
           style={style}
         >
-          <Control
-            prevHandler={prevMonthHandler}
-            nextHandler={nextMonthHandler}
-          />
+          <Control />
 
           <CalendarContainer
             calendarVisibleCount={calendarVisibleCount}
@@ -130,7 +103,6 @@ const RangePicker = React.forwardRef(
             endDate={_endDate}
             onSetTimeStart={setTimeFromHandler}
             onSetTimeEnd={setTimeToHandler}
-            onSetFocus={setFocusHandler}
           />
 
           <BottomBar title={rangeString}>
@@ -166,4 +138,4 @@ RangePicker.propTypes = {
   style: PropTypes.object,
 };
 
-export default RangePicker;
+export default withTimePickerContext(withAnimation(withControl(RangePicker)));

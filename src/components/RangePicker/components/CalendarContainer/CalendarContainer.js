@@ -42,10 +42,7 @@ const CalendarContainer = ({
 
 CalendarContainer.defaultProps = {
   calendarVisibleCount: 1,
-  /* startDate,
-  endDate, */
   locales: "ru",
-  /* showMonth, */
 };
 
 CalendarContainer.propTypes = {

@@ -5,7 +5,7 @@ import cn from "classnames";
 import styles from "./RangePicker.module.scss";
 import variable from "./variable.module.scss";
 import { DayProvider } from "../../contexts/day";
-import useShowMonth from "../../hooks/useShowMonth";
+import useMonth from "../../hooks/useMonth";
 import useRange from "../../hooks/useRange";
 import useAddListener from "../../hooks/useAddListener";
 import BottomBar from "./../BottomBar/BottomBar";
@@ -64,9 +64,11 @@ const RangePicker = React.forwardRef(
       [_endDate, _startDate, locales]
     );
 
-    const { showMonth, nextMonthHandler, prevMonthHandler } = useShowMonth(
-      startDate
-    );
+    const {
+      month,
+      nextHandler: nextMonthHandler,
+      prevHandler: prevMonthHandler,
+    } = useMonth(startDate);
 
     const [isFocus, setFocusHandler] = useState(false);
 
@@ -120,7 +122,7 @@ const RangePicker = React.forwardRef(
             startDate={_startDate}
             endDate={_endDate}
             locales={locales}
-            showMonth={showMonth}
+            showMonth={month}
           />
 
           <TimePicker
@@ -132,8 +134,12 @@ const RangePicker = React.forwardRef(
           />
 
           <BottomBar title={rangeString}>
-            <div onClick={applyHandler} data-id="apply-button">применить</div>
-            <div onClick={resetHandler} data-id="clear-button">очистить</div>
+            <div onClick={applyHandler} data-id="apply-button">
+              применить
+            </div>
+            <div onClick={resetHandler} data-id="clear-button">
+              очистить
+            </div>
           </BottomBar>
         </div>
       </DayProvider>

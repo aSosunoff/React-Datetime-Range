@@ -24,8 +24,19 @@ describe("Day", () => {
     });
   });
 
-  it("should render", () => {
-    expect(component).toHaveLength(1);
+  it("should render button", () => {
+    expect(button()).toHaveLength(1);
+  });
+
+  it("should contain number", () => {
+    setProp("number", 1);
+    expect(button().text()).toBe("1");
+
+    setProp("number", 2);
+    expect(button().text()).toBe("2");
+
+    setProp("number", 3);
+    expect(button().text()).toBe("3");
   });
 
   it("should set gridColumnStart style", () => {
@@ -57,16 +68,5 @@ describe("Day", () => {
 
     const [[result]] = callback.mock.calls;
     expect(result.getTime()).toBe(date.getTime());
-  });
-
-  it("should contain number", () => {
-    setProp("number", 1);
-    expect(button().text()).toBe("1");
-
-    setProp("number", 2);
-    expect(button().text()).toBe("2");
-
-    setProp("number", 3);
-    expect(button().text()).toBe("3");
   });
 });

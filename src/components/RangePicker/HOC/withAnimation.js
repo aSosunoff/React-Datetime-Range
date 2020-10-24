@@ -3,7 +3,7 @@ import { getBounding } from "../utils/getBounding";
 import useAddListener from "../hooks/useAddListener";
 import Animation from "../components/Animation";
 
-const withAnimation = (Component) => ({ target, ...props }) => {
+export const withAnimation = (WrapperComponent) => ({ target, ...props }) => {
   const rangepicker = useRef();
 
   const [bounding, setBounding] = useState({
@@ -27,16 +27,14 @@ const withAnimation = (Component) => ({ target, ...props }) => {
 
   useAddListener("pointerdown", _handleDocumentClick);
 
-  const WrapperComponent = useCallback(
-    (style) => <Component ref={rangepicker} {...props} style={style} />,
+  const RenderComponent = useCallback(
+    (style) => <WrapperComponent ref={rangepicker} {...props} style={style} />,
     [props]
   );
 
   return (
     <Animation inProp={props.isOpen} top={bounding.top} left={bounding.left}>
-      {WrapperComponent}
+      {RenderComponent}
     </Animation>
   );
 };
-
-export default withAnimation;

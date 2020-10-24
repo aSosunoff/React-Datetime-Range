@@ -120,7 +120,6 @@ const RangePicker = React.forwardRef(
 );
 
 RangePicker.defaultProps = {
-  isOpen: false,
   onClose: () => {},
   onRangeSelected: () => {},
   calendarVisibleCount: 2,
@@ -128,7 +127,6 @@ RangePicker.defaultProps = {
 };
 
 RangePicker.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
   startDate: PropTypes.instanceOf(Date),
   endDate: PropTypes.instanceOf(Date),
   onClose: PropTypes.func,

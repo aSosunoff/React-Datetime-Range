@@ -4,7 +4,7 @@ import { TimePickerContext } from "../contexts/timePicker";
 import useAddListener from "../hooks/useAddListener";
 import useMonth from "../hooks/useMonth";
 
-const withControl = (WrapperComponent) =>
+export const withControl = (WrapperComponent) =>
   React.forwardRef(({ isOpen, ...props }, ref) => {
     const { isFocus } = useContext(TimePickerContext);
 
@@ -38,8 +38,8 @@ const withControl = (WrapperComponent) =>
     const RenderControl = useCallback(
       () => (
         <Control
-          prevHandler={nextMonthHandler}
-          nextHandler={prevMonthHandler}
+          prevHandler={prevMonthHandler}
+          nextHandler={nextMonthHandler}
         />
       ),
       [nextMonthHandler, prevMonthHandler]
@@ -54,5 +54,3 @@ const withControl = (WrapperComponent) =>
       />
     );
   });
-
-export default withControl;

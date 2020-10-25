@@ -1,5 +1,4 @@
 import React, { useCallback, useContext } from "react";
-import Control from "../components/Control";
 import { TimePickerContext } from "../contexts/timePicker";
 import useAddListener from "../hooks/useAddListener";
 import useMonth from "../hooks/useMonth";
@@ -35,22 +34,13 @@ export const withControl = (WrapperComponent) =>
 
     useAddListener("keydown", _handleDocumentLeftRightClick);
 
-    const RenderControl = useCallback(
-      () => (
-        <Control
-          prevHandler={prevMonthHandler}
-          nextHandler={nextMonthHandler}
-        />
-      ),
-      [nextMonthHandler, prevMonthHandler]
-    );
-
     return (
       <WrapperComponent
         {...props}
         ref={ref}
         month={month}
-        Control={RenderControl}
+        prevMonthHandler={prevMonthHandler}
+        nextMonthHandler={nextMonthHandler}
       />
     );
   });

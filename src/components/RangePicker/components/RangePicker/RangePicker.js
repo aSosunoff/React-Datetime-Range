@@ -14,6 +14,7 @@ import { withTimePickerContext } from "../../HOC/withTimePickerContext";
 import { withDayContext } from "../../HOC/withDayContext";
 import { DayContext } from "../../contexts/day";
 import { compose } from "../../utils/compose";
+import Control from "../Control";
 
 const format = (locales, date) =>
   date.toLocaleString(locales, {
@@ -36,7 +37,8 @@ const RangePicker = React.forwardRef(
       locales,
       style,
       month,
-      Control,
+      prevMonthHandler,
+      nextMonthHandler,
     },
     ref
   ) => {
@@ -89,7 +91,10 @@ const RangePicker = React.forwardRef(
         className={cn(styles.rangepicker, variable["range-picker-variable"])}
         style={style}
       >
-        <Control />
+        <Control
+          prevHandler={prevMonthHandler}
+          nextHandler={nextMonthHandler}
+        />
 
         <CalendarContainer
           calendarVisibleCount={calendarVisibleCount}
@@ -141,6 +146,8 @@ const animationProps = {
 
 const controlProps = {
   month: PropTypes.instanceOf(Date),
+  prevMonthHandler: PropTypes.func,
+  nextMonthHandler: PropTypes.func,
 };
 
 RangePicker.propTypes = {

@@ -68,7 +68,6 @@ TimePicker.defaultProps = {
   endDate: null,
   onSetTimeStart: () => {},
   onSetTimeEnd: () => {},
-  onSetFocus: () => {},
 };
 
 TimePicker.propTypes = {
@@ -76,7 +75,6 @@ TimePicker.propTypes = {
   endDate: PropTypes.instanceOf(Date),
   onSetTimeStart: PropTypes.func,
   onSetTimeEnd: PropTypes.func,
-  onSetFocus: PropTypes.func,
 };
 
 export default TimePicker;

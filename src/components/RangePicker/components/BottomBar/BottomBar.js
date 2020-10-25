@@ -1,6 +1,5 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
-import cn from "classnames";
 import styles from "./BottomBar.module.scss";
 
 const format = (locales, date) =>
@@ -13,15 +12,13 @@ const format = (locales, date) =>
     second: "2-digit",
   });
 
-const BottomBar = ({ startDate, endDate, locales, children }) => {
-  const modifyChildren = useCallback(
-    (child) =>
-      React.cloneElement(child, {
-        className: cn(child.props.className, styles.button),
-      }),
-    []
-  );
-
+const BottomBar = ({
+  startDate,
+  endDate,
+  locales,
+  applyHandler,
+  resetHandler,
+}) => {
   const title = useMemo(
     () =>
       startDate && endDate
@@ -39,7 +36,20 @@ const BottomBar = ({ startDate, endDate, locales, children }) => {
           {title}
         </div>
       ) : null}
-      {React.Children.map(children, modifyChildren)}
+      <div
+        className={styles.button}
+        onClick={applyHandler}
+        data-id="apply-button"
+      >
+        применить
+      </div>
+      <div
+        className={styles.button}
+        onClick={resetHandler}
+        data-id="clear-button"
+      >
+        очистить
+      </div>
     </div>
   );
 };

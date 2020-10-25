@@ -98,14 +98,13 @@ const RangePicker = React.forwardRef(
           onSetTimeEnd={setTimeToHandler}
         />
 
-        <BottomBar startDate={_startDate} endDate={_endDate} locales={locales}>
-          <div onClick={applyHandler} data-id="apply-button">
-            применить
-          </div>
-          <div onClick={resetHandler} data-id="clear-button">
-            очистить
-          </div>
-        </BottomBar>
+        <BottomBar
+          startDate={_startDate}
+          endDate={_endDate}
+          locales={locales}
+          applyHandler={applyHandler}
+          resetHandler={resetHandler}
+        />
       </div>
     );
   }

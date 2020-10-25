@@ -1,11 +1,7 @@
-import React, { useContext } from "react";
-import { mount, shallow } from "enzyme";
+import React from "react";
+import { mount } from "enzyme";
 
 import TimePicker from "./TimePicker";
-import {
-  TimePickerContext,
-  TimePickerProvider,
-} from "../../contexts/timePicker";
 import { withTimePickerContext } from "../../HOC/withTimePickerContext";
 
 describe("TimePicker", () => {
@@ -19,14 +15,12 @@ describe("TimePicker", () => {
   const timePickerEnd = () => getByDataId("time-picker-end");
 
   const buildWrapperComponent = (props) => {
-    component = mount(<TimePicker {...props} />, {
-      wrappingComponent: TimePickerProvider,
-    });
+    component = mount(<TimePicker {...props} />);
   };
 
-  /* beforeEach(() => {
+  beforeEach(() => {
     buildWrapperComponent();
-  }); */
+  });
 
   /* it("should render", () => {
     expect(component).toHaveLength(1);
@@ -147,9 +141,6 @@ describe("TimePicker", () => {
   }); */
 
   it("should be call onSetFocus after call onBlur on inputEnd with false value", () => {
-    const WithTimePickerContext = withTimePickerContext(TimePicker);
-    component = mount(<WithTimePickerContext />);
-    console.log(TimePickerContext.Provider.value);
     /* const TimePickerProvider = component.find("TimePickerProvider").renderProp('children'); */
 
     /* const callback = jest.fn(); */

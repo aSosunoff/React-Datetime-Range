@@ -2,7 +2,6 @@ import React from "react";
 import { mount } from "enzyme";
 
 import TimePicker from "./TimePicker";
-import { withTimePickerContext } from "../../HOC/withTimePickerContext";
 
 describe("TimePicker", () => {
   let component;
@@ -22,8 +21,8 @@ describe("TimePicker", () => {
     buildWrapperComponent();
   });
 
-  /* it("should render", () => {
-    expect(component).toHaveLength(1);
+  it("should render", () => {
+    expect(getByDataId("time-picker")).toHaveLength(1);
   });
 
   it("should contain two input type time", () => {
@@ -114,60 +113,33 @@ describe("TimePicker", () => {
     expect(h).toBe(hV);
     expect(m).toBe(mV);
     expect(s).toBe(sV);
-  }); */
+  });
 
-  /* it("should be call onSetFocus after call onFocus on inputStart with true value", () => {
+  it("should be call onSetFocus after call onFocus on inputStart", () => {
     const callback = jest.fn();
     setProp("onSetFocus", callback);
     timePickerStart().simulate("focus");
-    const [[result]] = callback.mock.calls;
-    expect(result).toBe(true);
+    expect(callback).toHaveBeenCalled();
   });
 
-  it("should be call onSetFocus after call onBlur on inputStart with false value", () => {
+  it("should be call onSetBlur after call onBlur on inputStart", () => {
     const callback = jest.fn();
-    setProp("onSetFocus", callback);
+    setProp("onSetBlur", callback);
     timePickerStart().simulate("blur");
-    const [[result]] = callback.mock.calls;
-    expect(result).toBe(false);
+    expect(callback).toHaveBeenCalled();
   });
 
-  it("should be call onSetFocus after call onFocus on inputEnd with true value", () => {
+  it("should be call onSetFocus after call onBlur on inputEnd", () => {
     const callback = jest.fn();
     setProp("onSetFocus", callback);
     timePickerEnd().simulate("focus");
-    const [[result]] = callback.mock.calls;
-    expect(result).toBe(true);
-  }); */
+    expect(callback).toHaveBeenCalled();
+  });
 
-  it("should be call onSetFocus after call onBlur on inputEnd with false value", () => {
-    /* const TimePickerProvider = component.find("TimePickerProvider").renderProp('children'); */
-
-    /* const callback = jest.fn(); */
-
-    // component = mount(<TimePicker />, {
-    //   /* wrappingComponent: TimePickerContext, */
-    //   wrappingComponent: TimePickerContext.Provider,
-    //   wrappingComponentProps: {
-    //     value: { setFocus: callback, setBlur: callback, isFocus },
-    //   },
-    // });
-
-    /* component.getWrappingComponent().setProps({
-      value: { setFocus: callback, setBlur: callback, isFocus },
-    }); */
-
-    /* timePickerStart().simulate("focus");
-    timePickerStart().simulate("blur"); */
-    /* console.log(timePicker.debug()); */
-    /* console.log(timePicker.debug()); */
-
-    /* console.log(wrapper.debug()); */
-
-    /* console.log(callback.mock); */
-    /* const [[result]] = callback.mock.calls; */
-    /* console.log(component.context('isFocus')); */
-    console.log(component.debug());
-    /* expect(callback).toHaveBeenCalled(); */
+  it("should be call onSetBlur after call onBlur on inputEnd", () => {
+    const callback = jest.fn();
+    setProp("onSetBlur", callback);
+    timePickerEnd().simulate("blur");
+    expect(callback).toHaveBeenCalled();
   });
 });

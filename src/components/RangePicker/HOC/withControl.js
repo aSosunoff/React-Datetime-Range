@@ -1,7 +1,7 @@
 import React, { useCallback, useContext } from "react";
 import { TimePickerContext } from "../contexts/timePicker";
 import useAddListener from "../hooks/useAddListener";
-import useMonth from "../hooks/useMonth";
+import useMonth from "../hooks/useSwitchMonth";
 
 export const withControl = (WrapperComponent) =>
   React.forwardRef(({ isOpen, ...props }, ref) => {

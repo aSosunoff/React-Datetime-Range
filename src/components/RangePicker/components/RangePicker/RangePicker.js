@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useMemo } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 
@@ -8,27 +8,19 @@ import useRange from "../../hooks/useRange";
 import BottomBar from "./../BottomBar/BottomBar";
 import TimePicker from "./../TimePicker/TimePicker";
 import CalendarContainer from "./../CalendarContainer";
-import { withControl } from "../../HOC/withControl";
 import { withAnimation } from "../../HOC/withAnimation";
 import { withTimePickerContext } from "../../HOC/withTimePickerContext";
 import { withDayContext } from "../../HOC/withDayContext";
 import { DayContext } from "../../contexts/day";
 import { compose } from "../../utils/compose";
 import Control from "../Control";
-
-const format = (locales, date) =>
-  date.toLocaleString(locales, {
-    year: "numeric",
-    month: "numeric",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-  });
+import useSwitchMonthKeyDown from "../../hooks/useSwitchMonthKeyDown";
+import { TimePickerContext } from "../../contexts/timePicker";
 
 const RangePicker = React.forwardRef(
   (
     {
+      isOpen,
       startDate,
       endDate,
       onClose,
@@ -36,9 +28,6 @@ const RangePicker = React.forwardRef(
       calendarVisibleCount,
       locales,
       style,
-      month,
-      prevMonthHandler,
-      nextMonthHandler,
     },
     ref
   ) => {
@@ -59,16 +48,6 @@ const RangePicker = React.forwardRef(
       onClose();
     }, [_startDate, _endDate, onClose, onRangeSelected]);
 
-    const rangeString = useMemo(
-      () =>
-        _startDate && _endDate
-          ? `${format(locales, _startDate)} - ${format(locales, _endDate)}`
-          : _startDate
-          ? `${format(locales, _startDate)}`
-          : "",
-      [_endDate, _startDate, locales]
-    );
-
     const { day } = useContext(DayContext);
 
     useEffect(() => {
@@ -84,6 +63,14 @@ const RangePicker = React.forwardRef(
       setRangeHandler(from, to);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [day]);
+
+    const { isFocus } = useContext(TimePickerContext);
+
+    const {
+      month,
+      nextHandler: nextMonthHandler,
+      prevHandler: prevMonthHandler,
+    } = useSwitchMonthKeyDown(startDate, isOpen, isFocus);
 
     return (
       <div
@@ -111,7 +98,7 @@ const RangePicker = React.forwardRef(
           onSetTimeEnd={setTimeToHandler}
         />
 
-        <BottomBar title={rangeString}>
+        <BottomBar startDate={_startDate} endDate={_endDate} locales={locales}>
           <div onClick={applyHandler} data-id="apply-button">
             применить
           </div>
@@ -132,6 +119,7 @@ RangePicker.defaultProps = {
 };
 
 const defaultProps = {
+  isOpen: PropTypes.bool,
   startDate: PropTypes.instanceOf(Date),
   endDate: PropTypes.instanceOf(Date),
   onClose: PropTypes.func,
@@ -144,21 +132,13 @@ const animationProps = {
   style: PropTypes.object,
 };
 
-const controlProps = {
-  month: PropTypes.instanceOf(Date),
-  prevMonthHandler: PropTypes.func,
-  nextMonthHandler: PropTypes.func,
-};
-
 RangePicker.propTypes = {
   ...defaultProps,
   ...animationProps,
-  ...controlProps,
 };
 
 export default compose(
   withDayContext,
   withTimePickerContext,
-  withAnimation,
-  withControl
+  withAnimation
 )(RangePicker);

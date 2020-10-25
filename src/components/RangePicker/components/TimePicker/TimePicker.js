@@ -1,13 +1,17 @@
-import React, { useContext, useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import PropTypes from "prop-types";
 import styles from "./TimePicker.module.scss";
-import { TimePickerContext } from "../../contexts/timePicker";
 
-const TimePicker = ({ startDate, endDate, onSetTimeStart, onSetTimeEnd }) => {
+const TimePicker = ({
+  startDate,
+  endDate,
+  onSetTimeStart,
+  onSetTimeEnd,
+  onSetBlur,
+  onSetFocus,
+}) => {
   const inputStartRef = useRef();
   const inputEndRef = useRef();
-
-  const { setFocus, setBlur } = useContext(TimePickerContext);
 
   const timeFrom = useMemo(
     () => (startDate ? startDate.toLocaleTimeString() : ""),
@@ -44,8 +48,8 @@ const TimePicker = ({ startDate, endDate, onSetTimeStart, onSetTimeEnd }) => {
           onSetTimeStart(...getFormatTime(target.value))
         }
         value={timeFrom}
-        onBlur={setBlur}
-        onFocus={setFocus}
+        onBlur={onSetBlur}
+        onFocus={onSetFocus}
       />
 
       <input
@@ -56,8 +60,8 @@ const TimePicker = ({ startDate, endDate, onSetTimeStart, onSetTimeEnd }) => {
         disabled={!Boolean(timeTo)}
         onChange={({ target }) => onSetTimeEnd(...getFormatTime(target.value))}
         value={timeTo}
-        onBlur={setBlur}
-        onFocus={setFocus}
+        onBlur={onSetBlur}
+        onFocus={onSetFocus}
       />
     </div>
   );
@@ -68,6 +72,8 @@ TimePicker.defaultProps = {
   endDate: null,
   onSetTimeStart: () => {},
   onSetTimeEnd: () => {},
+  onSetBlur: () => {},
+  onSetFocus: () => {},
 };
 
 TimePicker.propTypes = {
@@ -75,6 +81,8 @@ TimePicker.propTypes = {
   endDate: PropTypes.instanceOf(Date),
   onSetTimeStart: PropTypes.func,
   onSetTimeEnd: PropTypes.func,
+  onSetBlur: PropTypes.func,
+  onSetFocus: PropTypes.func,
 };
 
 export default TimePicker;

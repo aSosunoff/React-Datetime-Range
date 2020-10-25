@@ -9,13 +9,12 @@ import BottomBar from "./../BottomBar/BottomBar";
 import TimePicker from "./../TimePicker/TimePicker";
 import CalendarContainer from "./../CalendarContainer";
 import { withAnimation } from "../../HOC/withAnimation";
-import { withTimePickerContext } from "../../HOC/withTimePickerContext";
 import { withDayContext } from "../../HOC/withDayContext";
 import { DayContext } from "../../contexts/day";
 import { compose } from "../../utils/compose";
 import Control from "../Control";
 import useSwitchMonthKeyDown from "../../hooks/useSwitchMonthKeyDown";
-import { TimePickerContext } from "../../contexts/timePicker";
+import useFocus from "../../hooks/useFocus";
 
 const RangePicker = React.forwardRef(
   (
@@ -64,7 +63,7 @@ const RangePicker = React.forwardRef(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [day]);
 
-    const { isFocus } = useContext(TimePickerContext);
+    const { isFocus, setBlur, setFocus } = useFocus();
 
     const {
       month,
@@ -96,6 +95,8 @@ const RangePicker = React.forwardRef(
           endDate={_endDate}
           onSetTimeStart={setTimeFromHandler}
           onSetTimeEnd={setTimeToHandler}
+          onSetBlur={setBlur}
+          onSetFocus={setFocus}
         />
 
         <BottomBar
@@ -138,6 +139,5 @@ RangePicker.propTypes = {
 
 export default compose(
   withDayContext,
-  withTimePickerContext,
   withAnimation
 )(RangePicker);

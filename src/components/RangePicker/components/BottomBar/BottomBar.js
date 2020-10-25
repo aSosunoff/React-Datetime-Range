@@ -56,7 +56,8 @@ const BottomBar = ({
 
 BottomBar.defaultProps = {
   locales: "ru",
-  children: [],
+  applyHandler: () => {},
+  resetHandler: () => {},
 };
 
 BottomBar.propTypes = {
@@ -64,6 +65,8 @@ BottomBar.propTypes = {
   endDate: PropTypes.instanceOf(Date),
   locales: PropTypes.string,
   children: PropTypes.array,
+  applyHandler: PropTypes.func,
+  resetHandler: PropTypes.func,
 };
 
 export default BottomBar;

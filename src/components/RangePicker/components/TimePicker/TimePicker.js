@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+import React, { useEffect, useMemo, useRef } from "react";
 import PropTypes from "prop-types";
 import styles from "./TimePicker.module.scss";
 
@@ -7,6 +7,7 @@ const TimePicker = ({
   endDate,
   onSetTimeStart,
   onSetTimeEnd,
+  onSetBlur,
   onSetFocus,
 }) => {
   const inputStartRef = useRef();
@@ -27,10 +28,7 @@ const TimePicker = ({
     } else if (startDate && endDate) {
       inputEndRef.current.focus();
     }
-  }, [startDate, endDate, onSetFocus]);
-
-  const setFocusHandler = useCallback(() => onSetFocus(true), [onSetFocus]);
-  const setBlurHandler = useCallback(() => onSetFocus(false), [onSetFocus]);
+  }, [startDate, endDate]);
 
   const getFormatTime = (value) => {
     const [hour = 0, minute = 0, second = 0] = value.split(":").map(Number);
@@ -50,8 +48,8 @@ const TimePicker = ({
           onSetTimeStart(...getFormatTime(target.value))
         }
         value={timeFrom}
-        onBlur={setBlurHandler}
-        onFocus={setFocusHandler}
+        onBlur={onSetBlur}
+        onFocus={onSetFocus}
       />
 
       <input
@@ -62,8 +60,8 @@ const TimePicker = ({
         disabled={!Boolean(timeTo)}
         onChange={({ target }) => onSetTimeEnd(...getFormatTime(target.value))}
         value={timeTo}
-        onBlur={setBlurHandler}
-        onFocus={setFocusHandler}
+        onBlur={onSetBlur}
+        onFocus={onSetFocus}
       />
     </div>
   );
@@ -74,6 +72,7 @@ TimePicker.defaultProps = {
   endDate: null,
   onSetTimeStart: () => {},
   onSetTimeEnd: () => {},
+  onSetBlur: () => {},
   onSetFocus: () => {},
 };
 
@@ -82,6 +81,7 @@ TimePicker.propTypes = {
   endDate: PropTypes.instanceOf(Date),
   onSetTimeStart: PropTypes.func,
   onSetTimeEnd: PropTypes.func,
+  onSetBlur: PropTypes.func,
   onSetFocus: PropTypes.func,
 };
 

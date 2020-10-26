@@ -21,7 +21,7 @@ describe("RangePicker", () => {
     wrapper = mount(<RangePicker {...props} />);
   });
 
-  /* it("should render", () => {
+  it("should render", () => {
     expect(getByDataId("range-picker")).toHaveLength(1);
   });
 
@@ -100,7 +100,7 @@ describe("RangePicker", () => {
     expect(document.activeElement).toBe(
       getByDataId("time-picker-end").getDOMNode()
     );
-  }); */
+  });
 
   it("should set next calendar", () => {
     const Calendar = wrapper.find("Calendar").at(0);
@@ -116,6 +116,26 @@ describe("RangePicker", () => {
 
     expect(
       new Date(2020, 1, 1).toLocaleString("ru", {
+        month: "long",
+        year: "numeric",
+      })
+    ).toBe(calendar_title.text());
+  });
+
+  it("should set prev calendar", () => {
+    const Calendar = wrapper.find("Calendar").at(0);
+    const calendar_title = Calendar.find(
+      '[data-test-id="calendar-title"]'
+    );
+
+    expect(
+      props.startDate.toLocaleString("ru", { month: "long", year: "numeric" })
+    ).toBe(calendar_title.text());
+
+    getByDataId("control-left").simulate("click");
+
+    expect(
+      new Date(2019, 11, 1).toLocaleString("ru", {
         month: "long",
         year: "numeric",
       })

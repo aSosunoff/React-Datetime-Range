@@ -1,8 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import styles from "./Day.module.scss";
-import { DayContext } from "../../../../contexts/day";
+import { useDayContext } from "../../../../contexts/day";
 
 const Day = ({
   number,
@@ -13,7 +13,7 @@ const Day = ({
   isSaturday,
   isSunday,
 }) => {
-  const { setDay } = useContext(DayContext);
+  const { setDay } = useDayContext();
 
   const className = styles[type] || null;
 

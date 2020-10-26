@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 
@@ -10,7 +10,7 @@ import TimePicker from "./../TimePicker/TimePicker";
 import CalendarContainer from "./../CalendarContainer";
 import { withAnimation } from "../../HOC/withAnimation";
 import { withDayContext } from "../../HOC/withDayContext";
-import { DayContext } from "../../contexts/day";
+import { useDayContext } from "../../contexts/day";
 import { compose } from "../../utils/compose";
 import Control from "../Control";
 import useSwitchMonthKeyDown from "../../hooks/useSwitchMonthKeyDown";
@@ -47,7 +47,7 @@ const RangePicker = React.forwardRef(
       onClose();
     }, [_startDate, _endDate, onClose, onRangeSelected]);
 
-    const { day } = useContext(DayContext);
+    const { day } = useDayContext();
 
     useEffect(() => {
       let from = null;
@@ -137,7 +137,4 @@ RangePicker.propTypes = {
   ...animationProps,
 };
 
-export default compose(
-  withDayContext,
-  withAnimation
-)(RangePicker);
+export default compose(withDayContext, withAnimation)(RangePicker);

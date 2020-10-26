@@ -1,7 +1,11 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
-export const DayContext = createContext();
+const DayContext = createContext();
 DayContext.displayName = "DayContext";
+
+export const useDayContext = () => {
+  return useContext(DayContext);
+};
 
 export const DayProvider = ({ children }) => {
   const [day, setDay] = useState(null);

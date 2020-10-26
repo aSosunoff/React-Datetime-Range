@@ -3,44 +3,50 @@ import { getBounding } from "../utils/getBounding";
 import useAddListener from "../hooks/useAddListener";
 import Animation from "../components/Animation";
 
-export const withAnimation = (WrapperComponent) => ({ target, ...props }) => {
-  const rangepicker = useRef();
+export const withAnimation = (WrapperComponent) => {
+  const WithAnimation = ({ target, ...props }) => {
+    const rangepicker = useRef();
 
-  const [bounding, setBounding] = useState({
-    top: 0,
-    left: 0,
-  });
+    const [bounding, setBounding] = useState({
+      top: 0,
+      left: 0,
+    });
 
-  useEffect(() => {
-    setBounding(getBounding(target, rangepicker.current));
-  }, [target]);
+    useEffect(() => {
+      setBounding(getBounding(target, rangepicker.current));
+    }, [target]);
 
-  const _handleDocumentClick = useCallback(
-    (event) => {
-      let conditionMain =
-        rangepicker.current &&
-        !rangepicker.current.contains(event.target) &&
-        props.isOpen;
+    const _handleDocumentClick = useCallback(
+      (event) => {
+        let conditionMain =
+          rangepicker.current &&
+          !rangepicker.current.contains(event.target) &&
+          props.isOpen;
 
-      if (conditionMain && target) {
-        conditionMain = conditionMain && !target.contains(event.target);
-      }
+        if (conditionMain && target) {
+          conditionMain = conditionMain && !target.contains(event.target);
+        }
 
-      return conditionMain && props.onClose();
-    },
-    [props, target]
-  );
+        return conditionMain && props.onClose();
+      },
+      [props, target]
+    );
 
-  useAddListener("pointerdown", _handleDocumentClick);
+    useAddListener("pointerdown", _handleDocumentClick);
 
-  const RenderComponent = useCallback(
-    (style) => <WrapperComponent ref={rangepicker} {...props} style={style} />,
-    [props]
-  );
+    const RenderComponent = useCallback(
+      (style) => (
+        <WrapperComponent ref={rangepicker} {...props} style={style} />
+      ),
+      [props]
+    );
 
-  return (
-    <Animation inProp={props.isOpen} top={bounding.top} left={bounding.left}>
-      {RenderComponent}
-    </Animation>
-  );
+    return (
+      <Animation inProp={props.isOpen} top={bounding.top} left={bounding.left}>
+        {RenderComponent}
+      </Animation>
+    );
+  };
+
+  return WithAnimation;
 };

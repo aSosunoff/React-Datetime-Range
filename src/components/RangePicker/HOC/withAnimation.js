@@ -16,12 +16,18 @@ export const withAnimation = (WrapperComponent) => ({ target, ...props }) => {
   }, [target]);
 
   const _handleDocumentClick = useCallback(
-    (event) =>
-      rangepicker.current &&
-      !rangepicker.current.contains(event.target) &&
-      props.isOpen &&
-      !target.contains(event.target) &&
-      props.onClose(),
+    (event) => {
+      let conditionMain =
+        rangepicker.current &&
+        !rangepicker.current.contains(event.target) &&
+        props.isOpen;
+
+      if (conditionMain && target) {
+        conditionMain = conditionMain && !target.contains(event.target);
+      }
+
+      return conditionMain && props.onClose();
+    },
     [props, target]
   );
 

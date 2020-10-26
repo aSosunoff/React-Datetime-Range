@@ -101,4 +101,23 @@ describe("RangePicker", () => {
       getByDataId("time-picker-end").getDOMNode()
     );
   });
+
+  it("should set next calendar", () => {
+    const calendar_left = getByDataId("calendar-container").at(0);
+    const calendar_title_left = getByDataId("calendar-title").at(0);
+    const control_right = getByDataId("control-right");
+
+    expect(
+      props.startDate.toLocaleString("ru", { month: "long", year: "numeric" })
+    ).toBe(calendar_title_left.text());
+
+    control_right.simulate("click");
+
+    expect(
+      new Date(2020, 1, 1).toLocaleString("ru", {
+        month: "long",
+        year: "numeric",
+      })
+    ).toBe(calendar_title_left.text());
+  });
 });

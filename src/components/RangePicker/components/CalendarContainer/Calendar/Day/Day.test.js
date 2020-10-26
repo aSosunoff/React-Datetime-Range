@@ -1,8 +1,9 @@
 import React from "react";
-import { mount/* , shallow */ } from "enzyme";
+import { mount /* , shallow */ } from "enzyme";
 
 import Day from "./Day";
 import { /* DayContext, */ DayProvider } from "../../../../contexts/day";
+import { withDayContext } from "../../../../HOC/withDayContext";
 /* import { withDayContext } from "../../../../HOC/withDayContext"; */
 
 describe("Day", () => {
@@ -20,9 +21,8 @@ describe("Day", () => {
   };
 
   beforeEach(() => {
-    component = mount(<Day {...props} />, {
-      wrappingComponent: DayProvider,
-    });
+    const WithDayContext = withDayContext(Day);
+    component = mount(<WithDayContext {...props} />);
   });
 
   it("should render button", () => {
@@ -58,6 +58,8 @@ describe("Day", () => {
   });
 
   it("should call setDay", () => {
+    /* button().simulate("click");
+    console.log(component.debug()); */
     /* const WithDayContext = withDayContext(Day);
     const wrapper = shallow(<WithDayContext {...props} />);
     const provider = wrapper.dive(); */
@@ -72,7 +74,6 @@ describe("Day", () => {
         })
         .debug()
     ); */
-
     /* const callback = jest.fn();
     const date = new Date(2020, 1, 1);
 

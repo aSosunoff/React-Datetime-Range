@@ -6,7 +6,7 @@ import Control from "./Control";
 describe("Control", () => {
   let component, prevHandler, nextHandler;
 
-  const getByDataId = (dataId) => component.find(`[data-id="${dataId}"]`);
+  const getByDataId = (dataId) => component.find(`[data-test-id="${dataId}"]`);
 
   const getControlLeft = () => getByDataId("control-left");
   const runHandlerLeftControl = () => getControlLeft().simulate("click");

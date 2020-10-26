@@ -15,13 +15,13 @@ const Calendar = ({ date, from, to, locales }) => {
 
   return (
     <div className={styles.calendar}>
-      <div className={styles.title} data-id="calendar-title">
+      <div className={styles.title} data-test-id="calendar-title">
         <time dateTime={localeString}>{localeString}</time>
       </div>
 
       <WeekLine locales={locales} />
 
-      <div className={styles.grid} data-id="calendar-container">
+      <div className={styles.grid} data-test-id="calendar-container">
         {days.map(
           ({
             dayNumber,

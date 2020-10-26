@@ -7,7 +7,7 @@ import { getWeeksNameLocales } from "../../../../utils/dateHalper";
 describe("WeekLine", () => {
   let component;
 
-  const getByDataId = (dataId) => component.find(`[data-id="${dataId}"]`);
+  const getByDataId = (dataId) => component.find(`[data-test-id="${dataId}"]`);
   const getProp = (prop) => component.prop(prop);
   const setProp = (prop, value) => component.setProps({ [prop]: value });
 

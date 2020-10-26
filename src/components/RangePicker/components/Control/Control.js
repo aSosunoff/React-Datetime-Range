@@ -7,12 +7,12 @@ const Control = ({ prevHandler, nextHandler }) => (
     <div
       className={styles.control_left}
       onClick={prevHandler}
-      data-id="control-left"
+      data-test-id="control-left"
     />
     <div
       className={styles.control_right}
       onClick={nextHandler}
-      data-id="control-right"
+      data-test-id="control-right"
     />
   </>
 );

@@ -7,7 +7,7 @@ const WeekLine = ({ locales }) => {
   const dayOfWeekName = useMemo(() => getWeeksNameLocales(locales), [locales]);
 
   return (
-    <div className={styles.day_of_week} data-id="week-line">
+    <div className={styles.day_of_week} data-test-id="week-line">
       {dayOfWeekName.map((name) => (
         <div key={name}>{name}</div>
       ))}

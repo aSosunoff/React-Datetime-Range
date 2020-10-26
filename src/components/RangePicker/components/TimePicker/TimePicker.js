@@ -37,9 +37,9 @@ const TimePicker = ({
   };
 
   return (
-    <div className={styles.time_picker} data-id="time-picker">
+    <div className={styles.time_picker} data-test-id="time-picker">
       <input
-        data-id="time-picker-start"
+        data-test-id="time-picker-start"
         ref={inputStartRef}
         type="time"
         step="1"
@@ -53,7 +53,7 @@ const TimePicker = ({
       />
 
       <input
-        data-id="time-picker-end"
+        data-test-id="time-picker-end"
         ref={inputEndRef}
         type="time"
         step="1"

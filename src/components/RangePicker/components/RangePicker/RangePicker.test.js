@@ -1,21 +1,44 @@
-import React from "react";
-import { shallow, mount } from "enzyme";
+import React, { useCallback, useRef, useState } from "react";
+import { mount } from "enzyme";
 
 import RangePicker from "./RangePicker";
-import { DayProvider } from "../../contexts/day";
+
+const App = () => {
+  const targetButton = useRef(null);
+  const [isOpen, setOpen] = useState(false);
+
+  const toggleRangePicker = useCallback(() => setOpen((isOpen) => !isOpen), []);
+
+  const closeRangePicker = useCallback(() => setOpen(false), []);
+  return (
+    <>
+      <button data-test-id="open" ref={targetButton} onClick={toggleRangePicker}>
+        Открыть
+      </button>
+
+      <RangePicker
+        isOpen={isOpen}
+        target={targetButton.current}
+        onClose={closeRangePicker}
+      />
+    </>
+  );
+};
 
 describe("RangePicker", () => {
   let component;
 
-  const getByDataId = (dataId) => component.find(`[data-id="${dataId}"]`);
+  const getByDataId = (dataId) => component.find(`[data-test-id="${dataId}"]`);
   const getProp = (prop) => component.prop(prop);
   const setProp = (prop, value) => component.setProps({ [prop]: value });
 
   it("should render", () => {
-    component = mount(<RangePicker />, {
-      wrappingComponent: DayProvider,
-    });
-    /* console.log(component.debug()); */
+    component = mount(<App />);
+    /* console.log(targetButton); */
+    /* getByDataId("open").simulate("click");
+    console.log(component.debug());
+    getByDataId("open").simulate("click");
+    console.log(component.debug()); */
     /* expect(component).toHaveLength(1); */
   });
 

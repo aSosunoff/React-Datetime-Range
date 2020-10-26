@@ -6,7 +6,7 @@ import BottomBar from "./BottomBar";
 describe("BottomBar", () => {
   let component;
 
-  const getByDataId = (dataId) => component.find(`[data-id="${dataId}"]`);
+  const getByDataId = (dataId) => component.find(`[data-test-id="${dataId}"]`);
 
   const getTitle = () => getByDataId("bottom-bar-title");
   const getApplyButton = () => getByDataId("bottom-bar-apply-button");

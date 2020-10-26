@@ -30,23 +30,23 @@ const BottomBar = ({
   );
 
   return (
-    <div className={styles.bottom_bar} data-id="bottom-bar">
+    <div className={styles.bottom_bar} data-test-id="bottom-bar">
       {title ? (
-        <div className={styles.title} data-id="bottom-bar-title">
+        <div className={styles.title} data-test-id="bottom-bar-title">
           {title}
         </div>
       ) : null}
       <div
         className={styles.button}
         onClick={applyHandler}
-        data-id="bottom-bar-apply-button"
+        data-test-id="bottom-bar-apply-button"
       >
         применить
       </div>
       <div
         className={styles.button}
         onClick={resetHandler}
-        data-id="bottom-bar-clear-button"
+        data-test-id="bottom-bar-clear-button"
       >
         очистить
       </div>

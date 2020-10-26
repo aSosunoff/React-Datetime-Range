@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import useDays from "../../../hooks/useDays";
+import useCalendar from "../../../hooks/useCalendar";
 import PropTypes from "prop-types";
 import Day from "./Day";
 import WeekLine from "./WeekLine";
@@ -11,7 +11,7 @@ const Calendar = ({ date, from, to, locales }) => {
     [date, locales]
   );
 
-  const { days } = useDays(date, from, to);
+  const { days } = useCalendar(date, from, to);
 
   return (
     <div className={styles.calendar}>

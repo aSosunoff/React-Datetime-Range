@@ -5,7 +5,7 @@ import {
   getNumberFirsDayOfWeekByMonth,
 } from "../utils/dateHalper";
 
-export default function useDays(month, from, to) {
+export default function useCalendar(month, from, to) {
   const monthDayCount = useMemo(() => getMonthDayCount(month), [month]);
 
   const firsDayOfWeekByMonth = useMemo(
@@ -43,6 +43,18 @@ export default function useDays(month, from, to) {
     []
   );
 
+  const getTypeDay = useCallback(
+    (date) =>
+      isStart(date)
+        ? "start"
+        : isBetween(date)
+        ? "between"
+        : isEnd(date)
+        ? "end"
+        : "",
+    [isBetween, isEnd, isStart]
+  );
+
   // const week = () => Math.ceil((index + firsDayOfWeekByMonth) / 7)
 
   const days = useMemo(
@@ -67,27 +79,13 @@ export default function useDays(month, from, to) {
           dayNumber,
           date: dateWithoutTime,
           gridColumnStart: dayNumber === 1 ? firsDayOfWeekByMonth : null,
-          type: isStart(dateWithoutTime)
-            ? "start"
-            : isBetween(dateWithoutTime)
-            ? "between"
-            : isEnd(dateWithoutTime)
-            ? "end"
-            : "",
+          type: getTypeDay(dateWithoutTime),
           isCurrent: isCurrent(dateWithoutTime),
           isSaturday: isDay(6),
           isSunday: isDay(7),
         };
       }),
-    [
-      monthDayCount,
-      month,
-      firsDayOfWeekByMonth,
-      isStart,
-      isBetween,
-      isEnd,
-      isCurrent,
-    ]
+    [monthDayCount, month, firsDayOfWeekByMonth, getTypeDay, isCurrent]
   );
 
   return {

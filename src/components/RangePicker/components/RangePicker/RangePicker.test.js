@@ -1,64 +1,108 @@
-import React, { useCallback, useRef, useState } from "react";
+import React from "react";
 import { mount } from "enzyme";
 
 import RangePicker from "./RangePicker";
 
-const App = () => {
-  const targetButton = useRef(null);
-  const [isOpen, setOpen] = useState(false);
-
-  const toggleRangePicker = useCallback(() => setOpen((isOpen) => !isOpen), []);
-
-  const closeRangePicker = useCallback(() => setOpen(false), []);
-  return (
-    <>
-      <button
-        data-test-id="open"
-        ref={targetButton}
-        onClick={toggleRangePicker}
-      >
-        Открыть
-      </button>
-
-      <RangePicker
-        isOpen={isOpen}
-        target={targetButton.current}
-        onClose={closeRangePicker}
-      />
-    </>
-  );
-};
-
 describe("RangePicker", () => {
-  let component;
+  let wrapper;
 
-  const getByDataId = (dataId) => component.find(`[data-test-id="${dataId}"]`);
-  const getProp = (prop) => component.prop(prop);
-  const setProp = (prop, value) => component.setProps({ [prop]: value });
+  const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
+  const getProp = (prop) => wrapper.prop(prop);
+  const setProp = (prop, value) => wrapper.setProps({ [prop]: value });
 
-  const getRangePicker = () => getByDataId("range-picker");
+  const props = {
+    startDate: new Date(2020, 0, 5),
+    endDate: new Date(2020, 0, 6),
+    onRangeSelected: jest.fn(),
+    onClose: jest.fn(),
+  };
 
   beforeEach(() => {
-    component = mount(<App />);
+    wrapper = mount(<RangePicker {...props} />);
   });
 
   it("should render", () => {
-    expect(getRangePicker()).toHaveLength(1);
+    expect(getByDataId("range-picker")).toHaveLength(1);
   });
 
-  /* it("should contain Control", () => {
-    expect(component.find("Control")).toHaveLength(1);
+  it("should contain Control", () => {
+    expect(wrapper.find("Control")).toHaveLength(1);
   });
 
   it("should contain CalendarContainer", () => {
-    expect(component.find("CalendarContainer")).toHaveLength(1);
+    expect(wrapper.find("CalendarContainer")).toHaveLength(1);
   });
 
   it("should contain TimePicker", () => {
-    expect(component.find("TimePicker")).toHaveLength(1);
+    expect(wrapper.find("TimePicker")).toHaveLength(1);
   });
 
   it("should contain BottomBar", () => {
-    expect(component.find("BottomBar")).toHaveLength(1);
-  }); */
+    expect(wrapper.find("BottomBar")).toHaveLength(1);
+  });
+
+  it("should set range", () => {
+    const calendar_left = getByDataId("calendar-container").at(0);
+
+    calendar_left
+      .find("Day")
+      .find({ number: 1 })
+      .find("button")
+      .simulate("click");
+
+    calendar_left
+      .find("Day")
+      .find({ number: 10 })
+      .find("button")
+      .simulate("click");
+
+    getByDataId("bottom-bar-apply-button").simulate("click");
+
+    const [[{ startDate, endDate }]] = props.onRangeSelected.mock.calls;
+
+    expect(startDate.getTime()).toBe(new Date(2020, 0, 1).getTime());
+    expect(endDate.getTime()).toBe(new Date(2020, 0, 10).getTime());
+  });
+
+  it("should set focus after set start date", () => {
+    const container = document.createElement("div");
+    document.body.append(container);
+    document.body.focus();
+
+    wrapper = mount(<RangePicker {...props} />, { attachTo: container });
+
+    const calendar_left = getByDataId("calendar-container").at(0);
+
+    calendar_left
+      .find("Day")
+      .find({ number: 1 })
+      .find("button")
+      .simulate("click");
+
+    expect(document.activeElement).toBe(getByDataId("time-picker-start").getDOMNode());
+  });
+
+  it("should set focus after set end date", () => {
+    const container = document.createElement("div");
+    document.body.append(container);
+    document.body.focus();
+
+    wrapper = mount(<RangePicker {...props} />, { attachTo: container });
+
+    const calendar_left = getByDataId("calendar-container").at(0);
+
+    calendar_left
+      .find("Day")
+      .find({ number: 1 })
+      .find("button")
+      .simulate("click");
+
+    calendar_left
+      .find("Day")
+      .find({ number: 1 })
+      .find("button")
+      .simulate("click");
+
+    expect(document.activeElement).toBe(getByDataId("time-picker-end").getDOMNode());
+  });
 });

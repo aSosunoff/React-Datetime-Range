@@ -3,4 +3,9 @@
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 5px;
   justify-items: center;
+
+  & input:focus {
+    border: solid var(--blue) 1px;
+    outline: none;
+  }
 }

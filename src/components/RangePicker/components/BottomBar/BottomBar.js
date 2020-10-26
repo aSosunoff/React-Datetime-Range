@@ -64,7 +64,6 @@ BottomBar.propTypes = {
   startDate: PropTypes.instanceOf(Date),
   endDate: PropTypes.instanceOf(Date),
   locales: PropTypes.string,
-  children: PropTypes.array,
   applyHandler: PropTypes.func,
   resetHandler: PropTypes.func,
 };

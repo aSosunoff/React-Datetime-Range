@@ -2,21 +2,21 @@ import { useCallback, useState } from "react";
 import { getNextMonth, getPrevMonth } from "../utils/dateHalper";
 
 export default function useSwitchMonth(date) {
-	const [month, setMonth] = useState(date ?? new Date());
+  const [month, setMonth] = useState(date ?? new Date());
 
-	const nextHandler = useCallback(
-		() => setMonth(getNextMonth(month)),
-		[month]
-	);
+  const nextHandler = useCallback(
+    () => setMonth((prev) => getNextMonth(prev)),
+    []
+  );
 
-	const prevHandler = useCallback(
-		() => setMonth(getPrevMonth(month)),
-		[month]
-	);
+  const prevHandler = useCallback(
+    () => setMonth((prev) => getPrevMonth(prev)),
+    []
+  );
 
-	return {
-		month,
-		nextHandler,
-		prevHandler,
-	};
+  return {
+    month,
+    nextHandler,
+    prevHandler,
+  };
 }

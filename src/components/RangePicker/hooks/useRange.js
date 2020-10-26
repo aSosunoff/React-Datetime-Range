@@ -3,28 +3,31 @@ import { useState, useEffect, useCallback } from "react";
 export default function useRange(startDate, endDate) {
   const [range, setRange] = useState({ startDate, endDate });
 
-  useEffect(() => setRange({ startDate, endDate }), [startDate, endDate]);
+  useEffect(() => setRange(() => ({ startDate, endDate })), [
+    startDate,
+    endDate,
+  ]);
 
   const setStartDate = useCallback(
     (date) =>
-      setRange({
+      setRange((prev) => ({
+        ...prev,
         startDate: date,
-        endDate: range.endDate,
-      }),
-    [range.endDate]
+      })),
+    []
   );
 
   const setEndDate = useCallback(
     (date) =>
-      setRange({
-        startDate: range.startDate,
+      setRange((prev) => ({
+        ...prev,
         endDate: date,
-      }),
-    [range.startDate]
+      })),
+    []
   );
 
   const resetHandler = useCallback(
-    () => setRange({ startDate: null, endDate: null }),
+    () => setRange(() => ({ startDate: null, endDate: null })),
     [setRange]
   );
 
@@ -59,7 +62,7 @@ export default function useRange(startDate, endDate) {
   );
 
   const setRangeHandler = (startDate, endDate) =>
-    setRange({ startDate, endDate });
+    setRange(() => ({ startDate, endDate }));
 
   return {
     ...range,

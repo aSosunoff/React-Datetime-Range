@@ -76,6 +76,7 @@ const RangePicker = React.forwardRef(
         ref={ref}
         className={cn(styles.rangepicker, variable["range-picker-variable"])}
         style={style}
+        data-test-id="range-picker"
       >
         <Control
           prevHandler={prevMonthHandler}

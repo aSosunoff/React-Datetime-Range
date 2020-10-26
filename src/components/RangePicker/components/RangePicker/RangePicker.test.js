@@ -12,7 +12,11 @@ const App = () => {
   const closeRangePicker = useCallback(() => setOpen(false), []);
   return (
     <>
-      <button data-test-id="open" ref={targetButton} onClick={toggleRangePicker}>
+      <button
+        data-test-id="open"
+        ref={targetButton}
+        onClick={toggleRangePicker}
+      >
         Открыть
       </button>
 
@@ -32,25 +36,17 @@ describe("RangePicker", () => {
   const getProp = (prop) => component.prop(prop);
   const setProp = (prop, value) => component.setProps({ [prop]: value });
 
-  it("should render", () => {
+  const getRangePicker = () => getByDataId("range-picker");
+
+  beforeEach(() => {
     component = mount(<App />);
-    /* console.log(targetButton); */
-    /* getByDataId("open").simulate("click");
-    console.log(component.debug());
-    getByDataId("open").simulate("click");
-    console.log(component.debug()); */
-    /* expect(component).toHaveLength(1); */
-  });
-
-  /* beforeEach(() => {
-    component = shallow(<RangePicker />);
   });
 
   it("should render", () => {
-    expect(component).toHaveLength(1);
+    expect(getRangePicker()).toHaveLength(1);
   });
 
-  it("should contain Control", () => {
+  /* it("should contain Control", () => {
     expect(component.find("Control")).toHaveLength(1);
   });
 

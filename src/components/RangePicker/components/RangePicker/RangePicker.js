@@ -112,6 +112,8 @@ const RangePicker = React.forwardRef(
   }
 );
 
+RangePicker.displayName = 'RangePicker';
+
 RangePicker.defaultProps = {
   onClose: () => {},
   onRangeSelected: () => {},

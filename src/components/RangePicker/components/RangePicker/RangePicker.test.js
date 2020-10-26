@@ -42,19 +42,11 @@ describe("RangePicker", () => {
   });
 
   it("should set range", () => {
-    const calendar_left = getByDataId("calendar-container").at(0);
+    const calendar = getByDataId("calendar-container").at(0);
 
-    calendar_left
-      .find("Day")
-      .find({ number: 1 })
-      .find("button")
-      .simulate("click");
+    calendar.find("Day").find({ number: 1 }).find("button").simulate("click");
 
-    calendar_left
-      .find("Day")
-      .find({ number: 10 })
-      .find("button")
-      .simulate("click");
+    calendar.find("Day").find({ number: 10 }).find("button").simulate("click");
 
     getByDataId("bottom-bar-apply-button").simulate("click");
 
@@ -71,13 +63,9 @@ describe("RangePicker", () => {
 
     wrapper = mount(<RangePicker {...props} />, { attachTo: container });
 
-    const calendar_left = getByDataId("calendar-container").at(0);
+    const calendar = getByDataId("calendar-container").at(0);
 
-    calendar_left
-      .find("Day")
-      .find({ number: 1 })
-      .find("button")
-      .simulate("click");
+    calendar.find("Day").find({ number: 1 }).find("button").simulate("click");
 
     expect(document.activeElement).toBe(
       getByDataId("time-picker-start").getDOMNode()
@@ -104,9 +92,7 @@ describe("RangePicker", () => {
 
   it("should set next calendar", () => {
     const Calendar = wrapper.find("Calendar").at(0);
-    const calendar_title = Calendar.find(
-      '[data-test-id="calendar-title"]'
-    );
+    const calendar_title = Calendar.find('[data-test-id="calendar-title"]');
 
     expect(
       props.startDate.toLocaleString("ru", { month: "long", year: "numeric" })
@@ -124,9 +110,7 @@ describe("RangePicker", () => {
 
   it("should set prev calendar", () => {
     const Calendar = wrapper.find("Calendar").at(0);
-    const calendar_title = Calendar.find(
-      '[data-test-id="calendar-title"]'
-    );
+    const calendar_title = Calendar.find('[data-test-id="calendar-title"]');
 
     expect(
       props.startDate.toLocaleString("ru", { month: "long", year: "numeric" })

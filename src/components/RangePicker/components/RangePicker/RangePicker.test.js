@@ -79,7 +79,9 @@ describe("RangePicker", () => {
       .find("button")
       .simulate("click");
 
-    expect(document.activeElement).toBe(getByDataId("time-picker-start").getDOMNode());
+    expect(document.activeElement).toBe(
+      getByDataId("time-picker-start").getDOMNode()
+    );
   });
 
   it("should set focus after set end date", () => {
@@ -91,18 +93,12 @@ describe("RangePicker", () => {
 
     const calendar_left = getByDataId("calendar-container").at(0);
 
-    calendar_left
-      .find("Day")
-      .find({ number: 1 })
-      .find("button")
-      .simulate("click");
+    const day_1 = calendar_left.find("Day").find({ number: 1 }).find("button");
+    day_1.simulate("click");
+    day_1.simulate("click");
 
-    calendar_left
-      .find("Day")
-      .find({ number: 1 })
-      .find("button")
-      .simulate("click");
-
-    expect(document.activeElement).toBe(getByDataId("time-picker-end").getDOMNode());
+    expect(document.activeElement).toBe(
+      getByDataId("time-picker-end").getDOMNode()
+    );
   });
 });

@@ -3,8 +3,11 @@ import { getMonthNames, getYearList } from "../../../utils/dateHalper";
 import CalendarDefault from "../CalendarDefault";
 import styles from "./CalendarSelector.module.scss";
 import cn from "classnames";
+import { useShowDateContext } from "../../../contexts/showDateContext";
 
-const CalendarSelector = ({ setYearHandler, setMonthHandler, ...props }) => {
+const CalendarSelector = (props) => {
+  const { setMonthHandler, setYearHandler } = useShowDateContext();
+
   const month = useMemo(() => props.date.getMonth(), [props.date]);
 
   const year = useMemo(() => props.date.getFullYear(), [props.date]);

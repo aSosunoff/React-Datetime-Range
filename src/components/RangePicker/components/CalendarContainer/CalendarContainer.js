@@ -5,23 +5,23 @@ import CalendarDefault from "./CalendarDefault";
 import styles from "./CalendarContainer.module.scss";
 import { useDayContext } from "../../contexts/dayContext";
 import CalendarSelector from "./CalendarSelector/CalendarSelector";
+import { useShowDateContext } from "../../contexts/showDateContext";
 
 const CalendarContainer = ({
   calendarVisibleCount,
   startDate,
   endDate,
   locales,
-  showMonth,
-  setMonthHandler,
-  setYearHandler,
 }) => {
+  const { showDate } = useShowDateContext();
+
   const calendars = useMemo(
     () =>
       new Array(calendarVisibleCount).fill(null).map((_, index) => ({
         key: index,
-        date: getNextMonthFromDate(showMonth, index),
+        date: getNextMonthFromDate(showDate, index),
       })),
-    [calendarVisibleCount, showMonth]
+    [calendarVisibleCount, showDate]
   );
 
   const { setHoverDay } = useDayContext();
@@ -42,8 +42,6 @@ const CalendarContainer = ({
             from={startDate}
             to={endDate}
             locales={locales}
-            setMonthHandler={setMonthHandler}
-            setYearHandler={setYearHandler}
           />
         ) : (
           <CalendarDefault
@@ -69,7 +67,6 @@ CalendarContainer.propTypes = {
   startDate: PropTypes.instanceOf(Date),
   endDate: PropTypes.instanceOf(Date),
   locales: PropTypes.string,
-  showMonth: PropTypes.instanceOf(Date).isRequired,
 };
 
 export default CalendarContainer;

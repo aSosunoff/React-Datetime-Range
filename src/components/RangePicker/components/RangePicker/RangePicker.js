@@ -10,11 +10,13 @@ import TimePicker from "./../TimePicker/TimePicker";
 import CalendarContainer from "./../CalendarContainer";
 import { withAnimation } from "../../HOC/withAnimation";
 import { withDayContext } from "../../HOC/withDayContext";
+import { withShowDateContext } from "../../HOC/withShowDateContext";
 import { useDayContext } from "../../contexts/dayContext";
 import { compose } from "../../utils/compose";
 import Control from "../Control";
-import useShowDateKeyDown from "../../hooks/useShowDateKeyDown";
 import useFocus from "../../hooks/useFocus";
+import { useShowDateContext } from "../../contexts/showDateContext";
+import useAddListener from "../../hooks/useAddListener";
 
 const RangePicker = React.forwardRef(
   (
@@ -65,13 +67,28 @@ const RangePicker = React.forwardRef(
 
     const { isFocus, setBlur, setFocus } = useFocus();
 
-    const {
-      showDate,
-      nextMonthHandler,
-      prevMonthHandler,
-      setMonthHandler,
-      setYearHandler,
-    } = useShowDateKeyDown(startDate, isOpen, isFocus);
+    const { nextMonthHandler, prevMonthHandler } = useShowDateContext();
+
+    const _handleDocumentLeftRightClick = useCallback(
+      (event) => {
+        if (isFocus) {
+          return;
+        }
+
+        if (!isOpen) {
+          return;
+        }
+
+        if (event.key === "ArrowLeft") {
+          prevMonthHandler();
+        } else if (event.key === "ArrowRight") {
+          nextMonthHandler();
+        }
+      },
+      [isFocus, isOpen, nextMonthHandler, prevMonthHandler]
+    );
+
+    useAddListener(document, "keydown", _handleDocumentLeftRightClick);
 
     return (
       <div
@@ -90,9 +107,6 @@ const RangePicker = React.forwardRef(
           startDate={_startDate}
           endDate={_endDate}
           locales={locales}
-          showMonth={showDate}
-          setYearHandler={setYearHandler}
-          setMonthHandler={setMonthHandler}
         />
 
         <TimePicker
@@ -144,4 +158,8 @@ RangePicker.propTypes = {
   ...animationProps,
 };
 
-export default compose(withDayContext, withAnimation)(RangePicker);
+export default compose(
+  withShowDateContext,
+  withDayContext,
+  withAnimation
+)(RangePicker);

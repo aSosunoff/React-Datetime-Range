@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { getNextMonthFromDate } from "../../utils/dateHalper";
-import Calendar from "./Calendar";
+import CalendarDefault from "./CalendarDefault";
 import styles from "./CalendarContainer.module.scss";
 import { useDayContext } from "../../contexts/day";
 
@@ -32,7 +32,7 @@ const CalendarContainer = ({
       onMouseLeave={setHoverDay.bind(this, null)}
     >
       {calendars.map((calendar) => (
-        <Calendar
+        <CalendarDefault
           key={calendar.key}
           date={calendar.date}
           from={startDate}

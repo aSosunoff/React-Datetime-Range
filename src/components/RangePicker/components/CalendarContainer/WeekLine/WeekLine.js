@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styles from "./WeekLine.module.scss";
-import { getWeeksNameLocales } from "../../../../utils/dateHalper";
+import { getWeeksNameLocales } from "../../../utils/dateHalper";
 
 const WeekLine = ({ locales }) => {
   const dayOfWeekName = useMemo(() => getWeeksNameLocales(locales), [locales]);

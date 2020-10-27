@@ -3,7 +3,7 @@ import useAddListener from "./useAddListener";
 import useSwitchMonth from "./useSwitchMonth";
 
 export default function useSwitchMonthKeyDown(date, isOpen, isFocus) {
-  const { month, nextHandler, prevHandler } = useSwitchMonth(date);
+  const switchMonth = useSwitchMonth(date);
 
   const _handleDocumentLeftRightClick = useCallback(
     (event) => {
@@ -16,19 +16,17 @@ export default function useSwitchMonthKeyDown(date, isOpen, isFocus) {
       }
 
       if (event.key === "ArrowLeft") {
-        prevHandler();
+        switchMonth.prevHandler();
       } else if (event.key === "ArrowRight") {
-        nextHandler();
+        switchMonth.nextHandler();
       }
     },
-    [isFocus, nextHandler, prevHandler, isOpen]
+    [isFocus, isOpen, switchMonth]
   );
 
   useAddListener(document, "keydown", _handleDocumentLeftRightClick);
 
   return {
-    month,
-    nextHandler,
-    prevHandler,
+    ...switchMonth,
   };
 }

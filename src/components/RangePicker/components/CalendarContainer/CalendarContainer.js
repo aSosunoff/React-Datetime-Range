@@ -4,6 +4,7 @@ import { getNextMonthFromDate } from "../../utils/dateHalper";
 import CalendarDefault from "./CalendarDefault";
 import styles from "./CalendarContainer.module.scss";
 import { useDayContext } from "../../contexts/day";
+import CalendarSelector from "./CalendarSelector/CalendarSelector";
 
 const CalendarContainer = ({
   calendarVisibleCount,
@@ -11,6 +12,8 @@ const CalendarContainer = ({
   endDate,
   locales,
   showMonth,
+  setMonthHandler,
+  setYearHandler,
 }) => {
   const calendars = useMemo(
     () =>
@@ -31,15 +34,27 @@ const CalendarContainer = ({
       }}
       onMouseLeave={setHoverDay.bind(this, null)}
     >
-      {calendars.map((calendar) => (
-        <CalendarDefault
-          key={calendar.key}
-          date={calendar.date}
-          from={startDate}
-          to={endDate}
-          locales={locales}
-        />
-      ))}
+      {calendars.map((calendar, index) =>
+        index === 0 ? (
+          <CalendarSelector
+            key={calendar.key}
+            date={calendar.date}
+            from={startDate}
+            to={endDate}
+            locales={locales}
+            setMonthHandler={setMonthHandler}
+            setYearHandler={setYearHandler}
+          />
+        ) : (
+          <CalendarDefault
+            key={calendar.key}
+            date={calendar.date}
+            from={startDate}
+            to={endDate}
+            locales={locales}
+          />
+        )
+      )}
     </div>
   );
 };

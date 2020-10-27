@@ -24,7 +24,7 @@ export default function useSwitchMonthKeyDown(date, isOpen, isFocus) {
     [isFocus, nextHandler, prevHandler, isOpen]
   );
 
-  useAddListener("keydown", _handleDocumentLeftRightClick);
+  useAddListener(document, "keydown", _handleDocumentLeftRightClick);
 
   return {
     month,

@@ -32,7 +32,7 @@ export const withAnimation = (WrapperComponent) => {
       [props, target]
     );
 
-    useAddListener("pointerdown", _handleDocumentClick);
+    useAddListener(document, "pointerdown", _handleDocumentClick);
 
     const RenderComponent = useCallback(
       (style) => (

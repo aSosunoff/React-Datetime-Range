@@ -1,11 +1,15 @@
 import { useEffect } from "react";
 
-export default function useAddListener(eventName, handler) {
+export default function useAddListener(element, eventName, handler) {
   useEffect(() => {
-    document.addEventListener(eventName, handler);
+    if (element) {
+      element.addEventListener(eventName, handler);
+    }
 
     return () => {
-      document.removeEventListener(eventName, handler);
+      if (element) {
+        element.removeEventListener(eventName, handler);
+      }
     };
-  }, [eventName, handler]);
+  }, [element, eventName, handler]);
 }

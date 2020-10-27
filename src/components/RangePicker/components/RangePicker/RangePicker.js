@@ -67,8 +67,10 @@ const RangePicker = React.forwardRef(
 
     const {
       month,
-      nextHandler: nextMonthHandler,
-      prevHandler: prevMonthHandler,
+      nextMonthHandler,
+      prevMonthHandler,
+      setMonthHandler,
+      setYearHandler,
     } = useSwitchMonthKeyDown(startDate, isOpen, isFocus);
 
     return (
@@ -89,6 +91,8 @@ const RangePicker = React.forwardRef(
           endDate={_endDate}
           locales={locales}
           showMonth={month}
+          setYearHandler={setYearHandler}
+          setMonthHandler={setMonthHandler}
         />
 
         <TimePicker
@@ -112,7 +116,7 @@ const RangePicker = React.forwardRef(
   }
 );
 
-RangePicker.displayName = 'RangePicker';
+RangePicker.displayName = "RangePicker";
 
 RangePicker.defaultProps = {
   onClose: () => {},

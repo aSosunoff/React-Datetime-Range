@@ -1,8 +1,8 @@
 import React, { useCallback, useMemo } from "react";
 import useCalendar from "../../../hooks/useCalendar";
 import PropTypes from "prop-types";
-import Day from "../Day";
-import WeekLine from "../WeekLine";
+import Day from "./Day";
+import WeekLine from "./WeekLine";
 import styles from "./CalendarDefault.module.scss";
 
 const CalendarDefault = ({ date, from, to, locales, TitleComponentRender }) => {

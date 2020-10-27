@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from "react";
+import { useDayContext } from "../contexts/day";
 import {
   getDateWithoutTime,
   getMonthDayCount,
@@ -6,6 +7,8 @@ import {
 } from "../utils/dateHalper";
 
 export default function useCalendar(month, from, to) {
+  const { hoverDay } = useDayContext();
+
   const monthDayCount = useMemo(() => getMonthDayCount(month), [month]);
 
   const firsDayOfWeekByMonth = useMemo(
@@ -43,18 +46,6 @@ export default function useCalendar(month, from, to) {
     []
   );
 
-  const getTypeDay = useCallback(
-    (date) =>
-      isStart(date)
-        ? "start"
-        : isBetween(date)
-        ? "between"
-        : isEnd(date)
-        ? "end"
-        : "",
-    [isBetween, isEnd, isStart]
-  );
-
   // const week = () => Math.ceil((index + firsDayOfWeekByMonth) / 7)
 
   const days = useMemo(
@@ -68,24 +59,39 @@ export default function useCalendar(month, from, to) {
           dayNumber
         );
 
-        const isDay = (numberDay) => {
-          const correctNumber = index + firsDayOfWeekByMonth;
-          return (
-            numberDay === correctNumber - Math.floor(correctNumber / 8) * 7
-          );
-        };
+        const isHoverBetween =
+          fromLocal && hoverDay && !toLocal
+            ? (fromLocal.getTime() < dateWithoutTime.getTime() &&
+                dateWithoutTime.getTime() <= hoverDay.getTime()) ||
+              (fromLocal.getTime() > dateWithoutTime.getTime() &&
+                dateWithoutTime.getTime() >= hoverDay.getTime())
+            : false;
 
         return {
           dayNumber,
           date: dateWithoutTime,
           gridColumnStart: dayNumber === 1 ? firsDayOfWeekByMonth : null,
-          type: getTypeDay(dateWithoutTime),
+          isStart: isStart(dateWithoutTime),
+          isBetween: isBetween(dateWithoutTime),
+          isEnd: isEnd(dateWithoutTime),
           isCurrent: isCurrent(dateWithoutTime),
-          isSaturday: isDay(6),
-          isSunday: isDay(7),
+          isHoverStart:
+            hoverDay && hoverDay.getTime() === dateWithoutTime.getTime(),
+          isHoverBetween,
         };
       }),
-    [monthDayCount, month, firsDayOfWeekByMonth, getTypeDay, isCurrent]
+    [
+      monthDayCount,
+      month,
+      fromLocal,
+      hoverDay,
+      toLocal,
+      firsDayOfWeekByMonth,
+      isStart,
+      isBetween,
+      isEnd,
+      isCurrent,
+    ]
   );
 
   return {

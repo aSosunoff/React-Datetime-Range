@@ -9,9 +9,10 @@ export const useDayContext = () => {
 
 export const DayProvider = ({ children }) => {
   const [day, setDay] = useState(null);
+  const [hoverDay, setHoverDay] = useState(null);
 
   return (
-    <DayContext.Provider value={{ setDay, day }}>
+    <DayContext.Provider value={{ setDay, day, setHoverDay, hoverDay }}>
       {children}
     </DayContext.Provider>
   );

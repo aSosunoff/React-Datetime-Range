@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { getNextMonthFromDate } from "../../utils/dateHalper";
 import Calendar from "./Calendar";
 import styles from "./CalendarContainer.module.scss";
+import { useDayContext } from "../../contexts/day";
 
 const CalendarContainer = ({
   calendarVisibleCount,
@@ -20,12 +21,15 @@ const CalendarContainer = ({
     [calendarVisibleCount, showMonth]
   );
 
+  const { setHoverDay } = useDayContext();
+
   return (
     <div
       className={styles.calendar_container}
       style={{
         gridTemplateColumns: `repeat(${calendarVisibleCount}, 1fr)`,
       }}
+      onMouseLeave={setHoverDay.bind(this, null)}
     >
       {calendars.map((calendar) => (
         <Calendar

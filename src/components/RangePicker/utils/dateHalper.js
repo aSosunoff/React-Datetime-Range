@@ -28,3 +28,14 @@ export const getWeeksNameLocales = (locales) => {
   }
   return weekLine;
 };
+
+export const getMonthNames = (locales) => {
+  const month = [];
+  for (let i = 0; i <= 11; i++) {
+    month.push(new Date(1970, i, 1).toLocaleString(locales, { month: "long" }));
+  }
+  return month;
+};
+
+export const getYearList = () =>
+  new Array(1031).fill(null).map((_, index) => index + 1970);

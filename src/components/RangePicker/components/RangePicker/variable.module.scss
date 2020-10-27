@@ -1,11 +1,14 @@
 .range-picker-variable {
-    --box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.3);
-    --box-shadow-hover: 2px 3px 4px rgba(0, 0, 0, 0.6);
-    --blue: #109cf1;
-    --dark-blue: #334d6e;
-    --light-blue: #cfebfc;
-    --middle-blue: #9fd7f9;
-    --grey: #90a0b7;
-    --white: #ffffff;
-    --transition: all .2s linear;
+  --box-shadow: 2px 3px 4px rgba(0, 0, 0, 0.3);
+  --box-shadow-hover: 2px 3px 4px rgba(0, 0, 0, 0.6);
+  --blue: #109cf1;
+  --dark-blue: #334d6e;
+  --light-blue: #cfebfc;
+  --middle-blue: #9fd7f9;
+  --grey: #90a0b7;
+  --white: #ffffff;
+  --transition: all 0.2s linear;
+
+  --font-size: 12px;
+  --font-family: system-ui;
 }

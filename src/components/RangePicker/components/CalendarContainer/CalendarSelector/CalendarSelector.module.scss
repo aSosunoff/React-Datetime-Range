@@ -1,0 +1,23 @@
+.title {
+  & select {
+    /* appearance: none; */
+    font-size: calc(var(--font-size) * 1em * 1.1em);
+    color: var(--dark-blue);
+    font-weight: 600;
+    line-height: 24px;
+    font-family: var(--font-family);
+    border-bottom: 1px solid transparent;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    outline: none;
+    transition: var(--transition);
+    cursor: pointer;
+    margin-top: 3px;
+    padding: 0px 5px;
+
+    &:hover {
+      border-bottom: 1px solid var(--grey);
+    }
+  }
+}

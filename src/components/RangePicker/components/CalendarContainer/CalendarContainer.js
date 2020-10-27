@@ -3,22 +3,25 @@ import PropTypes from "prop-types";
 import { getNextMonthFromDate } from "../../utils/dateHalper";
 import CalendarDefault from "./CalendarDefault";
 import styles from "./CalendarContainer.module.scss";
-import { useDayContext } from "../../contexts/day";
+import { useDayContext } from "../../contexts/dayContext";
+import CalendarSelector from "./CalendarSelector/CalendarSelector";
+import { useShowDateContext } from "../../contexts/showDateContext";
 
 const CalendarContainer = ({
   calendarVisibleCount,
   startDate,
   endDate,
   locales,
-  showMonth,
 }) => {
+  const { showDate } = useShowDateContext();
+
   const calendars = useMemo(
     () =>
       new Array(calendarVisibleCount).fill(null).map((_, index) => ({
         key: index,
-        date: getNextMonthFromDate(showMonth, index),
+        date: getNextMonthFromDate(showDate, index),
       })),
-    [calendarVisibleCount, showMonth]
+    [calendarVisibleCount, showDate]
   );
 
   const { setHoverDay } = useDayContext();
@@ -31,15 +34,25 @@ const CalendarContainer = ({
       }}
       onMouseLeave={setHoverDay.bind(this, null)}
     >
-      {calendars.map((calendar) => (
-        <CalendarDefault
-          key={calendar.key}
-          date={calendar.date}
-          from={startDate}
-          to={endDate}
-          locales={locales}
-        />
-      ))}
+      {calendars.map((calendar, index) =>
+        index === 0 ? (
+          <CalendarSelector
+            key={calendar.key}
+            date={calendar.date}
+            from={startDate}
+            to={endDate}
+            locales={locales}
+          />
+        ) : (
+          <CalendarDefault
+            key={calendar.key}
+            date={calendar.date}
+            from={startDate}
+            to={endDate}
+            locales={locales}
+          />
+        )
+      )}
     </div>
   );
 };
@@ -54,7 +67,6 @@ CalendarContainer.propTypes = {
   startDate: PropTypes.instanceOf(Date),
   endDate: PropTypes.instanceOf(Date),
   locales: PropTypes.string,
-  showMonth: PropTypes.instanceOf(Date).isRequired,
 };
 
 export default CalendarContainer;

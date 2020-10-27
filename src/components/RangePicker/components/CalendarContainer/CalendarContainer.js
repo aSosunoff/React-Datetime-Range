@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { getNextMonthFromDate } from "../../utils/dateHalper";
 import CalendarDefault from "./CalendarDefault";
 import styles from "./CalendarContainer.module.scss";
-import { useDayContext } from "../../contexts/day";
+import { useDayContext } from "../../contexts/dayContext";
 import CalendarSelector from "./CalendarSelector/CalendarSelector";
 
 const CalendarContainer = ({

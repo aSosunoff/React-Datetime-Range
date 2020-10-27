@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import styles from "./Day.module.scss";
-import { useDayContext } from "../../../contexts/day";
+import { useDayContext } from "../../../contexts/dayContext";
 
 const Day = ({
   dayNumber,

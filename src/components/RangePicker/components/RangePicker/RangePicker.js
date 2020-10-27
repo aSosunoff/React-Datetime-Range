@@ -10,7 +10,7 @@ import TimePicker from "./../TimePicker/TimePicker";
 import CalendarContainer from "./../CalendarContainer";
 import { withAnimation } from "../../HOC/withAnimation";
 import { withDayContext } from "../../HOC/withDayContext";
-import { useDayContext } from "../../contexts/day";
+import { useDayContext } from "../../contexts/dayContext";
 import { compose } from "../../utils/compose";
 import Control from "../Control";
 import useShowDateKeyDown from "../../hooks/useShowDateKeyDown";

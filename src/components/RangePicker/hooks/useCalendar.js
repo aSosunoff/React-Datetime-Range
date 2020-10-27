@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { useDayContext } from "../contexts/day";
+import { useDayContext } from "../contexts/dayContext";
 import {
   getDateWithoutTime,
   getMonthDayCount,

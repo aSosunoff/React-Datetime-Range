@@ -17,8 +17,6 @@ const Day = ({
 }) => {
   const { setDay, setHoverDay } = useDayContext();
 
-  const _handleHoverDay = useCallback(setHoverDay, [setHoverDay]);
-
   const isSaturday = date.getDay() === 6;
 
   const isSunday = date.getDay() === 0;
@@ -38,8 +36,7 @@ const Day = ({
         [styles.hover_between]: isHoverBetween,
       })}
       onClick={setDay.bind(this, date)}
-      onMouseOver={_handleHoverDay.bind(this, date)}
-      onMouseOut={_handleHoverDay.bind(this, null)}
+      onMouseEnter={setHoverDay.bind(this, date)}
     >
       {dayNumber}
     </button>

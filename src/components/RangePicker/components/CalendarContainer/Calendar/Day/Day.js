@@ -1,45 +1,60 @@
-import React from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import styles from "./Day.module.scss";
 import { useDayContext } from "../../../../contexts/day";
 
 const Day = ({
-  number,
+  dayNumber,
   gridColumnStart,
-  type,
   date,
+  isStart,
+  isBetween,
+  isEnd,
   isCurrent,
-  isSaturday,
-  isSunday,
+  isHoverStart,
+  isHoverBetween,
 }) => {
-  const { setDay } = useDayContext();
+  const { setDay, setHoverDay } = useDayContext();
 
-  const className = styles[type] || null;
+  const _handleHoverDay = useCallback(setHoverDay, [setHoverDay]);
+
+  const isSaturday = date.getDay() === 6;
+
+  const isSunday = date.getDay() === 0;
 
   return (
     <button
       type="button"
       style={{ gridColumnStart }}
-      className={cn(styles.cell, className, {
+      className={cn(styles.cell, {
+        [styles.start]: isStart,
+        [styles.between]: isBetween,
+        [styles.end]: isEnd,
         [styles.current]: isCurrent,
-        [styles.free]: !isCurrent && !className && (isSaturday || isSunday),
+        [styles.saturday]: isSaturday,
+        [styles.sunday]: isSunday,
+        [styles.hover_start]: isHoverStart,
+        [styles.hover_between]: isHoverBetween,
       })}
       onClick={setDay.bind(this, date)}
+      onMouseOver={_handleHoverDay.bind(this, date)}
+      onMouseOut={_handleHoverDay.bind(this, null)}
     >
-      {number}
+      {dayNumber}
     </button>
   );
 };
 
 Day.defaultProps = {
+  isStart: false,
+  isBetween: false,
+  isEnd: false,
   isCurrent: false,
-  isSaturday: false,
-  isSunday: false,
 };
 
 Day.propTypes = {
-  number: (props, propName, componentName) => {
+  dayNumber: (props, propName, componentName) => {
     if (!props[propName]) {
       return new Error(
         `Prop ${propName} of ${componentName} should be required`
@@ -56,8 +71,9 @@ Day.propTypes = {
   type: PropTypes.string,
   date: PropTypes.instanceOf(Date).isRequired,
   isCurrent: PropTypes.bool,
-  isSaturday: PropTypes.bool,
-  isSunday: PropTypes.bool,
+  isStart: PropTypes.bool,
+  isBetween: PropTypes.bool,
+  isEnd: PropTypes.bool,
 };
 
 export default Day;

@@ -1,30 +1,24 @@
 import React from "react";
-import PropTypes from "prop-types";
 import styles from "./Control.module.scss";
+import { useShowDateContext } from "../../contexts/showDateContext";
 
-const Control = ({ prevHandler, nextHandler }) => (
-  <>
-    <div
-      className={styles.control_left}
-      onClick={prevHandler}
-      data-test-id="control-left"
-    />
-    <div
-      className={styles.control_right}
-      onClick={nextHandler}
-      data-test-id="control-right"
-    />
-  </>
-);
+const Control = () => {
+  const { nextMonthHandler, prevMonthHandler } = useShowDateContext();
 
-Control.defaultProps = {
-  prevHandler: () => {},
-  nextHandler: () => {},
-};
-
-Control.propTypes = {
-  prevHandler: PropTypes.func,
-  nextHandler: PropTypes.func,
+  return (
+    <>
+      <div
+        className={styles.control_left}
+        onClick={prevMonthHandler}
+        data-test-id="control-left"
+      />
+      <div
+        className={styles.control_right}
+        onClick={nextMonthHandler}
+        data-test-id="control-right"
+      />
+    </>
+  );
 };
 
 export default Control;

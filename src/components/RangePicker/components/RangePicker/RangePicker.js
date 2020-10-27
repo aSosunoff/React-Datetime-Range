@@ -97,10 +97,7 @@ const RangePicker = React.forwardRef(
         style={style}
         data-test-id="range-picker"
       >
-        <Control
-          prevHandler={prevMonthHandler}
-          nextHandler={nextMonthHandler}
-        />
+        <Control />
 
         <CalendarContainer
           calendarVisibleCount={calendarVisibleCount}

@@ -22,28 +22,9 @@ const Calendar = ({ date, from, to, locales }) => {
       <WeekLine locales={locales} />
 
       <div className={styles.grid} data-test-id="calendar-container">
-        {days.map(
-          ({
-            dayNumber,
-            gridColumnStart,
-            type,
-            date,
-            isCurrent,
-            isSaturday,
-            isSunday,
-          }) => (
-            <Day
-              key={dayNumber}
-              isCurrent={isCurrent}
-              isSaturday={isSaturday}
-              isSunday={isSunday}
-              number={dayNumber}
-              gridColumnStart={gridColumnStart}
-              type={type}
-              date={date}
-            />
-          )
-        )}
+        {days.map((day) => (
+          <Day key={day.dayNumber} {...day} />
+        ))}
       </div>
     </div>
   );

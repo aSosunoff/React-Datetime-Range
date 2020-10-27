@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { getNextMonth, getPrevMonth } from "../utils/dateHalper";
 
-export default function useSwitchMonth(date) {
+export default function useShowDate(date) {
   const [showDate, setShowDate] = useState(date ?? new Date());
 
   const nextMonthHandler = useCallback(

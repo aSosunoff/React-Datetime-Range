@@ -1,9 +1,9 @@
 import { useCallback } from "react";
 import useAddListener from "./useAddListener";
-import useSwitchMonth from "./useShowDate";
+import useShowDate from "./useShowDate";
 
-export default function useSwitchMonthKeyDown(date, isOpen, isFocus) {
-  const switchMonth = useSwitchMonth(date);
+export default function useShowDateKeyDown(date, isOpen, isFocus) {
+  const switchMonth = useShowDate(date);
 
   const _handleDocumentLeftRightClick = useCallback(
     (event) => {

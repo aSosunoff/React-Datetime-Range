@@ -13,7 +13,7 @@ import { withDayContext } from "../../HOC/withDayContext";
 import { useDayContext } from "../../contexts/day";
 import { compose } from "../../utils/compose";
 import Control from "../Control";
-import useSwitchMonthKeyDown from "../../hooks/useShowDateKeyDown";
+import useShowDateKeyDown from "../../hooks/useShowDateKeyDown";
 import useFocus from "../../hooks/useFocus";
 
 const RangePicker = React.forwardRef(
@@ -71,7 +71,7 @@ const RangePicker = React.forwardRef(
       prevMonthHandler,
       setMonthHandler,
       setYearHandler,
-    } = useSwitchMonthKeyDown(startDate, isOpen, isFocus);
+    } = useShowDateKeyDown(startDate, isOpen, isFocus);
 
     return (
       <div

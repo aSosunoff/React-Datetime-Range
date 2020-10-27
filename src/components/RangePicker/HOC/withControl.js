@@ -32,7 +32,7 @@ export const withControl = (WrapperComponent) =>
       [isFocus, nextMonthHandler, prevMonthHandler, isOpen]
     );
 
-    useAddListener("keydown", _handleDocumentLeftRightClick);
+    useAddListener(document, "keydown", _handleDocumentLeftRightClick);
 
     return (
       <WrapperComponent

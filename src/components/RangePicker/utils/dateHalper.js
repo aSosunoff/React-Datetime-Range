@@ -48,3 +48,12 @@ export const getDateSplit = (date) => ({
   minutes: date.getMinutes(),
   seconds: date.getSeconds(),
 });
+
+export const getWeek = (date) => {
+  var onejan = new Date(date.getFullYear(), 0, 1);
+  var millisecsInDay = 86400000;
+  return Math.ceil(
+    ((date.getTime() - onejan.getTime()) / millisecsInDay + date.getDay() + 1) /
+      7
+  );
+};

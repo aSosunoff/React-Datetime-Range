@@ -32,7 +32,7 @@ const CalendarDefault = ({ date, from, to, locales, TitleComponentRender }) => {
 
       <div className={styles.grid} data-test-id="calendar-container">
         {days.map((day) => (
-          <Day key={day.dayNumber} {...day} />
+          <Day key={day.index} {...day} />
         ))}
       </div>
     </div>
@@ -48,7 +48,6 @@ CalendarDefault.propTypes = {
   from: PropTypes.instanceOf(Date),
   to: PropTypes.instanceOf(Date),
   locales: PropTypes.string,
-  /* TitleComponent: PropTypes.element, */
 };
 
 export default CalendarDefault;

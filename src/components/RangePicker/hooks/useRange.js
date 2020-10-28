@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
+import { getDateSplit } from "../utils/dateHalper";
 
 export default function useRange(startDate, endDate) {
   const [range, setRange] = useState({ startDate, endDate });
@@ -32,32 +33,18 @@ export default function useRange(startDate, endDate) {
   );
 
   const setTimeFromHandler = useCallback(
-    (hour, minute, second) =>
-      setStartDate(
-        new Date(
-          range.startDate.getFullYear(),
-          range.startDate.getMonth(),
-          range.startDate.getDate(),
-          hour,
-          minute,
-          second
-        )
-      ),
+    (hour, minute, second) => {
+      const { year, month, date } = getDateSplit(range.startDate);
+      return setStartDate(new Date(year, month, date, hour, minute, second));
+    },
     [setStartDate, range.startDate]
   );
 
   const setTimeToHandler = useCallback(
-    (hour, minute, second) =>
-      setEndDate(
-        new Date(
-          range.endDate.getFullYear(),
-          range.endDate.getMonth(),
-          range.endDate.getDate(),
-          hour,
-          minute,
-          second
-        )
-      ),
+    (hour, minute, second) => {
+      const { year, month, date } = getDateSplit(range.endDate);
+      return setEndDate(new Date(year, month, date, hour, minute, second));
+    },
     [setEndDate, range.endDate]
   );
 

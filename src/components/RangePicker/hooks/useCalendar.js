@@ -93,7 +93,6 @@ export default function useCalendar(month, from, to) {
 
   const daysHover = useMemo(() => {
     if (startRangeTimestamp && hoverDay && !endRangeTimestamp) {
-      console.log(2);
       return days.map((day) => {
         const isHoverBetween =
           (startRangeTimestamp < day.dateTimestamp &&

@@ -4,13 +4,12 @@ import CalendarDefault from "../CalendarDefault";
 import styles from "./CalendarSelector.module.scss";
 import cn from "classnames";
 import { useShowDateContext } from "../../../contexts/showDateContext";
+import useDateSplit from "../../../hooks/useDateSplit";
 
 const CalendarSelector = (props) => {
   const { setMonthHandler, setYearHandler } = useShowDateContext();
 
-  const month = useMemo(() => props.date.getMonth(), [props.date]);
-
-  const year = useMemo(() => props.date.getFullYear(), [props.date]);
+  const { year, month } = useDateSplit(props.date);
 
   const yearList = useMemo(() => getYearList(), []);
 

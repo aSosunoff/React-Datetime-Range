@@ -15,12 +15,16 @@ export default function useShowDate(date) {
   );
 
   const setMonthHandler = useCallback(
-    (month) => setShowDate((prev) => new Date(prev.setMonth(month))),
+    (month) =>
+      setShowDate(
+        (prev) => new Date(prev.getFullYear(), month, prev.getDate())
+      ),
     []
   );
 
   const setYearHandler = useCallback(
-    (year) => setShowDate((prev) => new Date(prev.setFullYear(year))),
+    (year) =>
+      setShowDate((prev) => new Date(year, prev.getMonth(), prev.getDate())),
     []
   );
 

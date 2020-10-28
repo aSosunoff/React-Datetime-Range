@@ -5,8 +5,11 @@ import {
   getMonthDayCount,
   getNumberFirsDayOfWeekByMonth,
 } from "../utils/dateHalper";
+import useDateSplit from "./useDateSplit";
 
 export default function useCalendar(month, from, to) {
+  const { year: yearSplit, month: monthSplit } = useDateSplit(month);
+
   const { hoverDay } = useDayContext();
 
   const monthDayCount = useMemo(() => getMonthDayCount(month), [month]);
@@ -16,33 +19,39 @@ export default function useCalendar(month, from, to) {
     [month]
   );
 
-  const fromLocal = useMemo(() => from && getDateWithoutTime(from), [from]);
+  const startRangeTimestamp = useMemo(
+    () => from && getDateWithoutTime(from).getTime(),
+    [from]
+  );
 
-  const toLocal = useMemo(() => to && getDateWithoutTime(to), [to]);
+  const endRangeTimestamp = useMemo(
+    () => to && getDateWithoutTime(to).getTime(),
+    [to]
+  );
 
   const isStart = useCallback(
-    (date) => Boolean(fromLocal) && fromLocal.getTime() === date.getTime(),
-    [fromLocal]
+    (dateTimestamp) =>
+      startRangeTimestamp && startRangeTimestamp === dateTimestamp,
+    [startRangeTimestamp]
   );
 
   const isEnd = useCallback(
-    (date) => Boolean(toLocal) && toLocal.getTime() === date.getTime(),
-    [toLocal]
+    (dateTimestamp) => endRangeTimestamp && endRangeTimestamp === dateTimestamp,
+    [endRangeTimestamp]
   );
 
   const isBetween = useCallback(
-    (date) =>
-      Boolean(fromLocal) &&
-      Boolean(toLocal) &&
-      fromLocal.getTime() < date.getTime() &&
-      date.getTime() < toLocal.getTime(),
-    [fromLocal, toLocal]
+    (dateTimestamp) =>
+      startRangeTimestamp &&
+      endRangeTimestamp &&
+      startRangeTimestamp < dateTimestamp &&
+      dateTimestamp < endRangeTimestamp,
+    [startRangeTimestamp, endRangeTimestamp]
   );
 
   const isCurrent = useCallback(
-    (date) =>
-      getDateWithoutTime(new Date()).getTime() ===
-      getDateWithoutTime(date).getTime(),
+    (dateTimestamp) =>
+      getDateWithoutTime(new Date()).getTime() === dateTimestamp,
     []
   );
 
@@ -53,39 +62,27 @@ export default function useCalendar(month, from, to) {
       new Array(monthDayCount).fill(null).map((_, index) => {
         const dayNumber = index + 1;
 
-        const dateWithoutTime = new Date(
-          month.getFullYear(),
-          month.getMonth(),
+        const dateTimestamp = new Date(
+          yearSplit,
+          monthSplit,
           dayNumber
-        );
-
-        const isHoverBetween =
-          fromLocal && hoverDay && !toLocal
-            ? (fromLocal.getTime() < dateWithoutTime.getTime() &&
-                dateWithoutTime.getTime() <= hoverDay.getTime()) ||
-              (fromLocal.getTime() > dateWithoutTime.getTime() &&
-                dateWithoutTime.getTime() >= hoverDay.getTime())
-            : false;
+        ).getTime();
 
         return {
           dayNumber,
-          date: dateWithoutTime,
+          date: new Date(dateTimestamp),
+          dateTimestamp,
           gridColumnStart: dayNumber === 1 ? firsDayOfWeekByMonth : null,
-          isStart: isStart(dateWithoutTime),
-          isBetween: isBetween(dateWithoutTime),
-          isEnd: isEnd(dateWithoutTime),
-          isCurrent: isCurrent(dateWithoutTime),
-          isHoverStart:
-            hoverDay && hoverDay.getTime() === dateWithoutTime.getTime(),
-          isHoverBetween,
+          isStart: isStart(dateTimestamp),
+          isBetween: isBetween(dateTimestamp),
+          isEnd: isEnd(dateTimestamp),
+          isCurrent: isCurrent(dateTimestamp),
         };
       }),
     [
       monthDayCount,
-      month,
-      fromLocal,
-      hoverDay,
-      toLocal,
+      yearSplit,
+      monthSplit,
       firsDayOfWeekByMonth,
       isStart,
       isBetween,
@@ -94,7 +91,32 @@ export default function useCalendar(month, from, to) {
     ]
   );
 
+  const daysHover = useMemo(() => {
+    if (startRangeTimestamp && hoverDay && !endRangeTimestamp) {
+      console.log(2);
+      return days.map((day) => {
+        const isHoverBetween =
+          (startRangeTimestamp < day.dateTimestamp &&
+            day.dateTimestamp <= hoverDay.getTime()) ||
+          (startRangeTimestamp > day.dateTimestamp &&
+            day.dateTimestamp >= hoverDay.getTime());
+
+        return {
+          ...day,
+          isHoverStart: hoverDay && hoverDay.getTime() === day.dateTimestamp,
+          isHoverBetween,
+        };
+      });
+    }
+
+    return days.map((day) => ({
+      ...day,
+      isHoverStart: hoverDay && hoverDay.getTime() === day.dateTimestamp,
+      isHoverBetween: false,
+    }));
+  }, [days, endRangeTimestamp, hoverDay, startRangeTimestamp]);
+
   return {
-    days,
+    days: daysHover,
   };
 }

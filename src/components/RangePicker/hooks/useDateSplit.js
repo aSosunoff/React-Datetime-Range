@@ -1,17 +1,8 @@
 import { useMemo } from "react";
+import { getDateSplit } from "../utils/dateHalper";
 
 export default function useDateSplit(date) {
-  const dateDto = useMemo(
-    () => ({
-      year: date.getFullYear(),
-      month: date.getMonth(),
-      date: date.getDate(),
-      hour: date.getHours(),
-      minutes: date.getMinutes(),
-      seconds: date.getSeconds(),
-    }),
-    [date]
-  );
+  const dateDto = useMemo(() => getDateSplit(date), [date]);
 
   return {
     ...dateDto,

@@ -15,8 +15,6 @@ import { useDayContext } from "../../contexts/dayContext";
 import { compose } from "../../utils/compose";
 import Control from "../Control";
 import useFocus from "../../hooks/useFocus";
-import { useShowDateContext } from "../../contexts/showDateContext";
-import useAddListener from "../../hooks/useAddListener";
 
 const RangePicker = React.forwardRef(
   (
@@ -67,29 +65,6 @@ const RangePicker = React.forwardRef(
 
     const { isFocus, setBlur, setFocus } = useFocus();
 
-    const { nextMonthHandler, prevMonthHandler } = useShowDateContext();
-
-    const _handleDocumentLeftRightClick = useCallback(
-      (event) => {
-        if (isFocus) {
-          return;
-        }
-
-        if (!isOpen) {
-          return;
-        }
-
-        if (event.key === "ArrowLeft") {
-          prevMonthHandler();
-        } else if (event.key === "ArrowRight") {
-          nextMonthHandler();
-        }
-      },
-      [isFocus, isOpen, nextMonthHandler, prevMonthHandler]
-    );
-
-    useAddListener(document, "keydown", _handleDocumentLeftRightClick);
-
     return (
       <div
         ref={ref}
@@ -97,7 +72,7 @@ const RangePicker = React.forwardRef(
         style={style}
         data-test-id="range-picker"
       >
-        <Control />
+        <Control isFocus={isFocus} isOpen={isOpen} />
 
         <CalendarContainer
           calendarVisibleCount={calendarVisibleCount}

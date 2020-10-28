@@ -1,9 +1,31 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styles from "./Control.module.scss";
 import { useShowDateContext } from "../../contexts/showDateContext";
+import useAddListener from "../../hooks/useAddListener";
 
-const Control = () => {
+const Control = ({ isFocus, isOpen }) => {
   const { nextMonthHandler, prevMonthHandler } = useShowDateContext();
+
+  const _handleDocumentLeftRightClick = useCallback(
+    (event) => {
+      if (isFocus) {
+        return;
+      }
+
+      if (!isOpen) {
+        return;
+      }
+
+      if (event.key === "ArrowLeft") {
+        prevMonthHandler();
+      } else if (event.key === "ArrowRight") {
+        nextMonthHandler();
+      }
+    },
+    [isFocus, isOpen, nextMonthHandler, prevMonthHandler]
+  );
+
+  useAddListener(document, "keydown", _handleDocumentLeftRightClick);
 
   return (
     <>

@@ -62,15 +62,4 @@ const CalendarSelector = (props) => {
   );
 };
 
-/* CalendarSelector.defaultProps = {
-  locales: "ru",
-};
-
-CalendarSelector.propTypes = {
-  date: PropTypes.instanceOf(Date).isRequired,
-  from: PropTypes.instanceOf(Date),
-  to: PropTypes.instanceOf(Date),
-  locales: PropTypes.string,
-}; */
-
 export default CalendarSelector;

@@ -11,15 +11,19 @@ const Day = ({
   isStart,
   isBetween,
   isEnd,
-  isCurrent,
+  isThisDay,
   isHoverStart,
   isHoverBetween,
+  isCurrentMonth,
 }) => {
   const { setDay, setHoverDay } = useDayContext();
+  let isSaturday = false;
+  let isSunday = false;
 
-  const isSaturday = date.getDay() === 6;
-
-  const isSunday = date.getDay() === 0;
+  if (isCurrentMonth) {
+    isSaturday = date.getDay() === 6;
+    isSunday = date.getDay() === 0;
+  }
 
   return (
     <button
@@ -29,11 +33,12 @@ const Day = ({
         [styles.start]: isStart,
         [styles.between]: isBetween,
         [styles.end]: isEnd,
-        [styles.current]: isCurrent,
+        [styles.current]: isThisDay,
         [styles.saturday]: isSaturday,
         [styles.sunday]: isSunday,
         [styles.hover_start]: isHoverStart,
         [styles.hover_between]: isHoverBetween,
+        [styles.not_current_month]: !isCurrentMonth,
       })}
       onClick={setDay.bind(this, date)}
       onMouseEnter={setHoverDay.bind(this, date)}
@@ -47,7 +52,8 @@ Day.defaultProps = {
   isStart: false,
   isBetween: false,
   isEnd: false,
-  isCurrent: false,
+  isThisDay: false,
+  isCurrentMonth: false,
 };
 
 Day.propTypes = {
@@ -67,7 +73,8 @@ Day.propTypes = {
   gridColumnStart: PropTypes.number,
   type: PropTypes.string,
   date: PropTypes.instanceOf(Date).isRequired,
-  isCurrent: PropTypes.bool,
+  isThisDay: PropTypes.bool,
+  isCurrentMonth: PropTypes.bool,
   isStart: PropTypes.bool,
   isBetween: PropTypes.bool,
   isEnd: PropTypes.bool,

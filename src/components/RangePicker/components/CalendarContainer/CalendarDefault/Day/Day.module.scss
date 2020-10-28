@@ -50,4 +50,8 @@
     color: var(--white);
     border-radius: 100%;
   }
+
+  &.not_current_month {
+    color: var(--invisible);
+  }
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { mount /* , shallow */ } from "enzyme";
 
-import Day from "./Day";
+import Day from "./DayDefault";
 import { /* DayContext, */ DayProvider } from "../../../../contexts/day";
 import { withDayContext } from "../../../../HOC/withDayContext";
 /* import { withDayContext } from "../../../../HOC/withDayContext"; */

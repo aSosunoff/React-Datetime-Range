@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
-import styles from "./Day.module.scss";
+import styles from "./DayDefault.module.scss";
 import { useDayContext } from "../../../../contexts/dayContext";
 
-const Day = ({
+const DayDefault = ({
   dayNumber,
   gridColumnStart,
   date,
@@ -48,7 +48,7 @@ const Day = ({
   );
 };
 
-Day.defaultProps = {
+DayDefault.defaultProps = {
   isStart: false,
   isBetween: false,
   isEnd: false,
@@ -56,7 +56,7 @@ Day.defaultProps = {
   isCurrentMonth: false,
 };
 
-Day.propTypes = {
+DayDefault.propTypes = {
   dayNumber: (props, propName, componentName) => {
     if (!props[propName]) {
       return new Error(
@@ -80,4 +80,4 @@ Day.propTypes = {
   isEnd: PropTypes.bool,
 };
 
-export default Day;
+export default DayDefault;

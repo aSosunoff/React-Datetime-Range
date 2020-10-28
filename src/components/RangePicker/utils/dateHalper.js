@@ -39,3 +39,12 @@ export const getMonthNames = (locales) => {
 
 export const getYearList = () =>
   new Array(1031).fill(null).map((_, index) => index + 1970);
+
+export const getDateSplit = (date) => ({
+  year: date.getFullYear(),
+  month: date.getMonth(),
+  date: date.getDate(),
+  hour: date.getHours(),
+  minutes: date.getMinutes(),
+  seconds: date.getSeconds(),
+});

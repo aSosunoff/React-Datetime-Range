@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import styles from "./DayDefault.module.scss";
 import { useDayContext } from "../../../../contexts/dayContext";
 
 const DayDefault = ({
-  dayNumber,
+  number,
   gridColumnStart,
   date,
   isStart,
@@ -17,6 +17,18 @@ const DayDefault = ({
   isCurrentMonth,
 }) => {
   const { setDay, setHoverDay } = useDayContext();
+
+  const clickHandler = useCallback(() => isCurrentMonth && setDay(date), [
+    date,
+    isCurrentMonth,
+    setDay,
+  ]);
+
+  const mouseEnterHandler = useCallback(
+    () => isCurrentMonth && setHoverDay(date),
+    [date, isCurrentMonth, setHoverDay]
+  );
+
   let isSaturday = false;
   let isSunday = false;
 
@@ -40,10 +52,10 @@ const DayDefault = ({
         [styles.hover_between]: isHoverBetween,
         [styles.not_current_month]: !isCurrentMonth,
       })}
-      onClick={setDay.bind(this, date)}
-      onMouseEnter={setHoverDay.bind(this, date)}
+      onClick={clickHandler}
+      onMouseEnter={mouseEnterHandler}
     >
-      {dayNumber}
+      {number}
     </button>
   );
 };
@@ -57,7 +69,7 @@ DayDefault.defaultProps = {
 };
 
 DayDefault.propTypes = {
-  dayNumber: (props, propName, componentName) => {
+  number: (props, propName, componentName) => {
     if (!props[propName]) {
       return new Error(
         `Prop ${propName} of ${componentName} should be required`

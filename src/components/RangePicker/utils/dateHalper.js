@@ -57,3 +57,9 @@ export const getWeek = (date) => {
       7
   );
 };
+
+export const getCountWeek = (date) => {
+  const dateNumber = date.getDate() - 1;
+  const numberFirstDay = getNumberFirsDayOfWeekByMonth(date);
+  return Math.ceil((dateNumber + numberFirstDay) / 7);
+};

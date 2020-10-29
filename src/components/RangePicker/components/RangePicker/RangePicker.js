@@ -14,7 +14,6 @@ import { withShowDateContext } from "../../HOC/withShowDateContext";
 import { useDayContext } from "../../contexts/dayContext";
 import { compose } from "../../utils/compose";
 import Control from "../Control";
-import useFocus from "../../hooks/useFocus";
 
 const RangePicker = React.forwardRef(
   (
@@ -62,8 +61,6 @@ const RangePicker = React.forwardRef(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [day]);
 
-    const { isFocus, setBlur, setFocus } = useFocus();
-
     return (
       <div
         ref={ref}
@@ -71,7 +68,7 @@ const RangePicker = React.forwardRef(
         style={style}
         data-test-id="range-picker"
       >
-        <Control isFocus={isFocus} isOpen={isOpen} />
+        <Control isOpen={isOpen} />
 
         <CalendarContainer
           startDate={_startDate}
@@ -84,8 +81,6 @@ const RangePicker = React.forwardRef(
           endDate={_endDate}
           onSetTimeStart={setTimeFromHandler}
           onSetTimeEnd={setTimeToHandler}
-          onSetBlur={setBlur}
-          onSetFocus={setFocus}
         />
 
         <BottomBar

@@ -24,7 +24,6 @@ const RangePicker = React.forwardRef(
       endDate,
       onClose,
       onRangeSelected,
-      calendarVisibleCount,
       locales,
       style,
     },
@@ -75,7 +74,6 @@ const RangePicker = React.forwardRef(
         <Control isFocus={isFocus} isOpen={isOpen} />
 
         <CalendarContainer
-          calendarVisibleCount={calendarVisibleCount}
           startDate={_startDate}
           endDate={_endDate}
           locales={locales}
@@ -107,7 +105,6 @@ RangePicker.displayName = "RangePicker";
 RangePicker.defaultProps = {
   onClose: () => {},
   onRangeSelected: () => {},
-  calendarVisibleCount: 2,
   locales: "ru",
 };
 
@@ -117,7 +114,6 @@ const defaultProps = {
   endDate: PropTypes.instanceOf(Date),
   onClose: PropTypes.func,
   onRangeSelected: PropTypes.func,
-  calendarVisibleCount: PropTypes.number.isRequired,
   locales: PropTypes.string,
 };
 

@@ -25,12 +25,4 @@ describe("CalendarContainer", () => {
   it("should contain style default", () => {
     expect(component.prop("style").gridTemplateColumns).toBe("repeat(1, 1fr)");
   });
-
-  it("should contain style for two calendars", () => {
-    const calendarVisibleCount = 2;
-    setProp("calendarVisibleCount", calendarVisibleCount);
-    expect(component.prop("style").gridTemplateColumns).toBe(
-      `repeat(${calendarVisibleCount}, 1fr)`
-    );
-  });
 });

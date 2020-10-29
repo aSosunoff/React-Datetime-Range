@@ -1,8 +1,9 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import styles from "./DayDefault.module.scss";
 import { useDayContext } from "../../../../contexts/dayContext";
+import { debounceDecorator } from "../../../../utils/debounceDecorator";
 
 const DayDefault = ({
   number,
@@ -18,6 +19,11 @@ const DayDefault = ({
 }) => {
   const { setDay, setHoverDay } = useDayContext();
 
+  const debounceSetHoverDay = useMemo(
+    () => debounceDecorator(setHoverDay, 80),
+    [setHoverDay]
+  );
+
   const clickHandler = useCallback(() => isCurrentMonth && setDay(date), [
     date,
     isCurrentMonth,
@@ -25,8 +31,8 @@ const DayDefault = ({
   ]);
 
   const mouseEnterHandler = useCallback(
-    () => isCurrentMonth && setHoverDay(date),
-    [date, isCurrentMonth, setHoverDay]
+    () => isCurrentMonth && debounceSetHoverDay(date),
+    [date, isCurrentMonth, debounceSetHoverDay]
   );
 
   let isSaturday = false;

@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useMemo, useState } from "react";
-import { debounceDecorator } from "../utils/debounceDecorator";
+import React, { createContext, useContext, useState } from "react";
 
 const DayContext = createContext();
 DayContext.displayName = "DayContext";
@@ -13,15 +12,8 @@ export const DayProvider = ({ children }) => {
 
   const [hoverDay, setHoverDay] = useState(null);
 
-  const debounceSetHoverDay = useMemo(
-    () => debounceDecorator(setHoverDay, 80),
-    [setHoverDay]
-  );
-
   return (
-    <DayContext.Provider
-      value={{ setDay, day, setHoverDay: debounceSetHoverDay, hoverDay }}
-    >
+    <DayContext.Provider value={{ setDay, day, setHoverDay, hoverDay }}>
       {children}
     </DayContext.Provider>
   );

@@ -17,24 +17,23 @@ import Control from "../Control";
 
 const RangePicker = React.forwardRef(
   (
-    {
-      isOpen,
-      startDate,
-      endDate,
-      onClose,
-      onRangeSelected,
-      locales,
-      style,
-    },
+    { isOpen, startDate, endDate, onClose, onRangeSelected, locales, style },
     ref
   ) => {
     const {
+      /* Range */
       startDate: _startDate,
       endDate: _endDate,
-      setRangeHandler,
       resetHandler,
-      setTimeFromHandler,
-      setTimeToHandler,
+      setDateTimestampRangeHandler,
+      /* Date */
+      startDateTimestamp,
+      endDateTimestamp,
+      /* Time */
+      startTimeString,
+      endTimeString,
+      setStartTimeStringHandler,
+      setEndTimeStringHandler,
     } = useRange(startDate, endDate);
 
     const applyHandler = useCallback(() => {
@@ -43,23 +42,23 @@ const RangePicker = React.forwardRef(
         endDate: _endDate,
       });
       onClose();
-    }, [_startDate, _endDate, onClose, onRangeSelected]);
+    }, [onRangeSelected, _startDate, _endDate, onClose]);
 
-    const { day } = useDayContext();
+    const { dayTimestamp } = useDayContext();
 
     useEffect(() => {
       let from = null;
       let to = null;
-      if (!_startDate || _endDate) {
-        from = day;
+      if (!startDateTimestamp || endDateTimestamp) {
+        from = dayTimestamp;
       } else {
-        const current = day.getTime();
-        to = new Date(Math.max(current, _startDate.getTime()));
-        from = new Date(Math.min(current, _startDate.getTime()));
+        const current = dayTimestamp;
+        to = Math.max(current, startDateTimestamp);
+        from = Math.min(current, startDateTimestamp);
       }
-      setRangeHandler(from, to);
+      setDateTimestampRangeHandler(from, to);
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [day]);
+    }, [dayTimestamp]);
 
     return (
       <div
@@ -71,21 +70,23 @@ const RangePicker = React.forwardRef(
         <Control isOpen={isOpen} />
 
         <CalendarContainer
-          startDate={_startDate}
-          endDate={_endDate}
+          startDateTimestamp={startDateTimestamp}
+          endDateTimestamp={endDateTimestamp}
           locales={locales}
         />
 
         <TimePicker
-          startDate={_startDate}
-          endDate={_endDate}
-          onSetTimeStart={setTimeFromHandler}
-          onSetTimeEnd={setTimeToHandler}
+          startTime={startTimeString}
+          isDisabledStartTime={!Boolean(startDateTimestamp)}
+          endTime={endTimeString}
+          isDisabledEndTime={!Boolean(endDateTimestamp)}
+          onSetTimeStart={setStartTimeStringHandler}
+          onSetTimeEnd={setEndTimeStringHandler}
         />
 
         <BottomBar
-          startDate={_startDate}
-          endDate={_endDate}
+          startDate={/* _startDate */ null}
+          endDate={/* _endDate */ null}
           locales={locales}
           applyHandler={applyHandler}
           resetHandler={resetHandler}

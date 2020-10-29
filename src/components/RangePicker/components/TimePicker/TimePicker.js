@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styles from "./TimePicker.module.scss";
 

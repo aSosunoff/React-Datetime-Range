@@ -10,9 +10,9 @@ import { useShowDateContext } from "../../contexts/showDateContext";
 const CalendarContainer = ({ startDate, endDate, locales }) => {
   const { showDate, setMonthHandler, setYearHandler } = useShowDateContext();
 
-  const nextMonth = useMemo(() => getNextMonth(showDate), [showDate]);
-
   const { setHoverDay } = useDayContext();
+
+  const nextMonth = useMemo(() => getNextMonth(showDate), [showDate]);
 
   const changeMonthHandler = useCallback((month) => setMonthHandler(month), [
     setMonthHandler,

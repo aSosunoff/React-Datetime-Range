@@ -24,20 +24,17 @@ export default function useCalendar(month, from, to) {
     endRangeTimestamp
   );
 
-  const { days: currentDays, firsDayOfWeekByMonth } = useMonth(
-    month,
-    startRangeTimestamp,
-    endRangeTimestamp
-  );
+  const {
+    days: currentDays,
+    firsDayOfWeekByMonth,
+    weekCount: currentWeekCount,
+  } = useMonth(month, startRangeTimestamp, endRangeTimestamp);
 
   const {
     days: nextDays,
     firsDayOfWeekByMonth: nextFirsDayOfWeekByMonth,
-  } = useMonth(
-    getNextMonth(month),
-    startRangeTimestamp,
-    endRangeTimestamp
-  );
+    weekCount: nextWeekCount,
+  } = useMonth(getNextMonth(month), startRangeTimestamp, endRangeTimestamp);
 
   const { hoverDay } = useDayContext();
 

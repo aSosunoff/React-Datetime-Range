@@ -1,5 +1,6 @@
 import { useCallback, useMemo } from "react";
 import {
+  getCountWeek,
   getDateWithoutTime,
   getMonthDayCount,
   getNumberFirsDayOfWeekByMonth,
@@ -44,7 +45,7 @@ export default function useCalendarTest(
     []
   );
 
-  // const week = () => Math.ceil((index + firsDayOfWeekByMonth) / 7)
+  const weekCount = useMemo(() => getCountWeek(month), [month]);
 
   const days = useMemo(
     () =>
@@ -73,6 +74,7 @@ export default function useCalendarTest(
 
   return {
     firsDayOfWeekByMonth,
+    weekCount,
     days,
   };
 }

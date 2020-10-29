@@ -1,12 +1,12 @@
 import React, { useCallback, useMemo } from "react";
-import useCalendar from "../../../hooks/useCalendar";
+/* import useCalendar from "../../../hooks/useCalendar"; */
 import PropTypes from "prop-types";
 import Day from "./Day";
 import WeekLine from "./WeekLine";
 import styles from "./CalendarDefault.module.scss";
 
-const CalendarDefault = ({ date, from, to, locales, TitleComponentRender }) => {
-  const { days } = useCalendar(date, from, to);
+const CalendarDefault = ({ date, days, locales, TitleComponentRender }) => {
+  /* const { days } = useCalendar(date, from, to); */
 
   const localeString = useMemo(
     () => date.toLocaleString(locales, { month: "long", year: "numeric" }),
@@ -45,9 +45,8 @@ CalendarDefault.defaultProps = {
 
 CalendarDefault.propTypes = {
   date: PropTypes.instanceOf(Date).isRequired,
-  from: PropTypes.instanceOf(Date),
-  to: PropTypes.instanceOf(Date),
   locales: PropTypes.string,
+  days: PropTypes.array.isRequired,
 };
 
 export default CalendarDefault;

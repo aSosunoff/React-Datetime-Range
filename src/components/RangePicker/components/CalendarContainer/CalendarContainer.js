@@ -6,6 +6,8 @@ import styles from "./CalendarContainer.module.scss";
 import { useDayContext } from "../../contexts/dayContext";
 import CalendarSelector from "./CalendarSelector/CalendarSelector";
 import { useShowDateContext } from "../../contexts/showDateContext";
+import useCalendar from "../../hooks/useCalendar";
+import { useCalendarVisible } from "../../hooks/useCalendarVisible";
 
 const CalendarContainer = ({ startDate, endDate, locales }) => {
   const { showDate, setMonthHandler, setYearHandler } = useShowDateContext();
@@ -17,10 +19,18 @@ const CalendarContainer = ({ startDate, endDate, locales }) => {
   const changeMonthHandler = useCallback((month) => setMonthHandler(month), [
     setMonthHandler,
   ]);
-
   const changeYearHandler = useCallback((year) => setYearHandler(year), [
     setYearHandler,
   ]);
+
+  const calendarLeft = useCalendar(showDate, startDate, endDate);
+
+  const calendarRight = useCalendar(nextMonth, startDate, endDate);
+
+  const { calendarLeftDays, calendarRightDays } = useCalendarVisible(
+    calendarLeft,
+    calendarRight
+  );
 
   return (
     <div
@@ -29,16 +39,14 @@ const CalendarContainer = ({ startDate, endDate, locales }) => {
     >
       <CalendarSelector
         date={showDate}
-        from={startDate}
-        to={endDate}
+        days={calendarLeftDays}
         locales={locales}
         changeMonthHandler={changeMonthHandler}
         changeYearHandler={changeYearHandler}
       />
       <CalendarDefault
         date={nextMonth}
-        from={startDate}
-        to={endDate}
+        days={calendarRightDays}
         locales={locales}
       />
     </div>

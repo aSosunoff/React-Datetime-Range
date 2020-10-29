@@ -24,16 +24,15 @@ export default function useCalendar(month, from, to) {
     endRangeTimestamp
   );
 
-  const {
-    days: currentDays,
-    firsDayOfWeekByMonth,
-    weekCount: currentWeekCount,
-  } = useMonth(month, startRangeTimestamp, endRangeTimestamp);
+  const { days: currentDays, firsDayOfWeekByMonth, weekCount } = useMonth(
+    month,
+    startRangeTimestamp,
+    endRangeTimestamp
+  );
 
   const {
     days: nextDays,
-    firsDayOfWeekByMonth: nextFirsDayOfWeekByMonth,
-    weekCount: nextWeekCount,
+    firsDayOfWeekByMonth: nextMonthFirsDayOfWeekByMonth,
   } = useMonth(getNextMonth(month), startRangeTimestamp, endRangeTimestamp);
 
   const { hoverDay } = useDayContext();
@@ -52,13 +51,10 @@ export default function useCalendar(month, from, to) {
     []
   );
 
-  const _prevDays = useMemo(
-    () =>
-      firsDayOfWeekByMonth > 1
-        ? prevDays.slice(-(firsDayOfWeekByMonth - 1)).map(mapDefault)
-        : [],
-    [prevDays, firsDayOfWeekByMonth, mapDefault]
-  );
+  const _prevDays = useMemo(() => prevDays.map(mapDefault), [
+    prevDays,
+    mapDefault,
+  ]);
 
   const _currentDays = useMemo(
     () =>
@@ -82,18 +78,26 @@ export default function useCalendar(month, from, to) {
     [currentDays, endRangeTimestamp, hoverDay, startRangeTimestamp]
   );
 
-  const _nextDays = useMemo(
-    () =>
-      nextFirsDayOfWeekByMonth !== 1
-        ? nextDays.slice(0, 8 - nextFirsDayOfWeekByMonth).map(mapDefault)
-        : [],
-    [mapDefault, nextDays, nextFirsDayOfWeekByMonth]
-  );
+  const _nextDays = useMemo(() => nextDays.map(mapDefault), [
+    mapDefault,
+    nextDays,
+  ]);
+
+  const startIndexCurentMonth = useMemo(() => _prevDays.length + 1, [
+    _prevDays.length,
+  ]);
+
+  const count = useMemo(() => _currentDays.length, [_currentDays.length]);
 
   return {
     days: [..._prevDays, ..._currentDays, ..._nextDays].map((day, index) => ({
       ...day,
       index,
     })),
+    firsDayOfWeekByMonth,
+    nextMonthFirsDayOfWeekByMonth,
+    weekCount,
+    startIndexCurentMonth,
+    count,
   };
 }

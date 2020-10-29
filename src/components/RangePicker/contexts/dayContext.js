@@ -8,12 +8,19 @@ export const useDayContext = () => {
 };
 
 export const DayProvider = ({ children }) => {
-  const [day, setDay] = useState(null);
+  const [dayTimestamp, setDayTimestamp] = useState(null);
 
-  const [hoverDay, setHoverDay] = useState(null);
+  const [hoverDayTimestamp, setHoverDayTimestamp] = useState(null);
 
   return (
-    <DayContext.Provider value={{ setDay, day, setHoverDay, hoverDay }}>
+    <DayContext.Provider
+      value={{
+        setDayTimestamp,
+        dayTimestamp,
+        setHoverDayTimestamp,
+        hoverDayTimestamp,
+      }}
+    >
       {children}
     </DayContext.Provider>
   );

@@ -1,14 +1,16 @@
 import React, { useCallback, useMemo } from "react";
+import PropTypes from "prop-types";
 import { getMonthNames, getYearList } from "../../../utils/dateHalper";
 import CalendarDefault from "../CalendarDefault";
 import styles from "./CalendarSelector.module.scss";
 import cn from "classnames";
-import { useShowDateContext } from "../../../contexts/showDateContext";
 import useDateSplit from "../../../hooks/useDateSplit";
 
-const CalendarSelector = (props) => {
-  const { setMonthHandler, setYearHandler } = useShowDateContext();
-
+const CalendarSelector = ({
+  changeMonthHandler,
+  changeYearHandler,
+  ...props
+}) => {
   const { year, month } = useDateSplit(props.date);
 
   const yearList = useMemo(() => getYearList(), []);
@@ -17,26 +19,22 @@ const CalendarSelector = (props) => {
     props.locales,
   ]);
 
-  const changeMonthHandler = useCallback(
-    ({ target }) => {
-      const selected = target.options[target.options.selectedIndex];
-      setMonthHandler(selected.value);
-    },
-    [setMonthHandler]
+  const changeMonthHandlerLocal = useCallback(
+    ({ target: { options } }) =>
+      changeMonthHandler(options[options.selectedIndex].value),
+    [changeMonthHandler]
   );
 
-  const changeYearHandler = useCallback(
-    ({ target }) => {
-      const selected = target.options[target.options.selectedIndex];
-      setYearHandler(selected.value);
-    },
-    [setYearHandler]
+  const changeYearHandlerLocal = useCallback(
+    ({ target: { options } }) =>
+      changeYearHandler(options[options.selectedIndex].value),
+    [changeYearHandler]
   );
 
   const TitleComponentRender = useCallback(
     ({ titleClass }) => (
       <div className={cn(titleClass, styles.title)}>
-        <select value={month} onChange={changeMonthHandler}>
+        <select value={month} onChange={changeMonthHandlerLocal}>
           {monthNames.map((name, index) => (
             <option key={index} value={index}>
               {name}
@@ -44,7 +42,7 @@ const CalendarSelector = (props) => {
           ))}
         </select>
 
-        <select value={year} onChange={changeYearHandler}>
+        <select value={year} onChange={changeYearHandlerLocal}>
           {yearList.map((year) => (
             <option key={year} value={year}>
               {year}
@@ -53,12 +51,26 @@ const CalendarSelector = (props) => {
         </select>
       </div>
     ),
-    [changeMonthHandler, changeYearHandler, month, monthNames, year, yearList]
+    [
+      changeMonthHandlerLocal,
+      changeYearHandlerLocal,
+      month,
+      monthNames,
+      year,
+      yearList,
+    ]
   );
 
   return (
     <CalendarDefault {...props} TitleComponentRender={TitleComponentRender} />
   );
+};
+
+CalendarSelector.defaultProps = {};
+
+CalendarSelector.propTypes = {
+  changeMonthHandler: PropTypes.func.isRequired,
+  changeYearHandler: PropTypes.func.isRequired,
 };
 
 export default CalendarSelector;

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import { getNextMonth } from "../../utils/dateHalper";
 import CalendarDefault from "./CalendarDefault";
@@ -8,11 +8,19 @@ import CalendarSelector from "./CalendarSelector/CalendarSelector";
 import { useShowDateContext } from "../../contexts/showDateContext";
 
 const CalendarContainer = ({ startDate, endDate, locales }) => {
-  const { showDate } = useShowDateContext();
+  const { showDate, setMonthHandler, setYearHandler } = useShowDateContext();
 
   const nextMonth = useMemo(() => getNextMonth(showDate), [showDate]);
 
   const { setHoverDay } = useDayContext();
+
+  const changeMonthHandler = useCallback((month) => setMonthHandler(month), [
+    setMonthHandler,
+  ]);
+
+  const changeYearHandler = useCallback((year) => setYearHandler(year), [
+    setYearHandler,
+  ]);
 
   return (
     <div
@@ -24,6 +32,8 @@ const CalendarContainer = ({ startDate, endDate, locales }) => {
         from={startDate}
         to={endDate}
         locales={locales}
+        changeMonthHandler={changeMonthHandler}
+        changeYearHandler={changeYearHandler}
       />
       <CalendarDefault
         date={nextMonth}

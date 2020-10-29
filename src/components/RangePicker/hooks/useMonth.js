@@ -7,7 +7,7 @@ import {
 } from "../utils/dateHalper";
 import useDateSplit from "./useDateSplit";
 
-export default function useCalendarTest(
+export default function useMonth(
   month,
   startRangeTimestamp,
   endRangeTimestamp
@@ -20,13 +20,12 @@ export default function useCalendarTest(
   );
 
   const isStart = useCallback(
-    (dateTimestamp) =>
-      startRangeTimestamp && startRangeTimestamp === dateTimestamp,
+    (dateTimestamp) => startRangeTimestamp === dateTimestamp,
     [startRangeTimestamp]
   );
 
   const isEnd = useCallback(
-    (dateTimestamp) => endRangeTimestamp && endRangeTimestamp === dateTimestamp,
+    (dateTimestamp) => endRangeTimestamp === dateTimestamp,
     [endRangeTimestamp]
   );
 

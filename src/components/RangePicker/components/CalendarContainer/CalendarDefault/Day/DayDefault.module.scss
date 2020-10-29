@@ -31,18 +31,11 @@
   }
 
   &:active,
+  &:focus,
   &.start,
   &.end {
     background-color: var(--blue);
     color: var(--white);
-  }
-
-  &.start:hover,
-  &.end:hover,
-  &.start:focus,
-  &.end:focus {
-    background-color: var(--middle-blue);
-    color: var(--dark-blue);
   }
 
   &.current {

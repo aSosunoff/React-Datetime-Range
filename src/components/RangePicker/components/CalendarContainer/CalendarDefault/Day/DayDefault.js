@@ -8,7 +8,7 @@ import { debounceDecorator } from "../../../../utils/debounceDecorator";
 const DayDefault = ({
   number,
   gridColumnStart,
-  date,
+  dateTimestamp,
   isStart,
   isBetween,
   isEnd,
@@ -17,30 +17,29 @@ const DayDefault = ({
   isHoverBetween,
   isCurrentMonth,
 }) => {
-  const { setDay, setHoverDay } = useDayContext();
+  const { setDayTimestamp, setHoverDayTimestamp } = useDayContext();
 
   const debounceSetHoverDay = useMemo(
-    () => debounceDecorator(setHoverDay, 80),
-    [setHoverDay]
+    () => debounceDecorator(setHoverDayTimestamp, 80),
+    [setHoverDayTimestamp]
   );
 
-  const clickHandler = useCallback(() => isCurrentMonth && setDay(date), [
-    date,
-    isCurrentMonth,
-    setDay,
-  ]);
+  const clickHandler = useCallback(
+    () => isCurrentMonth && setDayTimestamp(dateTimestamp),
+    [dateTimestamp, isCurrentMonth, setDayTimestamp]
+  );
 
   const mouseEnterHandler = useCallback(
-    () => isCurrentMonth && debounceSetHoverDay(date),
-    [date, isCurrentMonth, debounceSetHoverDay]
+    () => isCurrentMonth && debounceSetHoverDay(dateTimestamp),
+    [dateTimestamp, isCurrentMonth, debounceSetHoverDay]
   );
 
   let isSaturday = false;
   let isSunday = false;
 
   if (isCurrentMonth) {
-    isSaturday = date.getDay() === 6;
-    isSunday = date.getDay() === 0;
+    isSaturday = new Date(dateTimestamp).getDay() === 6;
+    isSunday = new Date(dateTimestamp).getDay() === 0;
   }
 
   return (
@@ -90,7 +89,7 @@ DayDefault.propTypes = {
   },
   gridColumnStart: PropTypes.number,
   type: PropTypes.string,
-  date: PropTypes.instanceOf(Date).isRequired,
+  dateTimestamp: PropTypes.number.isRequired,
   isThisDay: PropTypes.bool,
   isCurrentMonth: PropTypes.bool,
   isStart: PropTypes.bool,

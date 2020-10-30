@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import styles from "./BottomBar.module.scss";
+import { useRangeContext } from "../../contexts/rangeContext";
 
 const format = (locales, date) =>
   date.toLocaleString(locales, {
@@ -12,13 +13,9 @@ const format = (locales, date) =>
     second: "2-digit",
   });
 
-const BottomBar = ({
-  startDate,
-  endDate,
-  locales,
-  applyHandler,
-  resetHandler,
-}) => {
+const BottomBar = ({ locales, applyHandler }) => {
+  const { startDate, endDate, resetHandler } = useRangeContext();
+
   const title = useMemo(
     () =>
       startDate && endDate
@@ -59,15 +56,11 @@ const BottomBar = ({
 BottomBar.defaultProps = {
   locales: "ru",
   applyHandler: () => {},
-  resetHandler: () => {},
 };
 
 BottomBar.propTypes = {
-  startDate: PropTypes.instanceOf(Date),
-  endDate: PropTypes.instanceOf(Date),
   locales: PropTypes.string,
   applyHandler: PropTypes.func,
-  resetHandler: PropTypes.func,
 };
 
 export default BottomBar;

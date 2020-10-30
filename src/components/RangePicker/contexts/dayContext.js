@@ -8,15 +8,11 @@ export const useDayContext = () => {
 };
 
 export const DayProvider = ({ children }) => {
-  const [dayTimestamp, setDayTimestamp] = useState(null);
-
   const [hoverDayTimestamp, setHoverDayTimestamp] = useState(null);
 
   return (
     <DayContext.Provider
       value={{
-        setDayTimestamp,
-        dayTimestamp,
         setHoverDayTimestamp,
         hoverDayTimestamp,
       }}

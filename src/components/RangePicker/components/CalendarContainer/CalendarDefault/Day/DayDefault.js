@@ -4,6 +4,7 @@ import cn from "classnames";
 import styles from "./DayDefault.module.scss";
 import { useDayContext } from "../../../../contexts/dayContext";
 import { debounceDecorator } from "../../../../utils/debounceDecorator";
+import { useRangeContext } from "../../../../contexts/rangeContext";
 
 const DayDefault = ({
   number,
@@ -17,7 +18,9 @@ const DayDefault = ({
   isHoverBetween,
   isCurrentMonth,
 }) => {
-  const { setDayTimestamp, setHoverDayTimestamp } = useDayContext();
+  const { setHoverDayTimestamp } = useDayContext();
+
+  const { setDateTimestampRangeHandler } = useRangeContext();
 
   const debounceSetHoverDay = useMemo(
     () => debounceDecorator(setHoverDayTimestamp, 80),
@@ -25,8 +28,8 @@ const DayDefault = ({
   );
 
   const clickHandler = useCallback(
-    () => isCurrentMonth && setDayTimestamp(dateTimestamp),
-    [dateTimestamp, isCurrentMonth, setDayTimestamp]
+    () => isCurrentMonth && setDateTimestampRangeHandler(dateTimestamp),
+    [dateTimestamp, isCurrentMonth, setDateTimestampRangeHandler]
   );
 
   const mouseEnterHandler = useCallback(

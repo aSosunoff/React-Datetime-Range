@@ -8,12 +8,9 @@ import CalendarSelector from "./CalendarSelector/CalendarSelector";
 import { useShowDateContext } from "../../contexts/showDateContext";
 import useCalendar from "../../hooks/useCalendar";
 import { useCalendarVisible } from "../../hooks/useCalendarVisible";
+import { useRangeContext } from "../../contexts/rangeContext";
 
-const CalendarContainer = ({
-  startDateTimestamp,
-  endDateTimestamp,
-  locales,
-}) => {
+const CalendarContainer = ({ locales }) => {
   const { showDate, setMonthHandler, setYearHandler } = useShowDateContext();
 
   const { setHoverDayTimestamp } = useDayContext();
@@ -26,6 +23,8 @@ const CalendarContainer = ({
   const changeYearHandler = useCallback((year) => setYearHandler(year), [
     setYearHandler,
   ]);
+
+  const { startDateTimestamp, endDateTimestamp } = useRangeContext();
 
   const calendarLeft = useCalendar(
     showDate,
@@ -70,8 +69,6 @@ CalendarContainer.defaultProps = {
 };
 
 CalendarContainer.propTypes = {
-  startDateTimestamp: PropTypes.number,
-  endDateTimestamp: PropTypes.number,
   locales: PropTypes.string,
 };
 

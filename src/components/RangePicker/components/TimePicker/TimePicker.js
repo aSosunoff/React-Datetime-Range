@@ -1,15 +1,25 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useMemo } from "react";
 import styles from "./TimePicker.module.scss";
+import { useRangeContext } from "../../contexts/rangeContext";
 
-const TimePicker = ({
-  startTime,
-  endTime,
-  isDisabledStartTime,
-  isDisabledEndTime,
-  onSetTimeStart,
-  onSetTimeEnd,
-}) => {
+const TimePicker = () => {
+  const {
+    startDateTimestamp,
+    endDateTimestamp,
+    startTimeString,
+    endTimeString,
+    setStartTimeStringHandler,
+    setEndTimeStringHandler,
+  } = useRangeContext();
+
+  const isDisabledStartTime = useMemo(() => !Boolean(startDateTimestamp), [
+    startDateTimestamp,
+  ]);
+
+  const isDisabledEndTime = useMemo(() => !Boolean(endDateTimestamp), [
+    endDateTimestamp,
+  ]);
+
   return (
     <div className={styles.time_picker} data-test-id="time-picker">
       <input
@@ -17,8 +27,8 @@ const TimePicker = ({
         type="time"
         step="1"
         disabled={isDisabledStartTime}
-        onChange={({ target }) => onSetTimeStart(target.value)}
-        value={startTime}
+        onChange={({ target }) => setStartTimeStringHandler(target.value)}
+        value={startTimeString}
       />
 
       <input
@@ -26,23 +36,11 @@ const TimePicker = ({
         type="time"
         step="1"
         disabled={isDisabledEndTime}
-        onChange={({ target }) => onSetTimeEnd(target.value)}
-        value={endTime}
+        onChange={({ target }) => setEndTimeStringHandler(target.value)}
+        value={endTimeString}
       />
     </div>
   );
-};
-
-TimePicker.defaultProps = {
-  onSetTimeStart: () => {},
-  onSetTimeEnd: () => {},
-};
-
-TimePicker.propTypes = {
-  startTime: PropTypes.string, // TODO: ВОТКНУТЬ ПРОВЕРКУ
-  endTime: PropTypes.string, // TODO: ВОТКНУТЬ ПРОВЕРКУ
-  onSetTimeStart: PropTypes.func,
-  onSetTimeEnd: PropTypes.func,
 };
 
 export default TimePicker;

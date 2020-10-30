@@ -85,8 +85,8 @@ const RangePicker = React.forwardRef(
         />
 
         <BottomBar
-          startDate={/* _startDate */ null}
-          endDate={/* _endDate */ null}
+          startDate={_startDate}
+          endDate={_endDate}
           locales={locales}
           applyHandler={applyHandler}
           resetHandler={resetHandler}

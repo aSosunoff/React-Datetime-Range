@@ -36,6 +36,7 @@ const BottomBar = ({
           {title}
         </div>
       ) : null}
+
       <div
         className={styles.button}
         onClick={applyHandler}
@@ -43,6 +44,7 @@ const BottomBar = ({
       >
         применить
       </div>
+
       <div
         className={styles.button}
         onClick={resetHandler}

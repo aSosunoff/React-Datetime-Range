@@ -25,10 +25,10 @@ const RangePicker = React.forwardRef(
       startDate: _startDate,
       endDate: _endDate,
       resetHandler,
-      setDateTimestampRangeHandler,
       /* Date */
       startDateTimestamp,
       endDateTimestamp,
+      setDateTimestampRangeHandler,
       /* Time */
       startTimeString,
       endTimeString,

@@ -20,7 +20,7 @@ const DayDefault = ({
 }) => {
   const { setHoverDayTimestamp } = useDayContext();
 
-  const { setDateTimestampRangeHandler } = useRangeContext();
+  const { setRangeHandler } = useRangeContext();
 
   const debounceSetHoverDay = useMemo(
     () => debounceDecorator(setHoverDayTimestamp, 80),
@@ -28,8 +28,8 @@ const DayDefault = ({
   );
 
   const clickHandler = useCallback(
-    () => isCurrentMonth && setDateTimestampRangeHandler(dateTimestamp),
-    [dateTimestamp, isCurrentMonth, setDateTimestampRangeHandler]
+    () => isCurrentMonth && setRangeHandler(dateTimestamp),
+    [dateTimestamp, isCurrentMonth, setRangeHandler]
   );
 
   const mouseEnterHandler = useCallback(

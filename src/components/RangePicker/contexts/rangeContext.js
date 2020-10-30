@@ -14,10 +14,10 @@ export const RangeProvider = ({ startDate, endDate, children }) => {
     startDate: _startDate,
     endDate: _endDate,
     resetHandler,
+    setRangeHandler,
     /* Date */
     startDateTimestamp,
     endDateTimestamp,
-    setDateTimestampRangeHandler,
     /* Time */
     startTimeString,
     endTimeString,
@@ -32,10 +32,10 @@ export const RangeProvider = ({ startDate, endDate, children }) => {
         startDate: _startDate,
         endDate: _endDate,
         resetHandler,
+        setRangeHandler,
         /* Date */
         startDateTimestamp,
         endDateTimestamp,
-        setDateTimestampRangeHandler,
         /* Time */
         startTimeString,
         endTimeString,

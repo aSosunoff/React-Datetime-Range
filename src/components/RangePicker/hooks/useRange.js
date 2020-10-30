@@ -56,6 +56,29 @@ export default function useRange(startDate, endDate) {
     };
   }, [endDateTimestamp, endTimeString, startDateTimestamp, startTimeString]);
 
+  const setRangeHandler = useCallback(
+    (dateTimestamp) => {
+      let from = null;
+      let to = null;
+      if (!startDateTimestamp || endDateTimestamp) {
+        from = dateTimestamp;
+        setEndTimeStringHandler("");
+      } else {
+        const current = dateTimestamp;
+        to = Math.max(current, startDateTimestamp);
+        from = Math.min(current, startDateTimestamp);
+      }
+
+      setDateTimestampRangeHandler(from, to);
+    },
+    [
+      endDateTimestamp,
+      setDateTimestampRangeHandler,
+      setEndTimeStringHandler,
+      startDateTimestamp,
+    ]
+  );
+
   return {
     /* Range */
     resetHandler,
@@ -63,7 +86,7 @@ export default function useRange(startDate, endDate) {
     /* Date */
     startDateTimestamp,
     endDateTimestamp,
-    setDateTimestampRangeHandler,
+    setRangeHandler,
     /* Time */
     startTimeString,
     endTimeString,

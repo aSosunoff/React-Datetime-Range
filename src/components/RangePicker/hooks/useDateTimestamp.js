@@ -18,23 +18,10 @@ export default function useDateTimestamp(startDate, endDate) {
   });
 
   const setDateTimestampRangeHandler = useCallback(
-    (dateTimestamp) => {
-      let from = null;
-      let to = null;
-      if (!rangeDate.startDateTimestamp || rangeDate.endDateTimestamp) {
-        from = dateTimestamp;
-      } else {
-        const current = dateTimestamp;
-        to = Math.max(current, rangeDate.startDateTimestamp);
-        from = Math.min(current, rangeDate.startDateTimestamp);
-      }
-
-      setDateTimestampRange(() => ({
-        startDateTimestamp: from,
-        endDateTimestamp: to,
-      }));
+    (startDateTimestamp, endDateTimestamp) => {
+      setDateTimestampRange(() => ({ startDateTimestamp, endDateTimestamp }));
     },
-    [rangeDate.endDateTimestamp, rangeDate.startDateTimestamp]
+    []
   );
 
   useEffect(

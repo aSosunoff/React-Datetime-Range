@@ -7,8 +7,6 @@ export default function useRange(startDate, endDate) {
     startDateTimestamp,
     endDateTimestamp,
     setDateTimestampRangeHandler,
-    setStartDateTimestampHandler,
-    setEndDateTimestampHandler,
     resetHandler: resetDateHandler,
   } = useDateTimestamp(startDate, endDate);
 
@@ -32,32 +30,40 @@ export default function useRange(startDate, endDate) {
       return [hour, minute, second];
     };
 
+    let startDate = null;
+
+    if (startDateTimestamp && !startTimeString) {
+      startDate = new Date(startDateTimestamp);
+    } else if (startDateTimestamp && startTimeString) {
+      startDate = new Date(
+        new Date(startDateTimestamp).setHours(...getFormatTime(startTimeString))
+      );
+    }
+
+    let endDate = null;
+
+    if (endDateTimestamp && !endTimeString) {
+      endDate = new Date(endDateTimestamp);
+    } else if (endDateTimestamp && endTimeString) {
+      endDate = new Date(
+        new Date(endDateTimestamp).setHours(...getFormatTime(endTimeString))
+      );
+    }
+
     return {
-      startDate:
-        startDateTimestamp &&
-        new Date(
-          new Date(startDateTimestamp).setHours(
-            ...getFormatTime(startTimeString)
-          )
-        ),
-      endDate:
-        endDateTimestamp &&
-        new Date(
-          new Date(endDateTimestamp).setHours(...getFormatTime(endTimeString))
-        ),
+      startDate,
+      endDate,
     };
   }, [endDateTimestamp, endTimeString, startDateTimestamp, startTimeString]);
 
   return {
     /* Range */
-    setDateTimestampRangeHandler,
     resetHandler,
     ...date,
     /* Date */
     startDateTimestamp,
     endDateTimestamp,
-    setStartDateTimestampHandler,
-    setEndDateTimestampHandler,
+    setDateTimestampRangeHandler,
     /* Time */
     startTimeString,
     endTimeString,

@@ -22,19 +22,19 @@ export default function useTime(startDate, endDate) {
   );
 
   const setStartTimeStringHandler = useCallback(
-    (timeString) =>
+    (startTimeString) =>
       setTimeStringRange((prev) => ({
         ...prev,
-        startTimeString: timeString,
+        startTimeString,
       })),
     []
   );
 
   const setEndTimeStringHandler = useCallback(
-    (timeString) =>
+    (endTimeString) =>
       setTimeStringRange((prev) => ({
         ...prev,
-        endTimeString: timeString,
+        endTimeString,
       })),
     []
   );

@@ -17,31 +17,16 @@ export default function useDateTimestamp(startDate, endDate) {
     endDateTimestamp,
   });
 
-  const setDateTimestampRangeHandler = (startDateTimestamp, endDateTimestamp) =>
-    setDateTimestampRange(() => ({ startDateTimestamp, endDateTimestamp }));
+  const setDateTimestampRangeHandler = useCallback(
+    (startDateTimestamp, endDateTimestamp) =>
+      setDateTimestampRange(() => ({ startDateTimestamp, endDateTimestamp })),
+    []
+  );
 
   useEffect(
     () =>
       setDateTimestampRange(() => ({ startDateTimestamp, endDateTimestamp })),
     [startDateTimestamp, endDateTimestamp]
-  );
-
-  const setStartDateTimestampHandler = useCallback(
-    (dateTimestamp) =>
-      setDateTimestampRange((prev) => ({
-        ...prev,
-        startDateTimestamp: dateTimestamp,
-      })),
-    []
-  );
-
-  const setEndDateTimestampHandler = useCallback(
-    (dateTimestamp) =>
-      setDateTimestampRange((prev) => ({
-        ...prev,
-        endDateTimestamp: dateTimestamp,
-      })),
-    []
   );
 
   const resetHandler = useCallback(
@@ -56,8 +41,6 @@ export default function useDateTimestamp(startDate, endDate) {
   return {
     ...rangeDate,
     setDateTimestampRangeHandler,
-    setStartDateTimestampHandler,
-    setEndDateTimestampHandler,
     resetHandler,
   };
 }

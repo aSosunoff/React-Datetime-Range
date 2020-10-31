@@ -8,12 +8,12 @@ import BottomBar from "./../BottomBar/BottomBar";
 import TimePicker from "./../TimePicker/TimePicker";
 import CalendarContainer from "./../CalendarContainer";
 import { withAnimation } from "../../HOC/withAnimation";
-import { withDayContext } from "../../HOC/withDayContext";
-import { withRangeContext } from "../../HOC/withRangeContext";
-import { withShowDateContext } from "../../HOC/withShowDateContext";
 import { compose } from "../../utils/compose";
 import Control from "../Control";
-import { useRangeContext } from "../../contexts/rangeContext";
+import { RangeProvider, useRangeContext } from "../../contexts/rangeContext";
+import { DayProvider } from "../../contexts/dayContext";
+import { withContext } from "../../utils/withContext";
+import { ShowDateProvider } from "../../contexts/showDateContext";
 
 const RangePicker = React.forwardRef(
   ({ isOpen, onClose, onRangeSelected, locales, style }, ref) => {
@@ -71,8 +71,11 @@ RangePicker.propTypes = {
 };
 
 export default compose(
-  withShowDateContext,
-  withDayContext,
-  withRangeContext,
+  withContext(ShowDateProvider, ({ startDate }) => ({ startDate })),
+  withContext(DayProvider),
+  withContext(RangeProvider, ({ startDate, endDate }) => ({
+    startDate,
+    endDate,
+  })),
   withAnimation
 )(RangePicker);

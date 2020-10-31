@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/React-Range-Picker/precache-manifest.19980315b1f225ed256b7799bb8a82be.js"
+  "/React-Range-Picker/precache-manifest.4432d0949f50869c968758700a9a8188.js"
 );
 
 self.addEventListener('message', (event) => {

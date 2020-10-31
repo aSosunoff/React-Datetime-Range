@@ -3,16 +3,21 @@ import PropTypes from "prop-types";
 import { getNextMonth } from "../../utils/dateHalper";
 import CalendarDefault from "./CalendarDefault";
 import styles from "./CalendarContainer.module.scss";
-import { useDayContext } from "../../contexts/dayContext";
+import {
+  HoverDayProvider,
+  useHoverDayContext,
+} from "../../contexts/hoverDayContext";
 import CalendarSelector from "./CalendarSelector/CalendarSelector";
 import { useShowDateContext } from "../../contexts/showDateContext";
 import useCalendar from "../../hooks/useCalendar";
 import { useCalendarVisible } from "../../hooks/useCalendarVisible";
+import { useRangeContext } from "../../contexts/rangeContext";
+import { withContext } from "../../HOC/withContext";
 
-const CalendarContainer = ({ startDate, endDate, locales }) => {
+const CalendarContainer = ({ locales }) => {
   const { showDate, setMonthHandler, setYearHandler } = useShowDateContext();
 
-  const { setHoverDay } = useDayContext();
+  const { setHoverDayTimestamp } = useHoverDayContext();
 
   const nextMonth = useMemo(() => getNextMonth(showDate), [showDate]);
 
@@ -23,9 +28,19 @@ const CalendarContainer = ({ startDate, endDate, locales }) => {
     setYearHandler,
   ]);
 
-  const calendarLeft = useCalendar(showDate, startDate, endDate);
+  const { startDateTimestamp, endDateTimestamp } = useRangeContext();
 
-  const calendarRight = useCalendar(nextMonth, startDate, endDate);
+  const calendarLeft = useCalendar(
+    showDate,
+    startDateTimestamp,
+    endDateTimestamp
+  );
+
+  const calendarRight = useCalendar(
+    nextMonth,
+    startDateTimestamp,
+    endDateTimestamp
+  );
 
   const { calendarLeftDays, calendarRightDays } = useCalendarVisible(
     calendarLeft,
@@ -35,7 +50,7 @@ const CalendarContainer = ({ startDate, endDate, locales }) => {
   return (
     <div
       className={styles.calendar_container}
-      onMouseLeave={setHoverDay.bind(this, null)}
+      onMouseLeave={setHoverDayTimestamp.bind(this, null)}
     >
       <CalendarSelector
         date={showDate}
@@ -58,9 +73,7 @@ CalendarContainer.defaultProps = {
 };
 
 CalendarContainer.propTypes = {
-  startDate: PropTypes.instanceOf(Date),
-  endDate: PropTypes.instanceOf(Date),
   locales: PropTypes.string,
 };
 
-export default CalendarContainer;
+export default withContext(HoverDayProvider)(CalendarContainer);

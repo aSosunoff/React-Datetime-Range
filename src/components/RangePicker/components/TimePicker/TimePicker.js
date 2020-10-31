@@ -1,22 +1,24 @@
 import React, { useMemo } from "react";
-import PropTypes from "prop-types";
 import styles from "./TimePicker.module.scss";
+import { useRangeContext } from "../../contexts/rangeContext";
 
-const TimePicker = ({ startDate, endDate, onSetTimeStart, onSetTimeEnd }) => {
-  const timeFrom = useMemo(
-    () => (startDate ? startDate.toLocaleTimeString() : ""),
-    [startDate]
-  );
+const TimePicker = () => {
+  const {
+    startDateTimestamp,
+    endDateTimestamp,
+    startTimeString,
+    endTimeString,
+    setStartTimeStringHandler,
+    setEndTimeStringHandler,
+  } = useRangeContext();
 
-  const timeTo = useMemo(() => (endDate ? endDate.toLocaleTimeString() : ""), [
-    endDate,
+  const isDisabledStartTime = useMemo(() => !Boolean(startDateTimestamp), [
+    startDateTimestamp,
   ]);
 
-  const getFormatTime = (value) => {
-    const [hour = 0, minute = 0, second = 0] = value.split(":").map(Number);
-
-    return [hour, minute, second];
-  };
+  const isDisabledEndTime = useMemo(() => !Boolean(endDateTimestamp), [
+    endDateTimestamp,
+  ]);
 
   return (
     <div className={styles.time_picker} data-test-id="time-picker">
@@ -24,37 +26,21 @@ const TimePicker = ({ startDate, endDate, onSetTimeStart, onSetTimeEnd }) => {
         data-test-id="time-picker-start"
         type="time"
         step="1"
-        disabled={!Boolean(timeFrom)}
-        onChange={({ target }) =>
-          onSetTimeStart(...getFormatTime(target.value))
-        }
-        value={timeFrom}
+        disabled={isDisabledStartTime}
+        onChange={({ target }) => setStartTimeStringHandler(target.value)}
+        value={startTimeString}
       />
 
       <input
         data-test-id="time-picker-end"
         type="time"
         step="1"
-        disabled={!Boolean(timeTo)}
-        onChange={({ target }) => onSetTimeEnd(...getFormatTime(target.value))}
-        value={timeTo}
+        disabled={isDisabledEndTime}
+        onChange={({ target }) => setEndTimeStringHandler(target.value)}
+        value={endTimeString}
       />
     </div>
   );
-};
-
-TimePicker.defaultProps = {
-  startDate: null,
-  endDate: null,
-  onSetTimeStart: () => {},
-  onSetTimeEnd: () => {},
-};
-
-TimePicker.propTypes = {
-  startDate: PropTypes.instanceOf(Date),
-  endDate: PropTypes.instanceOf(Date),
-  onSetTimeStart: PropTypes.func,
-  onSetTimeEnd: PropTypes.func,
 };
 
 export default TimePicker;

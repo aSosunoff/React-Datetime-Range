@@ -1,61 +1,96 @@
-import { useState, useEffect, useCallback } from "react";
-import { getDateSplit } from "../utils/dateHalper";
+import { useCallback, useMemo } from "react";
+import useDateTimestamp from "./useDateTimestamp";
+import useTime from "./useTime";
 
 export default function useRange(startDate, endDate) {
-  const [range, setRange] = useState({ startDate, endDate });
+  const {
+    startDateTimestamp,
+    endDateTimestamp,
+    setDateTimestampRangeHandler,
+    resetHandler: resetDateHandler,
+  } = useDateTimestamp(startDate, endDate);
 
-  useEffect(() => setRange(() => ({ startDate, endDate })), [
-    startDate,
-    endDate,
-  ]);
+  const {
+    startTimeString,
+    endTimeString,
+    setStartTimeStringHandler,
+    setEndTimeStringHandler,
+    resetHandler: resetTimeHandler,
+  } = useTime(startDate, endDate);
 
-  const setStartDate = useCallback(
-    (date) =>
-      setRange((prev) => ({
-        ...prev,
-        startDate: date,
-      })),
-    []
-  );
+  const resetHandler = useCallback(() => {
+    resetDateHandler();
+    resetTimeHandler();
+  }, [resetDateHandler, resetTimeHandler]);
 
-  const setEndDate = useCallback(
-    (date) =>
-      setRange((prev) => ({
-        ...prev,
-        endDate: date,
-      })),
-    []
-  );
+  const date = useMemo(() => {
+    const getFormatTime = (value) => {
+      const [hour = 0, minute = 0, second = 0] = value.split(":").map(Number);
 
-  const resetHandler = useCallback(
-    () => setRange(() => ({ startDate: null, endDate: null })),
-    [setRange]
-  );
+      return [hour, minute, second];
+    };
 
-  const setTimeFromHandler = useCallback(
-    (hour, minute, second) => {
-      const { year, month, date } = getDateSplit(range.startDate);
-      return setStartDate(new Date(year, month, date, hour, minute, second));
+    let startDate = null;
+
+    if (startDateTimestamp && !startTimeString) {
+      startDate = new Date(startDateTimestamp);
+    } else if (startDateTimestamp && startTimeString) {
+      startDate = new Date(
+        new Date(startDateTimestamp).setHours(...getFormatTime(startTimeString))
+      );
+    }
+
+    let endDate = null;
+
+    if (endDateTimestamp && !endTimeString) {
+      endDate = new Date(endDateTimestamp);
+    } else if (endDateTimestamp && endTimeString) {
+      endDate = new Date(
+        new Date(endDateTimestamp).setHours(...getFormatTime(endTimeString))
+      );
+    }
+
+    return {
+      startDate,
+      endDate,
+    };
+  }, [endDateTimestamp, endTimeString, startDateTimestamp, startTimeString]);
+
+  const setRangeHandler = useCallback(
+    (dateTimestamp) => {
+      let from = null;
+      let to = null;
+      if (!startDateTimestamp || endDateTimestamp) {
+        from = dateTimestamp;
+        setEndTimeStringHandler("");
+      } else {
+        const current = dateTimestamp;
+        to = Math.max(current, startDateTimestamp);
+        from = Math.min(current, startDateTimestamp);
+      }
+
+      setDateTimestampRangeHandler(from, to);
     },
-    [setStartDate, range.startDate]
+    [
+      endDateTimestamp,
+      setDateTimestampRangeHandler,
+      setEndTimeStringHandler,
+      startDateTimestamp,
+    ]
   );
-
-  const setTimeToHandler = useCallback(
-    (hour, minute, second) => {
-      const { year, month, date } = getDateSplit(range.endDate);
-      return setEndDate(new Date(year, month, date, hour, minute, second));
-    },
-    [setEndDate, range.endDate]
-  );
-
-  const setRangeHandler = (startDate, endDate) =>
-    setRange(() => ({ startDate, endDate }));
 
   return {
-    ...range,
-    setRangeHandler,
+    /* Range */
     resetHandler,
-    setTimeFromHandler,
-    setTimeToHandler,
+    ...date,
+    /* Date */
+    startDateTimestamp,
+    endDateTimestamp,
+    setRangeHandler,
+    /* Time */
+    startTimeString,
+    endTimeString,
+    setStartTimeStringHandler,
+    setEndTimeStringHandler,
   };
 }

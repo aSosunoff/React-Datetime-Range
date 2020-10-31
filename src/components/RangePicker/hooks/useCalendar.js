@@ -1,41 +1,31 @@
 import { useCallback, useMemo } from "react";
-import { useDayContext } from "../contexts/dayContext";
-import {
-  getDateWithoutTime,
-  getNextMonth,
-  getPrevMonth,
-} from "../utils/dateHalper";
+import { useHoverDayContext } from "../contexts/hoverDayContext";
+import { getNextMonth, getPrevMonth } from "../utils/dateHalper";
 import useMonth from "./useMonth";
 
-export default function useCalendar(month, from, to) {
-  const startRangeTimestamp = useMemo(
-    () => from && getDateWithoutTime(from).getTime(),
-    [from]
-  );
-
-  const endRangeTimestamp = useMemo(
-    () => to && getDateWithoutTime(to).getTime(),
-    [to]
-  );
-
+export default function useCalendar(
+  month,
+  startDateTimestamp,
+  endDateTimestamp
+) {
   const { days: prevDays } = useMonth(
     getPrevMonth(month),
-    startRangeTimestamp,
-    endRangeTimestamp
+    startDateTimestamp,
+    endDateTimestamp
   );
 
   const { days: currentDays, firsDayOfWeekByMonth, weekCount } = useMonth(
     month,
-    startRangeTimestamp,
-    endRangeTimestamp
+    startDateTimestamp,
+    endDateTimestamp
   );
 
   const {
     days: nextDays,
     firsDayOfWeekByMonth: nextMonthFirsDayOfWeekByMonth,
-  } = useMonth(getNextMonth(month), startRangeTimestamp, endRangeTimestamp);
+  } = useMonth(getNextMonth(month), startDateTimestamp, endDateTimestamp);
 
-  const { hoverDay } = useDayContext();
+  const { hoverDayTimestamp } = useHoverDayContext();
 
   const mapDefault = useCallback(
     (fields) => ({
@@ -60,22 +50,22 @@ export default function useCalendar(month, from, to) {
     () =>
       currentDays.map((day) => {
         const isHoverBetween =
-          startRangeTimestamp &&
-          hoverDay &&
-          !endRangeTimestamp &&
-          ((startRangeTimestamp < day.dateTimestamp &&
-            day.dateTimestamp <= hoverDay.getTime()) ||
-            (startRangeTimestamp > day.dateTimestamp &&
-              day.dateTimestamp >= hoverDay.getTime()));
+          startDateTimestamp &&
+          hoverDayTimestamp &&
+          !endDateTimestamp &&
+          ((startDateTimestamp < day.dateTimestamp &&
+            day.dateTimestamp <= hoverDayTimestamp) ||
+            (startDateTimestamp > day.dateTimestamp &&
+              day.dateTimestamp >= hoverDayTimestamp));
 
         return {
           ...day,
           isCurrentMonth: true,
           isHoverBetween,
-          isHoverStart: hoverDay && hoverDay.getTime() === day.dateTimestamp,
+          isHoverStart: hoverDayTimestamp === day.dateTimestamp,
         };
       }),
-    [currentDays, endRangeTimestamp, hoverDay, startRangeTimestamp]
+    [currentDays, endDateTimestamp, hoverDayTimestamp, startDateTimestamp]
   );
 
   const _nextDays = useMemo(() => nextDays.map(mapDefault), [

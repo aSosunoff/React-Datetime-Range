@@ -11,7 +11,6 @@ import { withAnimation } from "../../HOC/withAnimation";
 import { compose } from "../../utils/compose";
 import Control from "../Control";
 import { RangeProvider, useRangeContext } from "../../contexts/rangeContext";
-import { DayProvider } from "../../contexts/dayContext";
 import { withContext } from "../../HOC/withContext";
 import { ShowDateProvider } from "../../contexts/showDateContext";
 
@@ -72,7 +71,6 @@ RangePicker.propTypes = {
 
 export default compose(
   withContext(ShowDateProvider, ({ startDate }) => ({ startDate })),
-  withContext(DayProvider),
   withContext(RangeProvider, ({ startDate, endDate }) => ({
     startDate,
     endDate,

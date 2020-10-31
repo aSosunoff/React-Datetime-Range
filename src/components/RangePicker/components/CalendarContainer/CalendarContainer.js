@@ -3,12 +3,13 @@ import PropTypes from "prop-types";
 import { getNextMonth } from "../../utils/dateHalper";
 import CalendarDefault from "./CalendarDefault";
 import styles from "./CalendarContainer.module.scss";
-import { useDayContext } from "../../contexts/dayContext";
+import { DayProvider, useDayContext } from "../../contexts/dayContext";
 import CalendarSelector from "./CalendarSelector/CalendarSelector";
 import { useShowDateContext } from "../../contexts/showDateContext";
 import useCalendar from "../../hooks/useCalendar";
 import { useCalendarVisible } from "../../hooks/useCalendarVisible";
 import { useRangeContext } from "../../contexts/rangeContext";
+import { withContext } from "../../HOC/withContext";
 
 const CalendarContainer = ({ locales }) => {
   const { showDate, setMonthHandler, setYearHandler } = useShowDateContext();
@@ -72,4 +73,4 @@ CalendarContainer.propTypes = {
   locales: PropTypes.string,
 };
 
-export default CalendarContainer;
+export default withContext(DayProvider)(CalendarContainer);

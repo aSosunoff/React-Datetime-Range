@@ -12,7 +12,7 @@ import { compose } from "../../utils/compose";
 import Control from "../Control";
 import { RangeProvider, useRangeContext } from "../../contexts/rangeContext";
 import { DayProvider } from "../../contexts/dayContext";
-import { withContext } from "../../utils/withContext";
+import { withContext } from "../../HOC/withContext";
 import { ShowDateProvider } from "../../contexts/showDateContext";
 
 const RangePicker = React.forwardRef(

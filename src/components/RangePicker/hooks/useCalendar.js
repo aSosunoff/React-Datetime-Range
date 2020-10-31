@@ -1,5 +1,5 @@
 import { useCallback, useMemo } from "react";
-import { useDayContext } from "../contexts/dayContext";
+import { useHoverDayContext } from "../contexts/hoverDayContext";
 import { getNextMonth, getPrevMonth } from "../utils/dateHalper";
 import useMonth from "./useMonth";
 
@@ -25,7 +25,7 @@ export default function useCalendar(
     firsDayOfWeekByMonth: nextMonthFirsDayOfWeekByMonth,
   } = useMonth(getNextMonth(month), startDateTimestamp, endDateTimestamp);
 
-  const { hoverDayTimestamp } = useDayContext();
+  const { hoverDayTimestamp } = useHoverDayContext();
 
   const mapDefault = useCallback(
     (fields) => ({

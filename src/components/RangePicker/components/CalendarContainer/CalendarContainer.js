@@ -3,7 +3,10 @@ import PropTypes from "prop-types";
 import { getNextMonth } from "../../utils/dateHalper";
 import CalendarDefault from "./CalendarDefault";
 import styles from "./CalendarContainer.module.scss";
-import { DayProvider, useDayContext } from "../../contexts/dayContext";
+import {
+  HoverDayProvider,
+  useHoverDayContext,
+} from "../../contexts/hoverDayContext";
 import CalendarSelector from "./CalendarSelector/CalendarSelector";
 import { useShowDateContext } from "../../contexts/showDateContext";
 import useCalendar from "../../hooks/useCalendar";
@@ -14,7 +17,7 @@ import { withContext } from "../../HOC/withContext";
 const CalendarContainer = ({ locales }) => {
   const { showDate, setMonthHandler, setYearHandler } = useShowDateContext();
 
-  const { setHoverDayTimestamp } = useDayContext();
+  const { setHoverDayTimestamp } = useHoverDayContext();
 
   const nextMonth = useMemo(() => getNextMonth(showDate), [showDate]);
 
@@ -73,4 +76,4 @@ CalendarContainer.propTypes = {
   locales: PropTypes.string,
 };
 
-export default withContext(DayProvider)(CalendarContainer);
+export default withContext(HoverDayProvider)(CalendarContainer);

@@ -2,7 +2,7 @@ import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import cn from "classnames";
 import styles from "./DayDefault.module.scss";
-import { useDayContext } from "../../../../contexts/dayContext";
+import { useHoverDayContext } from "../../../../contexts/hoverDayContext";
 import { debounceDecorator } from "../../../../utils/debounceDecorator";
 import { useRangeContext } from "../../../../contexts/rangeContext";
 
@@ -18,7 +18,7 @@ const DayDefault = ({
   isHoverBetween,
   isCurrentMonth,
 }) => {
-  const { setHoverDayTimestamp } = useDayContext();
+  const { setHoverDayTimestamp } = useHoverDayContext();
 
   const { setRangeHandler } = useRangeContext();
 

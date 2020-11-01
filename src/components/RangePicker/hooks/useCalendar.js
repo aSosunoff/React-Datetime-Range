@@ -1,54 +1,25 @@
-import { useCallback, useMemo } from "react";
+import { useMemo } from "react";
 import { useHoverDayContext } from "../contexts/hoverDayContext";
 import { getNextMonth, getPrevMonth } from "../utils/dateHalper";
 import useMonth from "./useMonth";
+import useMonthRange from "./useMonthRange";
 
 export default function useCalendar(
   month,
   startDateTimestamp,
   endDateTimestamp
 ) {
-  const { days: prevDays } = useMonth(
-    getPrevMonth(month),
-    startDateTimestamp,
-    endDateTimestamp
-  );
-
-  const { days: currentDays, firsDayOfWeekByMonth, weekCount } = useMonth(
+  const currentMonth = useMonthRange(
     month,
     startDateTimestamp,
     endDateTimestamp
   );
 
-  const {
-    days: nextDays,
-    firsDayOfWeekByMonth: nextMonthFirsDayOfWeekByMonth,
-  } = useMonth(getNextMonth(month), startDateTimestamp, endDateTimestamp);
-
   const { hoverDayTimestamp } = useHoverDayContext();
 
-  const mapDefault = useCallback(
-    (fields) => ({
-      ...fields,
-      isStart: false,
-      isBetween: false,
-      isEnd: false,
-      isThisDay: false,
-      isCurrentMonth: false,
-      isHoverBetween: false,
-      isHoverStart: false,
-    }),
-    []
-  );
-
-  const _prevDays = useMemo(() => prevDays.map(mapDefault), [
-    prevDays,
-    mapDefault,
-  ]);
-
-  const _currentDays = useMemo(
+  const currentDays = useMemo(
     () =>
-      currentDays.map((day) => {
+      currentMonth.days.map((day) => {
         const isHoverBetween =
           startDateTimestamp &&
           hoverDayTimestamp &&
@@ -60,34 +31,27 @@ export default function useCalendar(
 
         return {
           ...day,
-          isCurrentMonth: true,
           isHoverBetween,
           isHoverStart: hoverDayTimestamp === day.dateTimestamp,
         };
       }),
-    [currentDays, endDateTimestamp, hoverDayTimestamp, startDateTimestamp]
+    [currentMonth.days, endDateTimestamp, hoverDayTimestamp, startDateTimestamp]
   );
 
-  const _nextDays = useMemo(() => nextDays.map(mapDefault), [
-    mapDefault,
-    nextDays,
-  ]);
-
-  const startIndexCurentMonth = useMemo(() => _prevDays.length + 1, [
-    _prevDays.length,
-  ]);
-
-  const count = useMemo(() => _currentDays.length, [_currentDays.length]);
-
   return {
-    days: [..._prevDays, ..._currentDays, ..._nextDays].map((day, index) => ({
-      ...day,
-      index,
-    })),
-    firsDayOfWeekByMonth,
-    nextMonthFirsDayOfWeekByMonth,
-    weekCount,
-    startIndexCurentMonth,
-    count,
+    prevMonth: useMonth(
+      getPrevMonth(month),
+      startDateTimestamp,
+      endDateTimestamp
+    ),
+    currentMonth: {
+      ...currentMonth,
+      days: currentDays,
+    },
+    nextMonth: useMonth(
+      getNextMonth(month),
+      startDateTimestamp,
+      endDateTimestamp
+    ),
   };
 }

@@ -62,20 +62,22 @@ export default function useRange(startDate, endDate) {
       let to = null;
       if (!startDateTimestamp || endDateTimestamp) {
         from = dateTimestamp;
-        resetTimeHandler();
+        setStartTimeStringHandler("00:00:00");
       } else {
         const current = dateTimestamp;
         to = Math.max(current, startDateTimestamp);
         from = Math.min(current, startDateTimestamp);
+        setEndTimeStringHandler("00:00:00");
       }
 
       setDateTimestampRangeHandler(from, to);
     },
     [
+      startDateTimestamp,
       endDateTimestamp,
       setDateTimestampRangeHandler,
-      resetTimeHandler,
-      startDateTimestamp,
+      setStartTimeStringHandler,
+      setEndTimeStringHandler,
     ]
   );
 

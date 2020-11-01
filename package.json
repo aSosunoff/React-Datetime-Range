@@ -1,8 +1,16 @@
 {
   "name": "react-range-picker",
   "version": "0.1.0",
-  "private": true,
   "homepage": "https://asosunoff.github.io/React-Range-Picker/",
+  "bugs": {
+    "url": "https://github.com/aSosunoff/React-Range-Picker/issues"
+  },
+  "description": "Range-Picker component",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aSosunoff/React-Range-Picker.git"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",

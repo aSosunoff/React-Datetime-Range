@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { getDateWithoutTime } from "../utils/dateHalper";
+import { getDateWithoutTime } from "../../utils/dateHalper";
 
 export default function useDateTimestamp(startDate, endDate) {
   const startDateTimestamp = useMemo(

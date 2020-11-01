@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from "react";
-import useRange from "../hooks/useRange";
+import useRange from "../hooks/range/useRange";
 
 const RangeContext = createContext();
 RangeContext.displayName = "RangeContext";

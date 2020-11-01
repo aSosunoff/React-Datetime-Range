@@ -2,12 +2,12 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 
 export default function useTime(startDate, endDate) {
   const startTimeString = useMemo(
-    () => (startDate && startDate.toLocaleTimeString()) || "",
+    () => (startDate && startDate.toLocaleTimeString()) || "00:00:00",
     [startDate]
   );
 
   const endTimeString = useMemo(
-    () => (endDate && endDate.toLocaleTimeString()) || "",
+    () => (endDate && endDate.toLocaleTimeString()) || "00:00:00",
     [endDate]
   );
 
@@ -42,8 +42,8 @@ export default function useTime(startDate, endDate) {
   const resetHandler = useCallback(
     () =>
       setTimeStringRange(() => ({
-        startTimeString: "",
-        endTimeString: "",
+        startTimeString: "00:00:00",
+        endTimeString: "00:00:00",
       })),
     []
   );

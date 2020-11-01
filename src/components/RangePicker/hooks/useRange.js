@@ -62,7 +62,7 @@ export default function useRange(startDate, endDate) {
       let to = null;
       if (!startDateTimestamp || endDateTimestamp) {
         from = dateTimestamp;
-        setEndTimeStringHandler("");
+        resetTimeHandler();
       } else {
         const current = dateTimestamp;
         to = Math.max(current, startDateTimestamp);
@@ -74,7 +74,7 @@ export default function useRange(startDate, endDate) {
     [
       endDateTimestamp,
       setDateTimestampRangeHandler,
-      setEndTimeStringHandler,
+      resetTimeHandler,
       startDateTimestamp,
     ]
   );

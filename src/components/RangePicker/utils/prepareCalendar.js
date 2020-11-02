@@ -10,20 +10,17 @@ export const prepareCalendar = (
   endDateTimestamp,
   hoverDayTimestamp,
   month
-) => {
-  console.log(1);
-  return {
-    prevMonth: compose(prepareMonth, getPrevMonth)(month),
-    currentMonth: compose(
-      partial(
-        prepareHoverMonth,
-        startDateTimestamp,
-        endDateTimestamp,
-        hoverDayTimestamp
-      ),
-      partial(prepareMonthRange, startDateTimestamp, endDateTimestamp),
-      prepareMonth
-    )(month),
-    nextMonth: compose(prepareMonth, getNextMonth)(month),
-  };
-};
+) => ({
+  prevMonth: compose(prepareMonth, getPrevMonth)(month),
+  currentMonth: compose(
+    partial(
+      prepareHoverMonth,
+      startDateTimestamp,
+      endDateTimestamp,
+      hoverDayTimestamp
+    ),
+    partial(prepareMonthRange, startDateTimestamp, endDateTimestamp),
+    prepareMonth
+  )(month),
+  nextMonth: compose(prepareMonth, getNextMonth)(month),
+});

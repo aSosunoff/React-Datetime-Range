@@ -13,6 +13,7 @@ import useCalendar from "../../hooks/useCalendar";
 import { useCalendarVisible } from "../../hooks/useCalendarVisible";
 import { useRangeContext } from "../../contexts/rangeContext";
 import { withContext } from "../../HOC/withContext";
+import useHoverCurrentMonth from "../../hooks/useHoverCurrentMonth";
 
 const CalendarContainer = ({ locales }) => {
   const { showDate, setMonthHandler, setYearHandler } = useShowDateContext();
@@ -36,15 +37,39 @@ const CalendarContainer = ({ locales }) => {
     endDateTimestamp
   );
 
+  const calendarLeftHoverDays = useHoverCurrentMonth(
+    calendarLeft.currentMonth,
+    startDateTimestamp,
+    endDateTimestamp
+  );
+
   const calendarRight = useCalendar(
     nextMonth,
     startDateTimestamp,
     endDateTimestamp
   );
 
+  const calendarRightHoverDays = useHoverCurrentMonth(
+    calendarRight.currentMonth,
+    startDateTimestamp,
+    endDateTimestamp
+  );
+
   const [calendarLeftDays, calendarRightDays] = useCalendarVisible(
-    calendarLeft,
-    calendarRight
+    {
+      ...calendarLeft,
+      currentMonth: {
+        ...calendarLeft.currentMonth,
+        days: calendarLeftHoverDays,
+      },
+    },
+    {
+      ...calendarRight,
+      currentMonth: {
+        ...calendarRight.currentMonth,
+        days: calendarRightHoverDays,
+      },
+    }
   );
 
   return (

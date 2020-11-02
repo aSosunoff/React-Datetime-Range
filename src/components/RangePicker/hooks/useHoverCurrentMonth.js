@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useHoverDayContext } from "../contexts/hoverDayContext";
 
 export default function useHoverCurrentMonth(
-  month,
+  days,
   startDateTimestamp,
   endDateTimestamp
 ) {
@@ -10,21 +10,18 @@ export default function useHoverCurrentMonth(
 
   return useMemo(
     () =>
-      month.days.map((day) => {
-        const isHoverBetween =
+      days.map((day) => ({
+        ...day,
+        isHoverBetween:
           startDateTimestamp &&
           hoverDayTimestamp &&
           !endDateTimestamp &&
           ((startDateTimestamp < day.dateTimestamp &&
             day.dateTimestamp <= hoverDayTimestamp) ||
             (startDateTimestamp > day.dateTimestamp &&
-              day.dateTimestamp >= hoverDayTimestamp));
-        return {
-          ...day,
-          isHoverBetween,
-          isHoverStart: hoverDayTimestamp === day.dateTimestamp,
-        };
-      }),
-    [endDateTimestamp, hoverDayTimestamp, month.days, startDateTimestamp]
+              day.dateTimestamp >= hoverDayTimestamp)),
+        isHoverStart: hoverDayTimestamp === day.dateTimestamp,
+      })),
+    [endDateTimestamp, hoverDayTimestamp, days, startDateTimestamp]
   );
 }

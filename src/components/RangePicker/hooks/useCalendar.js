@@ -13,14 +13,14 @@ export default function useCalendar(
     endDateTimestamp
   );
 
-  const nextMonth = useMonth(
-    getNextMonth(month),
+  const currentMonth = useMonthRange(
+    month,
     startDateTimestamp,
     endDateTimestamp
   );
 
-  const currentMonth = useMonthRange(
-    month,
+  const nextMonth = useMonth(
+    getNextMonth(month),
     startDateTimestamp,
     endDateTimestamp
   );

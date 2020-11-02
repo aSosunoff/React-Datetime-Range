@@ -38,7 +38,7 @@ const CalendarContainer = ({ locales }) => {
   );
 
   const calendarLeftHoverDays = useHoverCurrentMonth(
-    calendarLeft.currentMonth,
+    calendarLeft.currentMonth.days,
     startDateTimestamp,
     endDateTimestamp
   );
@@ -50,7 +50,7 @@ const CalendarContainer = ({ locales }) => {
   );
 
   const calendarRightHoverDays = useHoverCurrentMonth(
-    calendarRight.currentMonth,
+    calendarRight.currentMonth.days,
     startDateTimestamp,
     endDateTimestamp
   );

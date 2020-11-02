@@ -9,6 +9,18 @@ export default function useCalendar(
   startDateTimestamp,
   endDateTimestamp
 ) {
+  const prevMonth = useMonth(
+    getPrevMonth(month),
+    startDateTimestamp,
+    endDateTimestamp
+  );
+
+  const nextMonth = useMonth(
+    getNextMonth(month),
+    startDateTimestamp,
+    endDateTimestamp
+  );
+
   const currentMonth = useMonthRange(
     month,
     startDateTimestamp,
@@ -39,19 +51,11 @@ export default function useCalendar(
   );
 
   return {
-    prevMonth: useMonth(
-      getPrevMonth(month),
-      startDateTimestamp,
-      endDateTimestamp
-    ),
+    prevMonth,
     currentMonth: {
       ...currentMonth,
       days: currentDays,
     },
-    nextMonth: useMonth(
-      getNextMonth(month),
-      startDateTimestamp,
-      endDateTimestamp
-    ),
+    nextMonth,
   };
 }

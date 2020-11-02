@@ -42,7 +42,7 @@ const CalendarContainer = ({ locales }) => {
     endDateTimestamp
   );
 
-  const { calendarLeftDays, calendarRightDays } = useCalendarVisible(
+  const [calendarLeftDays, calendarRightDays] = useCalendarVisible(
     calendarLeft,
     calendarRight
   );

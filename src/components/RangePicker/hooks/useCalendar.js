@@ -1,11 +1,6 @@
 import { useMemo } from "react";
-import { getNextMonth, getPrevMonth } from "../utils/dateHalper";
-import { compose } from "../utils/compose";
-import { partial } from "../utils/partial";
-import { prepareMonth } from "../utils/prepareMonth";
-import { prepareHoverMonth } from "../utils/prepareHoverMonth";
-import prepareMonthRange from "../utils/prepareMonthRange";
 import { useHoverDayContext } from "../contexts/hoverDayContext";
+import { prepareCalendar } from "../utils/prepareCalendar";
 
 export default function useCalendar(
   startDateTimestamp,
@@ -14,32 +9,14 @@ export default function useCalendar(
 ) {
   const { hoverDayTimestamp } = useHoverDayContext();
 
-  const prevMonth = useMemo(() => compose(prepareMonth, getPrevMonth)(month), [
-    month,
-  ]);
-
-  const currentMonth = useMemo(
+  return useMemo(
     () =>
-      compose(
-        partial(
-          prepareHoverMonth,
-          startDateTimestamp,
-          endDateTimestamp,
-          hoverDayTimestamp
-        ),
-        partial(prepareMonthRange, startDateTimestamp, endDateTimestamp),
-        prepareMonth
-      )(month),
+      prepareCalendar(
+        startDateTimestamp,
+        endDateTimestamp,
+        hoverDayTimestamp,
+        month
+      ),
     [endDateTimestamp, hoverDayTimestamp, month, startDateTimestamp]
   );
-
-  const nextMonth = useMemo(() => compose(prepareMonth, getNextMonth)(month), [
-    month,
-  ]);
-
-  return {
-    prevMonth,
-    currentMonth,
-    nextMonth,
-  };
 }

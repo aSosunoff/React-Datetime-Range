@@ -22,12 +22,9 @@ const CalendarContainer = ({ locales }) => {
 
   const nextMonth = useMemo(() => getNextMonth(showDate), [showDate]);
 
-  const changeMonthHandler = useCallback((month) => setMonthHandler(month), [
-    setMonthHandler,
-  ]);
-  const changeYearHandler = useCallback((year) => setYearHandler(year), [
-    setYearHandler,
-  ]);
+  const changeMonthHandler = useCallback(setMonthHandler, [setMonthHandler]);
+
+  const changeYearHandler = useCallback(setYearHandler, [setYearHandler]);
 
   const { startDateTimestamp, endDateTimestamp } = useRangeContext();
 

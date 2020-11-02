@@ -1,51 +1,41 @@
 import { useMemo } from "react";
 
-export const useCalendarVisible = (calendarLeft, calendarRight) =>
+export const useCalendarVisible = (...calendars) =>
   useMemo(() => {
-    const leftCalendarIndexStart =
-      calendarLeft.startIndexCurentMonth - calendarLeft.firsDayOfWeekByMonth;
+    const prepareCalendar = calendars.map(
+      ({ prevMonth, currentMonth, nextMonth }) => ({
+        days: [
+          ...prevMonth.days,
+          ...currentMonth.days.map((day) => ({
+            ...day,
+            isCurrentMonth: true,
+          })),
+          ...nextMonth.days,
+        ],
+        startIndex:
+          prevMonth.days.length + 1 - currentMonth.firsDayOfWeekByMonth,
+        weekCount: currentMonth.weekCount,
+        daysCount: currentMonth.days.length,
+        firsDayOfWeekByMonth: currentMonth.firsDayOfWeekByMonth,
+        nextMonthFirsDayOfWeekByMonth: nextMonth.firsDayOfWeekByMonth,
+      })
+    );
 
-    const rightCalendarIndexStart =
-      calendarRight.startIndexCurentMonth - calendarRight.firsDayOfWeekByMonth;
+    const calendar = prepareCalendar.reduce(
+      (res, calendar) =>
+        !res || res.weekCount < calendar.weekCount ? calendar : res,
+      null
+    );
 
-    let indexEnd = 0;
+    let indexEnd =
+      calendar.daysCount +
+      calendar.firsDayOfWeekByMonth +
+      (8 - calendar.nextMonthFirsDayOfWeekByMonth) -
+      1;
 
-    if (calendarLeft.weekCount <= calendarRight.weekCount) {
-      indexEnd =
-        calendarRight.count +
-        calendarRight.firsDayOfWeekByMonth +
-        (8 - calendarRight.nextMonthFirsDayOfWeekByMonth) -
-        1;
-    } else if (calendarLeft.weekCount > calendarRight.weekCount) {
-      indexEnd =
-        calendarLeft.count +
-        calendarLeft.firsDayOfWeekByMonth +
-        (8 - calendarLeft.nextMonthFirsDayOfWeekByMonth) -
-        1;
-    }
-
-    return {
-      calendarLeftDays: calendarLeft.days.slice(
-        leftCalendarIndexStart,
-        leftCalendarIndexStart + indexEnd
-      ),
-
-      calendarRightDays: calendarRight.days.slice(
-        rightCalendarIndexStart,
-        rightCalendarIndexStart + indexEnd
-      ),
-    };
-  }, [
-    calendarLeft.count,
-    calendarLeft.days,
-    calendarLeft.firsDayOfWeekByMonth,
-    calendarLeft.nextMonthFirsDayOfWeekByMonth,
-    calendarLeft.startIndexCurentMonth,
-    calendarLeft.weekCount,
-    calendarRight.count,
-    calendarRight.days,
-    calendarRight.firsDayOfWeekByMonth,
-    calendarRight.nextMonthFirsDayOfWeekByMonth,
-    calendarRight.startIndexCurentMonth,
-    calendarRight.weekCount,
-  ]);
+    return prepareCalendar.map((calendar) =>
+      calendar.days
+        .slice(calendar.startIndex, calendar.startIndex + indexEnd)
+        .map((day, index) => ({ ...day, index }))
+    );
+  }, [calendars]);

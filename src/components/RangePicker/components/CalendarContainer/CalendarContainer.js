@@ -21,28 +21,25 @@ const CalendarContainer = ({ locales }) => {
 
   const nextMonth = useMemo(() => getNextMonth(showDate), [showDate]);
 
-  const changeMonthHandler = useCallback((month) => setMonthHandler(month), [
-    setMonthHandler,
-  ]);
-  const changeYearHandler = useCallback((year) => setYearHandler(year), [
-    setYearHandler,
-  ]);
+  const changeMonthHandler = useCallback(setMonthHandler, [setMonthHandler]);
+
+  const changeYearHandler = useCallback(setYearHandler, [setYearHandler]);
 
   const { startDateTimestamp, endDateTimestamp } = useRangeContext();
 
   const calendarLeft = useCalendar(
-    showDate,
     startDateTimestamp,
-    endDateTimestamp
+    endDateTimestamp,
+    showDate
   );
 
   const calendarRight = useCalendar(
-    nextMonth,
     startDateTimestamp,
-    endDateTimestamp
+    endDateTimestamp,
+    nextMonth
   );
 
-  const { calendarLeftDays, calendarRightDays } = useCalendarVisible(
+  const [calendarLeftDays, calendarRightDays] = useCalendarVisible(
     calendarLeft,
     calendarRight
   );

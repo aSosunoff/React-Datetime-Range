@@ -28,15 +28,15 @@ const CalendarContainer = ({ locales }) => {
   const { startDateTimestamp, endDateTimestamp } = useRangeContext();
 
   const calendarLeft = useCalendar(
-    showDate,
     startDateTimestamp,
-    endDateTimestamp
+    endDateTimestamp,
+    showDate
   );
 
   const calendarRight = useCalendar(
-    nextMonth,
     startDateTimestamp,
-    endDateTimestamp
+    endDateTimestamp,
+    nextMonth
   );
 
   const [calendarLeftDays, calendarRightDays] = useCalendarVisible(

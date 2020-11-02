@@ -8,9 +8,9 @@ import prepareMonthRange from "../utils/prepareMonthRange";
 import { useHoverDayContext } from "../contexts/hoverDayContext";
 
 export default function useCalendar(
-  month,
   startDateTimestamp,
-  endDateTimestamp
+  endDateTimestamp,
+  month
 ) {
   const { hoverDayTimestamp } = useHoverDayContext();
 

@@ -8,11 +8,11 @@ import {
 } from "../../contexts/hoverDayContext";
 import CalendarSelector from "./CalendarSelector/CalendarSelector";
 import { useShowDateContext } from "../../contexts/showDateContext";
-import useCalendar from "../../hooks/useCalendar";
 import { useCalendarVisible } from "../../hooks/useCalendarVisible";
 import { useRangeContext } from "../../contexts/rangeContext";
 import { withContext } from "../../HOC/withContext";
 import CalendarSimple from "./CalendarSimple";
+import { prepareCalendar } from "../../utils/prepareCalendar";
 
 const CalendarContainer = ({ locales }) => {
   const { showDate, setMonthHandler, setYearHandler } = useShowDateContext();
@@ -27,21 +27,30 @@ const CalendarContainer = ({ locales }) => {
 
   const { startDateTimestamp, endDateTimestamp } = useRangeContext();
 
-  const calendarLeft = useCalendar(
-    startDateTimestamp,
-    endDateTimestamp,
-    showDate
+  const { hoverDayTimestamp } = useHoverDayContext();
+
+  const calendars = useMemo(
+    () =>
+      [showDate, nextMonth].map((month) => ({
+        month,
+        prepareCalendar: prepareCalendar(
+          startDateTimestamp,
+          endDateTimestamp,
+          hoverDayTimestamp,
+          month
+        ),
+      })),
+    [
+      endDateTimestamp,
+      hoverDayTimestamp,
+      nextMonth,
+      showDate,
+      startDateTimestamp,
+    ]
   );
 
-  const calendarRight = useCalendar(
-    startDateTimestamp,
-    endDateTimestamp,
-    nextMonth
-  );
-
-  const [calendarLeftDays, calendarRightDays] = useCalendarVisible(
-    calendarLeft,
-    calendarRight
+  const daysCalendar = useCalendarVisible(
+    ...calendars.map(({ prepareCalendar }) => prepareCalendar)
   );
 
   return (
@@ -49,18 +58,25 @@ const CalendarContainer = ({ locales }) => {
       className={styles.calendar_container}
       onMouseLeave={setHoverDayTimestamp.bind(this, null)}
     >
-      <CalendarSelector
-        date={showDate}
-        days={calendarLeftDays}
-        locales={locales}
-        changeMonthHandler={changeMonthHandler}
-        changeYearHandler={changeYearHandler}
-      />
-      <CalendarSimple
-        date={nextMonth}
-        days={calendarRightDays}
-        locales={locales}
-      />
+      {calendars.map((calendar, index) =>
+        index === 0 ? (
+          <CalendarSelector
+            key={index}
+            date={calendar.month}
+            days={daysCalendar[index]}
+            locales={locales}
+            changeMonthHandler={changeMonthHandler}
+            changeYearHandler={changeYearHandler}
+          />
+        ) : (
+          <CalendarSimple
+            key={index}
+            date={calendar.month}
+            days={daysCalendar[index]}
+            locales={locales}
+          />
+        )
+      )}
     </div>
   );
 };

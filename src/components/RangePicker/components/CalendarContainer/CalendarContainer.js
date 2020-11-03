@@ -1,7 +1,6 @@
 import React, { useCallback, useMemo } from "react";
 import PropTypes from "prop-types";
 import { getNextMonth } from "../../utils/dateHalper";
-import CalendarDefault from "./CalendarDefault";
 import styles from "./CalendarContainer.module.scss";
 import {
   HoverDayProvider,
@@ -13,6 +12,7 @@ import useCalendar from "../../hooks/useCalendar";
 import { useCalendarVisible } from "../../hooks/useCalendarVisible";
 import { useRangeContext } from "../../contexts/rangeContext";
 import { withContext } from "../../HOC/withContext";
+import CalendarSimple from "./CalendarSimple";
 
 const CalendarContainer = ({ locales }) => {
   const { showDate, setMonthHandler, setYearHandler } = useShowDateContext();
@@ -56,7 +56,7 @@ const CalendarContainer = ({ locales }) => {
         changeMonthHandler={changeMonthHandler}
         changeYearHandler={changeYearHandler}
       />
-      <CalendarDefault
+      <CalendarSimple
         date={nextMonth}
         days={calendarRightDays}
         locales={locales}

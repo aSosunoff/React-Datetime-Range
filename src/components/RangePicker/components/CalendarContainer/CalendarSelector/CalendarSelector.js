@@ -9,9 +9,10 @@ import useDateSplit from "../../../hooks/useDateSplit";
 const CalendarSelector = ({
   changeMonthHandler,
   changeYearHandler,
+  date,
   ...props
 }) => {
-  const { year, month } = useDateSplit(props.date);
+  const { year, month } = useDateSplit(date);
 
   const yearList = useMemo(() => getYearList(), []);
 
@@ -31,7 +32,7 @@ const CalendarSelector = ({
     [changeYearHandler]
   );
 
-  const TitleComponentRender = useCallback(
+  const Title = useCallback(
     ({ titleClass }) => (
       <div className={cn(titleClass, styles.title)}>
         <select value={month} onChange={changeMonthHandlerLocal}>
@@ -61,9 +62,7 @@ const CalendarSelector = ({
     ]
   );
 
-  return (
-    <CalendarDefault {...props} TitleComponentRender={TitleComponentRender} />
-  );
+  return <CalendarDefault {...props}>{Title}</CalendarDefault>;
 };
 
 CalendarSelector.defaultProps = {};
@@ -71,6 +70,7 @@ CalendarSelector.defaultProps = {};
 CalendarSelector.propTypes = {
   changeMonthHandler: PropTypes.func.isRequired,
   changeYearHandler: PropTypes.func.isRequired,
+  date: PropTypes.instanceOf(Date).isRequired,
 };
 
 export default CalendarSelector;

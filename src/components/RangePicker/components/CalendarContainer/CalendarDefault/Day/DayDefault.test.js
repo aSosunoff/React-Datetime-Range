@@ -1,10 +1,11 @@
 import React from "react";
-import { mount /* , shallow */ } from "enzyme";
+import { mount } from "enzyme";
 
 import Day from "./DayDefault";
-import { /* DayContext, */ HoverDayProvider } from "../../../../contexts/day";
-import { withDayContext } from "../../../../HOC/withDayContext";
-/* import { withDayContext } from "../../../../HOC/withDayContext"; */
+import { withContext } from "../../../../HOC/withContext";
+import { HoverDayProvider } from "../../../../contexts/hoverDayContext";
+import { compose } from "../../../../utils/compose";
+import { RangeProvider } from "../../../../contexts/rangeContext";
 
 describe("Day", () => {
   let component;
@@ -17,12 +18,15 @@ describe("Day", () => {
 
   const props = {
     number: 1,
-    date: new Date(2020, 0, 1),
+    dateTimestamp: new Date(2020, 0, 1).getTime(),
   };
 
   beforeEach(() => {
-    const WithDayContext = withDayContext(Day);
-    component = mount(<WithDayContext {...props} />);
+    const WithHoverDayProvider = compose(
+      withContext(RangeProvider),
+      withContext(HoverDayProvider)
+    )(Day);
+    component = mount(<WithHoverDayProvider {...props} />);
   });
 
   it("should render button", () => {
@@ -45,45 +49,5 @@ describe("Day", () => {
     expect(button().prop("style").gridColumnStart).toBe(1);
     setProp("gridColumnStart", 2);
     expect(button().prop("style").gridColumnStart).toBe(2);
-  });
-
-  it("should contain class start", () => {
-    setProp("type", "start");
-    expect(button().prop("className")).toContain("start");
-  });
-
-  it("should contain class current", () => {
-    setProp("isCurrent", true);
-    expect(button().prop("className")).toContain("current");
-  });
-
-  it("should call setDay", () => {
-    /* button().simulate("click");
-    console.log(component.debug()); */
-    /* const WithDayContext = withDayContext(Day);
-    const wrapper = shallow(<WithDayContext {...props} />);
-    const provider = wrapper.dive(); */
-    /* console.log(provider.prop('value').day); */
-    /* const button = wrapper.find("button"); */
-    /* console.log(
-      wrapper
-        .find("Day")
-        .shallow({
-          wrappingComponent: DayContext.Provider,
-          wrappingComponentProps: { value: { setDay: () => {}, day: 1 } },
-        })
-        .debug()
-    ); */
-    /* const callback = jest.fn();
-    const date = new Date(2020, 1, 1);
-
-    const provider = component.getWrappingComponent();
-    provider.setProps({ setDayHandler: callback });
-
-    setProp("date", date);
-    button().simulate("click");
-
-    const [[result]] = callback.mock.calls;
-    expect(result.getTime()).toBe(date.getTime()); */
   });
 });

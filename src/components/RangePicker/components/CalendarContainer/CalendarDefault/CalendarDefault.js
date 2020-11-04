@@ -10,7 +10,7 @@ const CalendarDefault = ({ days, locales, children: Title }) => (
 
     <WeekLine locales={locales} />
 
-    <div className={styles.grid} data-test-id="calendar-container-day">
+    <div className={styles.grid}>
       {days.map((day) => (
         <Day key={day.index} {...day} />
       ))}

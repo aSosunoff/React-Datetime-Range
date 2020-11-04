@@ -56,12 +56,19 @@ export const useCalendar = () => {
     [calendars, endDateTimestamp, hoverDayTimestamp, startDateTimestamp]
   );
 
-  const daysCalendar = useCalendarVisible(
-    calendarsWithHoverDay.map(({ prepareCalendar }) => prepareCalendar)
+  const calendarsWithHoverDayCalendar = useMemo(
+    () => calendarsWithHoverDay.map(({ prepareCalendar }) => prepareCalendar),
+    [calendarsWithHoverDay]
   );
 
-  return calendarsWithHoverDay.map((calendar, index) => ({
-    date: calendar.month,
-    days: daysCalendar[index],
-  }));
+  const daysCalendar = useCalendarVisible(calendarsWithHoverDayCalendar);
+
+  return useMemo(
+    () =>
+      calendarsWithHoverDay.map((calendar, index) => ({
+        date: calendar.month,
+        days: daysCalendar[index],
+      })),
+    [calendarsWithHoverDay, daysCalendar]
+  );
 };

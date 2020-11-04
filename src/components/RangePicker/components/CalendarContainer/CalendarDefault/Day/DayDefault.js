@@ -91,7 +91,6 @@ DayDefault.propTypes = {
     }
   },
   gridColumnStart: PropTypes.number,
-  type: PropTypes.string,
   dateTimestamp: PropTypes.number.isRequired,
   isThisDay: PropTypes.bool,
   isCurrentMonth: PropTypes.bool,

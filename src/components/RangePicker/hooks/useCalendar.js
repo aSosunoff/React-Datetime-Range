@@ -12,7 +12,7 @@ export const useCalendar = () => {
 
   const showCalendars = useMemo(
     () =>
-      new Array(6)
+      new Array(2)
         .fill(null)
         .reduce(
           (res) =>

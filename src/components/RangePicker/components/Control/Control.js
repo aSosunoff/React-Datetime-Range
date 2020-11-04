@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import styles from "./Control.module.scss";
 import { useShowDateContext } from "../../contexts/showDateContext";
-import useAddListener from "../../hooks/useAddListener";
+import { useEventListener } from "../../hooks/useEventListener";
 
 const Control = ({ isOpen }) => {
   const { nextMonthHandler, prevMonthHandler } = useShowDateContext();
@@ -21,7 +21,7 @@ const Control = ({ isOpen }) => {
     [isOpen, nextMonthHandler, prevMonthHandler]
   );
 
-  useAddListener(document, "keydown", _handleDocumentLeftRightClick);
+  useEventListener("keydown", _handleDocumentLeftRightClick);
 
   return (
     <>

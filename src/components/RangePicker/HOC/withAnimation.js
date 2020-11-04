@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { getBounding } from "../utils/getBounding";
-import useAddListener from "../hooks/useAddListener";
+import { useEventListener } from "../hooks/useEventListener";
 import Animation from "../components/Animation";
 
 export const withAnimation = (WrapperComponent) => {
@@ -32,7 +32,7 @@ export const withAnimation = (WrapperComponent) => {
       [props, target]
     );
 
-    useAddListener(document, "pointerdown", _handleDocumentClick);
+    useEventListener("pointerdown", _handleDocumentClick);
 
     const RenderComponent = useCallback(
       (style) => (

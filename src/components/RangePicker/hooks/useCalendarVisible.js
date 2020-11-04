@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-export const useCalendarVisible = (...calendars) =>
+export const useCalendarVisible = (calendars) =>
   useMemo(() => {
     const prepareCalendar = calendars.map(
       ({ prevMonth, currentMonth, nextMonth }) => ({

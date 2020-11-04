@@ -1,4 +1,4 @@
-export const getNextMonthFromDate = (startDate, index) =>
+export const getMonthFromDate = (startDate, index) =>
   new Date(startDate.getFullYear(), startDate.getMonth() + index, 1);
 
 export const getNextMonth = (date) =>

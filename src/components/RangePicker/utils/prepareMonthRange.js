@@ -10,10 +10,11 @@ export default function prepareMonthRange(
   const isEnd = (dateTimestamp) => endRangeTimestamp === dateTimestamp;
 
   const isBetween = (dateTimestamp) =>
-    startRangeTimestamp &&
-    endRangeTimestamp &&
-    startRangeTimestamp < dateTimestamp &&
-    dateTimestamp < endRangeTimestamp;
+    (startRangeTimestamp &&
+      endRangeTimestamp &&
+      startRangeTimestamp < dateTimestamp &&
+      dateTimestamp < endRangeTimestamp) ||
+    false;
 
   const isThisDay = (dateTimestamp) =>
     getDateWithoutTime(new Date()).getTime() === dateTimestamp;

@@ -29,7 +29,6 @@ const CalendarContainer = ({ locales }) => {
       style={{
         gridTemplateColumns: `repeat(${calendars.length}, 1fr)`,
       }}
-      data-test-id="calendar-container"
     >
       {calendars.map(({ date, days }, index) =>
         index === 0 ? (

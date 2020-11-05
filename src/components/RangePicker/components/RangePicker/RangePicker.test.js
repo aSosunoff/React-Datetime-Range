@@ -7,8 +7,6 @@ describe("RangePicker", () => {
   let wrapper;
 
   const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
-  /* const getProp = (prop) => wrapper.prop(prop);
-  const setProp = (prop, value) => wrapper.setProps({ [prop]: value }); */
 
   const props = {
     startDate: new Date(2020, 0, 5),
@@ -42,7 +40,7 @@ describe("RangePicker", () => {
   });
 
   it("should contain CalendarSelector and CalendarSimple", () => {
-    const CalendarContainer = getByDataId("calendar-container");
+    const CalendarContainer = wrapper.find("CalendarContainer");
 
     const CalendarSelector = CalendarContainer.find("CalendarSelector");
 
@@ -54,7 +52,7 @@ describe("RangePicker", () => {
   });
 
   it("should raise range after apply", () => {
-    const CalendarContainer = getByDataId("calendar-container");
+    const CalendarContainer = wrapper.find("CalendarContainer");
 
     const CalendarSelector = CalendarContainer.find("CalendarSelector");
 
@@ -76,60 +74,69 @@ describe("RangePicker", () => {
     expect(endDate.getTime()).toBe(new Date(2020, 0, 10).getTime());
   });
 
-  /* it("should set focus after set start date", () => {
-    const container = document.createElement("div");
-    document.body.append(container);
-    document.body.focus();
-
-    wrapper = mount(<RangePicker {...props} />, { attachTo: container });
-
-    const CalendarContainer = getByDataId("calendar-container");
-
-    CalendarContainer
-      .find("CalendarSelector")
-      .find("DayDefault")
-      .find({ number: 1, isCurrentMonth: true })
-      .find("button")
-      .simulate("click");
-
-    expect(document.activeElement).toBe(
-      getByDataId("time-picker-start").getDOMNode()
-    );
-  }); */
-
-  /* it("should set next calendar", () => {
-    const Calendar = wrapper.find("Calendar").at(0);
-    const calendar_title = Calendar.find('[data-test-id="calendar-title"]');
-
-    expect(
-      props.startDate.toLocaleString("ru", { month: "long", year: "numeric" })
-    ).toBe(calendar_title.text());
-
-    getByDataId("control-right").simulate("click");
+  it("should set next calendar", () => {
+    let titleText = wrapper
+      .find("CalendarContainer")
+      .find("CalendarSimple")
+      .find('[data-test-id="calendar-title"]')
+      .text();
 
     expect(
       new Date(2020, 1, 1).toLocaleString("ru", {
         month: "long",
         year: "numeric",
       })
-    ).toBe(calendar_title.text());
-  }); */
+    ).toBe(titleText);
 
-  /* it("should set prev calendar", () => {
-    const Calendar = wrapper.find("Calendar").at(0);
-    const calendar_title = Calendar.find('[data-test-id="calendar-title"]');
+    wrapper
+      .find("Control")
+      .find('[data-test-id="control-right"]')
+      .simulate("click");
+
+    titleText = wrapper
+      .find("CalendarContainer")
+      .find("CalendarSimple")
+      .find('[data-test-id="calendar-title"]')
+      .text();
 
     expect(
-      props.startDate.toLocaleString("ru", { month: "long", year: "numeric" })
-    ).toBe(calendar_title.text());
-
-    getByDataId("control-left").simulate("click");
-
-    expect(
-      new Date(2019, 11, 1).toLocaleString("ru", {
+      new Date(2020, 2, 1).toLocaleString("ru", {
         month: "long",
         year: "numeric",
       })
-    ).toBe(calendar_title.text());
-  }); */
+    ).toBe(titleText);
+  });
+
+  it("should set prev calendar", () => {
+    let titleText = wrapper
+      .find("CalendarContainer")
+      .find("CalendarSimple")
+      .find('[data-test-id="calendar-title"]')
+      .text();
+
+    expect(
+      new Date(2020, 1, 1).toLocaleString("ru", {
+        month: "long",
+        year: "numeric",
+      })
+    ).toBe(titleText);
+
+    wrapper
+      .find("Control")
+      .find('[data-test-id="control-left"]')
+      .simulate("click");
+
+    titleText = wrapper
+      .find("CalendarContainer")
+      .find("CalendarSimple")
+      .find('[data-test-id="calendar-title"]')
+      .text();
+
+    expect(
+      new Date(2020, 0, 1).toLocaleString("ru", {
+        month: "long",
+        year: "numeric",
+      })
+    ).toBe(titleText);
+  });
 });

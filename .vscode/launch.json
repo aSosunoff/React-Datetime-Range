@@ -18,11 +18,11 @@
       "disableOptimisticBPs": true
     },
     {
-      "name": "Day",
+      "name": "RangePicker",
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-scripts",
-      "args": ["test", "--runInBand", "--no-cache", "--watchAll=false", "--testPathPattern=DayDefault"],
+      "args": ["test", "--runInBand", "--no-cache", "--watchAll=false", "--testPathPattern=RangePicker"],
       "cwd": "${workspaceFolder}",
       "protocol": "inspector",
       "console": "integratedTerminal",

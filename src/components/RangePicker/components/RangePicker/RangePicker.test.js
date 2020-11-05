@@ -140,3 +140,120 @@ describe("RangePicker", () => {
     ).toBe(titleText);
   });
 });
+
+describe("CalendarDefault", () => {
+  let wrapper;
+
+  const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
+  /* const getProp = (prop) => component.prop(prop); */
+  const setProp = (prop, value) => wrapper.setProps({ [prop]: value });
+
+  const props = {
+    startDate: new Date(2020, 0, 5),
+    endDate: new Date(2020, 0, 6),
+    onRangeSelected: jest.fn(),
+    onClose: jest.fn(),
+  };
+
+  beforeEach(() => {
+    wrapper = mount(<RangePicker {...props} />);
+  });
+
+  it("should render", () => {
+    wrapper
+      .find("CalendarContainer")
+      .children()
+      .children()
+      .forEach((calendar) => {
+        expect(calendar.find("CalendarDefault")).toHaveLength(1);
+      });
+  });
+
+  /* it("should contain title", () => {
+    expect(title()).toHaveLength(1);
+  }); */
+
+  it("should contain WeekLine", () => {
+    wrapper.find("CalendarDefault").forEach((calendar) => {
+      expect(calendar.find("WeekLine")).toHaveLength(1);
+    });
+  });
+
+  it("should contain day container", () => {
+    wrapper.find("CalendarDefault").forEach((calendar) => {
+      expect(
+        calendar.find("[data-test-id='calendar-default-day-container']")
+      ).toHaveLength(1);
+    });
+  });
+
+  /*  it("should contain title (default)", () => {
+    const localesDefault = getProp("locales");
+    let localeString = props.date.toLocaleString(localesDefault, {
+      month: "long",
+      year: "numeric",
+    });
+    expect(title().find("time").text()).toBe(localeString);
+  });
+
+  it("should contain title (en)", () => {
+    setProp("locales", "en");
+    const localeString = props.date.toLocaleString("en", {
+      month: "long",
+      year: "numeric",
+    });
+    expect(title().find("time").text()).toBe(localeString);
+  }); */
+
+  it("should contain length 31 day", () => {
+    expect(
+      wrapper
+        .find("CalendarDefault")
+        .at(0)
+        .find("[data-test-id='calendar-default-day-container']")
+        .find("DayDefault")
+        .find({ isCurrentMonth: true })
+    ).toHaveLength(31);
+  });
+});
+
+// describe("CalendarSelector AND CalendarSimple", () => {
+//   let wrapper;
+
+//   const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
+//   /* const getProp = (prop) => component.prop(prop); */
+//   const setProp = (prop, value) => wrapper.setProps({ [prop]: value });
+
+//   const props = {
+//     startDate: new Date(2020, 0, 5),
+//     endDate: new Date(2020, 0, 6),
+//     onRangeSelected: jest.fn(),
+//     onClose: jest.fn(),
+//   };
+
+//   beforeEach(() => {
+//     wrapper = mount(<RangePicker {...props} />);
+//   });
+
+//   /* it("should contain title", () => {
+//     expect(title()).toHaveLength(1);
+//   }); */
+
+//   /*  it("should contain title (default)", () => {
+//     const localesDefault = getProp("locales");
+//     let localeString = props.date.toLocaleString(localesDefault, {
+//       month: "long",
+//       year: "numeric",
+//     });
+//     expect(title().find("time").text()).toBe(localeString);
+//   });
+
+//   it("should contain title (en)", () => {
+//     setProp("locales", "en");
+//     const localeString = props.date.toLocaleString("en", {
+//       month: "long",
+//       year: "numeric",
+//     });
+//     expect(title().find("time").text()).toBe(localeString);
+//   }); */
+// });

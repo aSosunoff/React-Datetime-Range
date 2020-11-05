@@ -6,7 +6,27 @@ import RangePicker from "./RangePicker";
 describe("RangePicker", () => {
   let wrapper;
 
-  const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
+  const getByDataId = (wrapper, dataId) =>
+    wrapper.find(`[data-test-id="${dataId}"]`);
+
+  const RangePickerComponent = () => wrapper.find("RangePicker");
+
+  const Control = () => wrapper.find("Control");
+  const ControlRight = () => getByDataId(Control(), "control-right");
+  const ControlLeft = () => getByDataId(Control(), "control-left");
+
+  const CalendarContainer = () => wrapper.find("CalendarContainer");
+  const TimePicker = () => wrapper.find("TimePicker");
+
+  const BottomBar = () => wrapper.find("BottomBar");
+  const BottomBarApplyButton = () =>
+    getByDataId(BottomBar(), "bottom-bar-apply-button");
+
+  const CalendarSelector = () => CalendarContainer().find("CalendarSelector");
+
+  const CalendarSimple = () => CalendarContainer().find("CalendarSimple");
+  const CalendarSimpleTitle = () =>
+    getByDataId(CalendarSimple(), "calendar-title");
 
   const props = {
     startDate: new Date(2020, 0, 5),
@@ -20,53 +40,44 @@ describe("RangePicker", () => {
   });
 
   it("should render", () => {
-    expect(getByDataId("range-picker")).toHaveLength(1);
+    expect(RangePickerComponent()).toHaveLength(1);
   });
 
   it("should contain Control", () => {
-    expect(wrapper.find("Control")).toHaveLength(1);
+    expect(Control()).toHaveLength(1);
   });
 
   it("should contain CalendarContainer", () => {
-    expect(wrapper.find("CalendarContainer")).toHaveLength(1);
+    expect(CalendarContainer()).toHaveLength(1);
   });
 
   it("should contain TimePicker", () => {
-    expect(wrapper.find("TimePicker")).toHaveLength(1);
+    expect(TimePicker()).toHaveLength(1);
   });
 
   it("should contain BottomBar", () => {
-    expect(wrapper.find("BottomBar")).toHaveLength(1);
+    expect(BottomBar()).toHaveLength(1);
   });
 
   it("should contain CalendarSelector and CalendarSimple", () => {
-    const CalendarContainer = wrapper.find("CalendarContainer");
-
-    const CalendarSelector = CalendarContainer.find("CalendarSelector");
-
-    expect(CalendarSelector).toHaveLength(1);
-
-    const CalendarSimple = CalendarContainer.find("CalendarSimple");
-
-    expect(CalendarSimple).toHaveLength(1);
+    expect(CalendarSelector()).toHaveLength(1);
+    expect(CalendarSimple()).toHaveLength(1);
   });
 
   it("should raise range after apply", () => {
-    const CalendarContainer = wrapper.find("CalendarContainer");
-
-    const CalendarSelector = CalendarContainer.find("CalendarSelector");
-
-    CalendarSelector.find("DayDefault")
+    CalendarSelector()
+      .find("DayDefault")
       .find({ number: 1, isCurrentMonth: true })
       .find("button")
       .simulate("click");
 
-    CalendarSelector.find("DayDefault")
+    CalendarSelector()
+      .find("DayDefault")
       .find({ number: 10, isCurrentMonth: true })
       .find("button")
       .simulate("click");
 
-    getByDataId("bottom-bar-apply-button").simulate("click");
+    BottomBarApplyButton().simulate("click");
 
     const [[{ startDate, endDate }]] = props.onRangeSelected.mock.calls;
 
@@ -75,11 +86,7 @@ describe("RangePicker", () => {
   });
 
   it("should set next calendar", () => {
-    let titleText = wrapper
-      .find("CalendarContainer")
-      .find("CalendarSimple")
-      .find('[data-test-id="calendar-title"]')
-      .text();
+    let titleText = CalendarSimpleTitle().text();
 
     expect(
       new Date(2020, 1, 1).toLocaleString("ru", {
@@ -88,16 +95,9 @@ describe("RangePicker", () => {
       })
     ).toBe(titleText);
 
-    wrapper
-      .find("Control")
-      .find('[data-test-id="control-right"]')
-      .simulate("click");
+    ControlRight().simulate("click");
 
-    titleText = wrapper
-      .find("CalendarContainer")
-      .find("CalendarSimple")
-      .find('[data-test-id="calendar-title"]')
-      .text();
+    titleText = CalendarSimpleTitle().text();
 
     expect(
       new Date(2020, 2, 1).toLocaleString("ru", {
@@ -108,11 +108,7 @@ describe("RangePicker", () => {
   });
 
   it("should set prev calendar", () => {
-    let titleText = wrapper
-      .find("CalendarContainer")
-      .find("CalendarSimple")
-      .find('[data-test-id="calendar-title"]')
-      .text();
+    let titleText = CalendarSimpleTitle().text();
 
     expect(
       new Date(2020, 1, 1).toLocaleString("ru", {
@@ -121,16 +117,9 @@ describe("RangePicker", () => {
       })
     ).toBe(titleText);
 
-    wrapper
-      .find("Control")
-      .find('[data-test-id="control-left"]')
-      .simulate("click");
+    ControlLeft().simulate("click");
 
-    titleText = wrapper
-      .find("CalendarContainer")
-      .find("CalendarSimple")
-      .find('[data-test-id="calendar-title"]')
-      .text();
+    titleText = CalendarSimpleTitle().text();
 
     expect(
       new Date(2020, 0, 1).toLocaleString("ru", {
@@ -144,7 +133,7 @@ describe("RangePicker", () => {
 describe("CalendarDefault", () => {
   let wrapper;
 
-  const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
+  const CalendarDefault = () => wrapper.find("CalendarDefault");
 
   const props = {
     startDate: new Date(2020, 0, 5),
@@ -158,23 +147,19 @@ describe("CalendarDefault", () => {
   });
 
   it("should render", () => {
-    wrapper
-      .find("CalendarContainer")
-      .children()
-      .children()
-      .forEach((calendar) => {
-        expect(calendar.find("CalendarDefault")).toHaveLength(1);
-      });
+    CalendarDefault().forEach((calendar) => {
+      expect(calendar).toHaveLength(1);
+    });
   });
 
   it("should contain WeekLine", () => {
-    wrapper.find("CalendarDefault").forEach((calendar) => {
+    CalendarDefault().forEach((calendar) => {
       expect(calendar.find("WeekLine")).toHaveLength(1);
     });
   });
 
   it("should contain day container", () => {
-    wrapper.find("CalendarDefault").forEach((calendar) => {
+    CalendarDefault().forEach((calendar) => {
       expect(
         calendar.find("[data-test-id='calendar-default-day-container']")
       ).toHaveLength(1);
@@ -183,8 +168,7 @@ describe("CalendarDefault", () => {
 
   it("should contain length 31 day", () => {
     expect(
-      wrapper
-        .find("CalendarDefault")
+      CalendarDefault()
         .at(0)
         .find("[data-test-id='calendar-default-day-container']")
         .find("DayDefault")
@@ -196,7 +180,7 @@ describe("CalendarDefault", () => {
 describe("CalendarSelector", () => {
   let wrapper;
 
-  const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
+  const CalendarSelector = () => wrapper.find("CalendarSelector");
 
   const props = {
     startDate: new Date(2020, 0, 5),
@@ -210,18 +194,22 @@ describe("CalendarSelector", () => {
   });
 
   it("should render", () => {
-    expect(wrapper.find("CalendarSelector")).toHaveLength(1);
+    expect(CalendarSelector()).toHaveLength(1);
   });
 
   it("should contain two select element", () => {
-    expect(wrapper.find("CalendarSelector").find("select")).toHaveLength(2);
+    expect(CalendarSelector().find("select")).toHaveLength(2);
   });
 });
 
 describe("CalendarSimple", () => {
   let wrapper;
 
-  const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
+  const getByDataId = (wrapper, dataId) =>
+    wrapper.find(`[data-test-id="${dataId}"]`);
+
+  const CalendarSimple = () => wrapper.find("CalendarSimple");
+  const Title = () => getByDataId(CalendarSimple(), "calendar-title");
 
   const props = {
     startDate: new Date(2020, 0, 5),
@@ -235,21 +223,19 @@ describe("CalendarSimple", () => {
   });
 
   it("should render", () => {
-    expect(wrapper.find("CalendarSimple")).toHaveLength(1);
+    expect(CalendarSimple()).toHaveLength(1);
   });
 
   it("should contain title (default)", () => {
     let localeString = new Date(
       props.startDate.getFullYear(),
       props.startDate.getMonth() + 1
-    ).toLocaleString(wrapper.find("CalendarSimple").prop("locales"), {
+    ).toLocaleString(CalendarSimple().prop("locales"), {
       month: "long",
       year: "numeric",
     });
 
-    expect(getByDataId("calendar-title").find("time").text()).toBe(
-      localeString
-    );
+    expect(Title().find("time").text()).toBe(localeString);
   });
 
   it("should contain title (en)", () => {
@@ -258,21 +244,19 @@ describe("CalendarSimple", () => {
     const localeString = new Date(
       props.startDate.getFullYear(),
       props.startDate.getMonth() + 1
-    ).toLocaleString(wrapper.find("CalendarSimple").prop("locales"), {
+    ).toLocaleString(CalendarSimple().prop("locales"), {
       month: "long",
       year: "numeric",
     });
 
-    expect(getByDataId("calendar-title").find("time").text()).toBe(
-      localeString
-    );
+    expect(Title().find("time").text()).toBe(localeString);
   });
 });
 
 describe("CalendarContainer", () => {
   let wrapper;
 
-  const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
+  const CalendarContainer = () => wrapper.find("CalendarContainer");
 
   const props = {
     startDate: new Date(2020, 0, 5),
@@ -286,20 +270,25 @@ describe("CalendarContainer", () => {
   });
 
   it("should render", () => {
-    expect(wrapper.find("CalendarContainer")).toHaveLength(1);
+    expect(CalendarContainer()).toHaveLength(1);
   });
 
   it("should contain style default", () => {
-    expect(
-      wrapper.find("CalendarContainer").getDOMNode().style.gridTemplateColumns
-    ).toBe("repeat(2, 1fr)");
+    expect(CalendarContainer().getDOMNode().style.gridTemplateColumns).toBe(
+      "repeat(2, 1fr)"
+    );
   });
 });
 
 describe("TimePicker", () => {
   let wrapper;
 
-  const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
+  const getByDataId = (wrapper, dataId) =>
+    wrapper.find(`[data-test-id="${dataId}"]`);
+
+  const TimePicker = () => wrapper.find("TimePicker");
+  const Start = () => getByDataId(TimePicker(), "time-picker-start");
+  const End = () => getByDataId(TimePicker(), "time-picker-end");
 
   const props = {
     onRangeSelected: jest.fn(),
@@ -311,41 +300,31 @@ describe("TimePicker", () => {
   });
 
   it("should render", () => {
-    expect(wrapper.find("TimePicker")).toHaveLength(1);
+    expect(TimePicker()).toHaveLength(1);
   });
 
   it("should contain two input type time", () => {
-    expect(wrapper.find("TimePicker").find('input[type="time"]')).toHaveLength(
-      2
-    );
+    expect(TimePicker().find('input[type="time"]')).toHaveLength(2);
   });
 
   it("should be toggle disabled prop startDate", () => {
-    expect(
-      wrapper.find("TimePicker input[type='time']").at(0).prop("disabled")
-    ).toBeTruthy();
+    expect(Start().prop("disabled")).toBeTruthy();
 
     wrapper.setProps({ startDate: new Date() });
 
     wrapper.update();
 
-    expect(
-      wrapper.find("TimePicker input[type='time']").at(0).prop("disabled")
-    ).toBeFalsy();
+    expect(Start().prop("disabled")).toBeFalsy();
   });
 
   it("should be toggle disabled prop endDate", () => {
-    expect(
-      wrapper.find("TimePicker input[type='time']").at(1).prop("disabled")
-    ).toBeTruthy();
+    expect(End().prop("disabled")).toBeTruthy();
 
     wrapper.setProps({ endDate: new Date() });
 
     wrapper.update();
 
-    expect(
-      wrapper.find("TimePicker input[type='time']").at(1).prop("disabled")
-    ).toBeFalsy();
+    expect(End().prop("disabled")).toBeFalsy();
   });
 
   it("should be set value startDate", () => {
@@ -353,17 +332,13 @@ describe("TimePicker", () => {
 
     wrapper.update();
 
-    expect(
-      wrapper.find("TimePicker input[type='time']").at(0).prop("value")
-    ).toBe("10:10:10");
+    expect(Start().prop("value")).toBe("10:10:10");
 
     wrapper.setProps({ startDate: new Date(0, 0, 0, 20, 10, 10) });
 
     wrapper.update();
 
-    expect(
-      wrapper.find("TimePicker input[type='time']").at(0).prop("value")
-    ).toBe("20:10:10");
+    expect(Start().prop("value")).toBe("20:10:10");
   });
 
   it("should be set value endDate", () => {
@@ -371,17 +346,13 @@ describe("TimePicker", () => {
 
     wrapper.update();
 
-    expect(
-      wrapper.find("TimePicker input[type='time']").at(1).prop("value")
-    ).toBe("10:10:10");
+    expect(End().prop("value")).toBe("10:10:10");
 
     wrapper.setProps({ endDate: new Date(0, 0, 0, 20, 10, 10) });
 
     wrapper.update();
 
-    expect(
-      wrapper.find("TimePicker input[type='time']").at(1).prop("value")
-    ).toBe("20:10:10");
+    expect(End().prop("value")).toBe("20:10:10");
   });
 });
 

@@ -1,0 +1,50 @@
+.cell {
+  cursor: pointer;
+  position: relative;
+  border: 0;
+  background-color: transparent;
+  color: var(--dark-blue);
+  font-size: 1em;
+  line-height: 20px;
+  outline: none;
+
+  &.hover_start {
+    background-color: var(--grey) !important;
+    color: var(--white);
+    transition: var(--transition);
+  }
+
+  &.saturday,
+  &.sunday {
+    background-color: var(--grey);
+    color: var(--white);
+  }
+
+  &.hover_between {
+    transition: var(--transition);
+  }
+
+  &.between,
+  &.hover_between {
+    background-color: var(--light-blue);
+    color: var(--dark-blue);
+  }
+
+  &:active,
+  &:focus,
+  &.start,
+  &.end {
+    background-color: var(--blue);
+    color: var(--white);
+  }
+
+  &.current {
+    background-color: var(--blue);
+    color: var(--white);
+    border-radius: 100%;
+  }
+
+  &.not_current_month {
+    color: var(--invisible);
+  }
+}

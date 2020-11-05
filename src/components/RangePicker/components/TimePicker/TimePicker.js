@@ -25,6 +25,7 @@ const TimePicker = () => {
       <input
         type="time"
         step="1"
+        data-test-id="time-picker-start"
         disabled={isDisabledStartTime}
         onChange={({ target }) => setStartTimeStringHandler(target.value)}
         value={startTimeString}
@@ -33,6 +34,7 @@ const TimePicker = () => {
       <input
         type="time"
         step="1"
+        data-test-id="time-picker-end"
         disabled={isDisabledEndTime}
         onChange={({ target }) => setEndTimeStringHandler(target.value)}
         value={endTimeString}

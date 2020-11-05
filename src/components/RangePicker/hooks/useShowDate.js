@@ -34,5 +34,6 @@ export default function useShowDate(date) {
     prevMonthHandler,
     setMonthHandler,
     setYearHandler,
+    setShowDate,
   };
 }

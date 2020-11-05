@@ -70,7 +70,10 @@ RangePicker.propTypes = {
 };
 
 export default compose(
-  withContext(ShowDateProvider, ({ startDate }) => ({ startDate })),
+  withContext(ShowDateProvider, ({ startDate, isOpen }) => ({
+    startDate,
+    isOpen,
+  })),
   withContext(RangeProvider, ({ startDate, endDate }) => ({
     startDate,
     endDate,

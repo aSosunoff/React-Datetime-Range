@@ -1,5 +1,5 @@
 {
-  "name": "@aSosunoff/react-range-picker",
+  "name": "@asosunoff/react-range-picker",
   "version": "0.1.0",
   "homepage": "https://asosunoff.github.io/React-Range-Picker/",
   "author": {
@@ -63,5 +63,8 @@
     "date-range-picker",
     "month-picker",
     "react"
-  ]
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
 }

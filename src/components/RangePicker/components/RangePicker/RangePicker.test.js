@@ -145,7 +145,6 @@ describe("CalendarDefault", () => {
   let wrapper;
 
   const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
-  /* const getProp = (prop) => component.prop(prop); */
   const setProp = (prop, value) => wrapper.setProps({ [prop]: value });
 
   const props = {
@@ -169,10 +168,6 @@ describe("CalendarDefault", () => {
       });
   });
 
-  /* it("should contain title", () => {
-    expect(title()).toHaveLength(1);
-  }); */
-
   it("should contain WeekLine", () => {
     wrapper.find("CalendarDefault").forEach((calendar) => {
       expect(calendar.find("WeekLine")).toHaveLength(1);
@@ -186,24 +181,6 @@ describe("CalendarDefault", () => {
       ).toHaveLength(1);
     });
   });
-
-  /*  it("should contain title (default)", () => {
-    const localesDefault = getProp("locales");
-    let localeString = props.date.toLocaleString(localesDefault, {
-      month: "long",
-      year: "numeric",
-    });
-    expect(title().find("time").text()).toBe(localeString);
-  });
-
-  it("should contain title (en)", () => {
-    setProp("locales", "en");
-    const localeString = props.date.toLocaleString("en", {
-      month: "long",
-      year: "numeric",
-    });
-    expect(title().find("time").text()).toBe(localeString);
-  }); */
 
   it("should contain length 31 day", () => {
     expect(

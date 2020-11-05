@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Day from "./Day";
+import DayDefault from "./DayDefault";
 import WeekLine from "./WeekLine";
 import styles from "./CalendarDefault.module.scss";
 
@@ -10,9 +10,9 @@ const CalendarDefault = ({ days, locales, children: Title }) => (
 
     <WeekLine locales={locales} />
 
-    <div className={styles.grid}>
+    <div className={styles.grid} data-test-id="calendar-default-day-container">
       {days.map((day) => (
-        <Day key={day.index} {...day} />
+        <DayDefault key={day.index} {...day} />
       ))}
     </div>
   </div>

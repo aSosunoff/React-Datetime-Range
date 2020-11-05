@@ -145,7 +145,6 @@ describe("CalendarDefault", () => {
   let wrapper;
 
   const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
-  const setProp = (prop, value) => wrapper.setProps({ [prop]: value });
 
   const props = {
     startDate: new Date(2020, 0, 5),
@@ -194,43 +193,79 @@ describe("CalendarDefault", () => {
   });
 });
 
-// describe("CalendarSelector AND CalendarSimple", () => {
-//   let wrapper;
+describe("CalendarSelector", () => {
+  let wrapper;
 
-//   const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
-//   /* const getProp = (prop) => component.prop(prop); */
-//   const setProp = (prop, value) => wrapper.setProps({ [prop]: value });
+  const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
 
-//   const props = {
-//     startDate: new Date(2020, 0, 5),
-//     endDate: new Date(2020, 0, 6),
-//     onRangeSelected: jest.fn(),
-//     onClose: jest.fn(),
-//   };
+  const props = {
+    startDate: new Date(2020, 0, 5),
+    endDate: new Date(2020, 0, 6),
+    onRangeSelected: jest.fn(),
+    onClose: jest.fn(),
+  };
 
-//   beforeEach(() => {
-//     wrapper = mount(<RangePicker {...props} />);
-//   });
+  beforeEach(() => {
+    wrapper = mount(<RangePicker {...props} />);
+  });
 
-//   /* it("should contain title", () => {
-//     expect(title()).toHaveLength(1);
-//   }); */
+  it("should render", () => {
+    expect(wrapper.find("CalendarSelector")).toHaveLength(1);
+  });
 
-//   /*  it("should contain title (default)", () => {
-//     const localesDefault = getProp("locales");
-//     let localeString = props.date.toLocaleString(localesDefault, {
-//       month: "long",
-//       year: "numeric",
-//     });
-//     expect(title().find("time").text()).toBe(localeString);
-//   });
+  it("should contain two select element", () => {
+    expect(wrapper.find("CalendarSelector").find("select")).toHaveLength(2);
+  });
+});
 
-//   it("should contain title (en)", () => {
-//     setProp("locales", "en");
-//     const localeString = props.date.toLocaleString("en", {
-//       month: "long",
-//       year: "numeric",
-//     });
-//     expect(title().find("time").text()).toBe(localeString);
-//   }); */
-// });
+describe("CalendarSimple", () => {
+  let wrapper;
+
+  const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
+
+  const props = {
+    startDate: new Date(2020, 0, 5),
+    endDate: new Date(2020, 0, 6),
+    // locales: "ru",
+    onRangeSelected: jest.fn(),
+    onClose: jest.fn(),
+  };
+
+  beforeEach(() => {
+    wrapper = mount(<RangePicker {...props} />);
+  });
+
+  it("should render", () => {
+    expect(wrapper.find("CalendarSimple")).toHaveLength(1);
+  });
+
+  it("should contain title (default)", () => {
+    let localeString = new Date(
+      props.startDate.getFullYear(),
+      props.startDate.getMonth() + 1
+    ).toLocaleString(wrapper.find("CalendarSimple").prop("locales"), {
+      month: "long",
+      year: "numeric",
+    });
+
+    expect(getByDataId("calendar-title").find("time").text()).toBe(
+      localeString
+    );
+  });
+
+  it("should contain title (en)", () => {
+    wrapper.setProps({ locales: "en" });
+
+    const localeString = new Date(
+      props.startDate.getFullYear(),
+      props.startDate.getMonth() + 1
+    ).toLocaleString(wrapper.find("CalendarSimple").prop("locales"), {
+      month: "long",
+      year: "numeric",
+    });
+
+    expect(getByDataId("calendar-title").find("time").text()).toBe(
+      localeString
+    );
+  });
+});

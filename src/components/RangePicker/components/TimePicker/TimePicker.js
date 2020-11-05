@@ -21,9 +21,8 @@ const TimePicker = () => {
   ]);
 
   return (
-    <div className={styles.time_picker} data-test-id="time-picker">
+    <div className={styles.time_picker}>
       <input
-        data-test-id="time-picker-start"
         type="time"
         step="1"
         disabled={isDisabledStartTime}
@@ -32,7 +31,6 @@ const TimePicker = () => {
       />
 
       <input
-        data-test-id="time-picker-end"
         type="time"
         step="1"
         disabled={isDisabledEndTime}

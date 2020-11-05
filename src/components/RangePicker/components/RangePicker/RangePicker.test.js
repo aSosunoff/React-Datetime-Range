@@ -295,3 +295,92 @@ describe("CalendarContainer", () => {
     ).toBe("repeat(2, 1fr)");
   });
 });
+
+describe("TimePicker", () => {
+  let wrapper;
+
+  const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
+
+  const props = {
+    onRangeSelected: jest.fn(),
+    onClose: jest.fn(),
+  };
+
+  beforeEach(() => {
+    wrapper = mount(<RangePicker {...props} />);
+  });
+
+  it("should render", () => {
+    expect(wrapper.find("TimePicker")).toHaveLength(1);
+  });
+
+  it("should contain two input type time", () => {
+    expect(wrapper.find("TimePicker").find('input[type="time"]')).toHaveLength(
+      2
+    );
+  });
+
+  it("should be toggle disabled prop startDate", () => {
+    expect(
+      wrapper.find("TimePicker input[type='time']").at(0).prop("disabled")
+    ).toBeTruthy();
+
+    wrapper.setProps({ startDate: new Date() });
+
+    wrapper.update();
+
+    expect(
+      wrapper.find("TimePicker input[type='time']").at(0).prop("disabled")
+    ).toBeFalsy();
+  });
+
+  it("should be toggle disabled prop endDate", () => {
+    expect(
+      wrapper.find("TimePicker input[type='time']").at(1).prop("disabled")
+    ).toBeTruthy();
+
+    wrapper.setProps({ endDate: new Date() });
+
+    wrapper.update();
+
+    expect(
+      wrapper.find("TimePicker input[type='time']").at(1).prop("disabled")
+    ).toBeFalsy();
+  });
+
+  it("should be set value startDate", () => {
+    wrapper.setProps({ startDate: new Date(0, 0, 0, 10, 10, 10) });
+
+    wrapper.update();
+
+    expect(
+      wrapper.find("TimePicker input[type='time']").at(0).prop("value")
+    ).toBe("10:10:10");
+
+    wrapper.setProps({ startDate: new Date(0, 0, 0, 20, 10, 10) });
+
+    wrapper.update();
+
+    expect(
+      wrapper.find("TimePicker input[type='time']").at(0).prop("value")
+    ).toBe("20:10:10");
+  });
+
+  it("should be set value endDate", () => {
+    wrapper.setProps({ endDate: new Date(0, 0, 0, 10, 10, 10) });
+
+    wrapper.update();
+
+    expect(
+      wrapper.find("TimePicker input[type='time']").at(1).prop("value")
+    ).toBe("10:10:10");
+
+    wrapper.setProps({ endDate: new Date(0, 0, 0, 20, 10, 10) });
+
+    wrapper.update();
+
+    expect(
+      wrapper.find("TimePicker input[type='time']").at(1).prop("value")
+    ).toBe("20:10:10");
+  });
+});

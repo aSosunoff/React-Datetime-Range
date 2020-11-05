@@ -384,3 +384,46 @@ describe("TimePicker", () => {
     ).toBe("20:10:10");
   });
 });
+
+describe("BottomBar", () => {
+  let wrapper;
+
+  const getByDataId = (wrapper, dataId) =>
+    wrapper.find(`[data-test-id="${dataId}"]`);
+
+  const BottomBar = () => wrapper.find("BottomBar");
+  const Title = () => getByDataId(BottomBar(), "bottom-bar-title");
+  const ApplyButton = () => getByDataId(BottomBar(), "bottom-bar-apply-button");
+  const ResetButton = () => getByDataId(BottomBar(), "bottom-bar-clear-button");
+
+  const props = {
+    onRangeSelected: jest.fn(),
+    onClose: jest.fn(),
+  };
+
+  beforeEach(() => {
+    wrapper = mount(<RangePicker {...props} />);
+  });
+
+  it("should render", () => {
+    expect(BottomBar()).toHaveLength(1);
+  });
+
+  it("should render without title", () => {
+    expect(Title()).toHaveLength(0);
+  });
+
+  it("should render with title", () => {
+    wrapper.setProps({ startDate: new Date() });
+    wrapper.update();
+    expect(Title()).toHaveLength(1);
+  });
+
+  it("should contain apply button", () => {
+    expect(ApplyButton()).toHaveLength(1);
+  });
+
+  it("should contain reset button", () => {
+    expect(ResetButton()).toHaveLength(1);
+  });
+});

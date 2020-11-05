@@ -27,7 +27,7 @@ const BottomBar = ({ locales, applyHandler }) => {
   );
 
   return (
-    <div className={styles.bottom_bar} data-test-id="bottom-bar">
+    <div className={styles.bottom_bar}>
       {title ? (
         <div className={styles.title} data-test-id="bottom-bar-title">
           {title}

@@ -1,6 +1,7 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import CalendarDefault from "../CalendarDefault";
+import styles from "./CalendarSimple.module.scss";
 
 const CalendarSimple = ({ date, ...props }) => {
   const localeString = useMemo(
@@ -9,16 +10,13 @@ const CalendarSimple = ({ date, ...props }) => {
     [date, props.locales]
   );
 
-  const Title = useCallback(
-    ({ titleClass }) => (
-      <div className={titleClass} data-test-id="calendar-title">
+  return (
+    <CalendarDefault {...props}>
+      <div className={styles.title} data-test-id="calendar-title">
         <time dateTime={localeString}>{localeString}</time>
       </div>
-    ),
-    [localeString]
+    </CalendarDefault>
   );
-
-  return <CalendarDefault {...props}>{Title}</CalendarDefault>;
 };
 
 CalendarSimple.defaultProps = {};

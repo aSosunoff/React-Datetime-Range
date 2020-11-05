@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { getMonthNames, getYearList } from "../../../utils/dateHalper";
 import CalendarDefault from "../CalendarDefault";
 import styles from "./CalendarSelector.module.scss";
-import cn from "classnames";
 import useDateSplit from "../../../hooks/useDateSplit";
 
 const CalendarSelector = ({
@@ -32,9 +31,9 @@ const CalendarSelector = ({
     [changeYearHandler]
   );
 
-  const Title = useCallback(
-    ({ titleClass }) => (
-      <div className={cn(titleClass, styles.title)}>
+  return (
+    <CalendarDefault {...props}>
+      <div className={styles.title}>
         <select value={month} onChange={changeMonthHandlerLocal}>
           {monthNames.map((name, index) => (
             <option key={index} value={index}>
@@ -51,18 +50,8 @@ const CalendarSelector = ({
           ))}
         </select>
       </div>
-    ),
-    [
-      changeMonthHandlerLocal,
-      changeYearHandlerLocal,
-      month,
-      monthNames,
-      year,
-      yearList,
-    ]
+    </CalendarDefault>
   );
-
-  return <CalendarDefault {...props}>{Title}</CalendarDefault>;
 };
 
 CalendarSelector.defaultProps = {};

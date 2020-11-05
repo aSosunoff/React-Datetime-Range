@@ -6,7 +6,7 @@ import styles from "./CalendarDefault.module.scss";
 
 const CalendarDefault = ({ days, locales, children: Title }) => (
   <div className={styles.calendar}>
-    <Title titleClass={styles.title} />
+    {Title}
 
     <WeekLine locales={locales} />
 
@@ -25,6 +25,7 @@ CalendarDefault.defaultProps = {
 CalendarDefault.propTypes = {
   locales: PropTypes.string,
   days: PropTypes.array.isRequired,
+  children: PropTypes.element.isRequired,
 };
 
 export default CalendarDefault;

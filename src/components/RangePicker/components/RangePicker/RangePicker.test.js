@@ -226,7 +226,6 @@ describe("CalendarSimple", () => {
   const props = {
     startDate: new Date(2020, 0, 5),
     endDate: new Date(2020, 0, 6),
-    // locales: "ru",
     onRangeSelected: jest.fn(),
     onClose: jest.fn(),
   };
@@ -267,5 +266,32 @@ describe("CalendarSimple", () => {
     expect(getByDataId("calendar-title").find("time").text()).toBe(
       localeString
     );
+  });
+});
+
+describe("CalendarContainer", () => {
+  let wrapper;
+
+  const getByDataId = (dataId) => wrapper.find(`[data-test-id="${dataId}"]`);
+
+  const props = {
+    startDate: new Date(2020, 0, 5),
+    endDate: new Date(2020, 0, 6),
+    onRangeSelected: jest.fn(),
+    onClose: jest.fn(),
+  };
+
+  beforeEach(() => {
+    wrapper = mount(<RangePicker {...props} />);
+  });
+
+  it("should render", () => {
+    expect(wrapper.find("CalendarContainer")).toHaveLength(1);
+  });
+
+  it("should contain style default", () => {
+    expect(
+      wrapper.find("CalendarContainer").getDOMNode().style.gridTemplateColumns
+    ).toBe("repeat(2, 1fr)");
   });
 });

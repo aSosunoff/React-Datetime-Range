@@ -62,7 +62,7 @@ describe("Control", () => {
       })
     );
 
-    wrapper = mount(<RangePicker startDate={new Date()} />);
+    wrapper = mount(<RangePicker />);
 
     RightButton().simulate("click");
 

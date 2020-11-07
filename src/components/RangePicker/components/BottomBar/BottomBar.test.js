@@ -35,12 +35,12 @@ describe("BottomBar", () => {
     jest.requireActual("./BottomBar");
 
   beforeEach(() => {
-    const context = rangeContext();
-    const actual = requireActual();
-
     BottomBarComponent().default.mockImplementation(
       BottomBarComponentRequireActual().default
     );
+
+    const context = rangeContext();
+    const actual = requireActual();
 
     for (const key in context) {
       if (context[key].mockImplementation)
@@ -61,10 +61,15 @@ describe("BottomBar", () => {
   it("should render with title start date", () => {
     const startDate = new Date(2020, 0, 1, 0, 0, 0);
 
-    wrapper.setProps({ startDate });
-    wrapper.update();
+    rangeContext().useRangeContext.mockImplementation(() => ({
+      ...requireActual().useRangeContext(),
+      startDate,
+    }));
+
+    wrapper = mount(<RangePicker />);
 
     expect(Title()).toHaveLength(1);
+
     expect(Title().text()).toBe(format(BottomBar().prop("locales"), startDate));
   });
 
@@ -72,8 +77,13 @@ describe("BottomBar", () => {
     const startDate = new Date(2020, 0, 1, 0, 0, 0);
     const endDate = new Date(2020, 0, 1, 0, 0, 0);
 
-    wrapper.setProps({ startDate, endDate });
-    wrapper.update();
+    rangeContext().useRangeContext.mockImplementation(() => ({
+      ...requireActual().useRangeContext(),
+      startDate,
+      endDate,
+    }));
+
+    wrapper = mount(<RangePicker />);
 
     expect(Title()).toHaveLength(1);
 

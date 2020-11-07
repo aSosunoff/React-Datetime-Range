@@ -1,20 +1,19 @@
 import React from "react";
 import { mount } from "enzyme";
 
-import Day from "./DayDefault";
+import DayDefault from "./DayDefault";
 import { withContext } from "../../../../HOC/withContext";
 import { HoverDayProvider } from "../../../../contexts/hoverDayContext";
 import { compose } from "../../../../utils/compose";
 import { RangeProvider } from "../../../../contexts/rangeContext";
 
 describe("Day", () => {
-  let component;
+  let wrapper;
 
-  const getByDataId = (dataId) => component.find(`[data-test-id="${dataId}"]`);
-  const getProp = (prop) => component.prop(prop);
-  const setProp = (prop, value) => component.setProps({ [prop]: value });
+  const getByDataId = (wrapper, dataId) =>
+    wrapper.find(`[data-test-id="${dataId}"]`);
 
-  const button = () => component.find("button");
+  const DayDefaultComponent = () => wrapper.find("DayDefault");
 
   const props = {
     number: 1,
@@ -25,29 +24,29 @@ describe("Day", () => {
     const WithHoverDayProvider = compose(
       withContext(RangeProvider),
       withContext(HoverDayProvider)
-    )(Day);
-    component = mount(<WithHoverDayProvider {...props} />);
+    )(DayDefault);
+    wrapper = mount(<WithHoverDayProvider {...props} />);
   });
 
   it("should render button", () => {
-    expect(button()).toHaveLength(1);
+    expect(DayDefaultComponent()).toHaveLength(1);
   });
 
   it("should contain number", () => {
-    setProp("number", 1);
-    expect(button().text()).toBe("1");
+    wrapper.setProps({ number: 1 });
+    expect(DayDefaultComponent().text()).toBe("1");
 
-    setProp("number", 2);
-    expect(button().text()).toBe("2");
+    wrapper.setProps({ number: 2 });
+    expect(DayDefaultComponent().text()).toBe("2");
 
-    setProp("number", 3);
-    expect(button().text()).toBe("3");
+    wrapper.setProps({ number: 3 });
+    expect(DayDefaultComponent().text()).toBe("3");
   });
 
   it("should set gridColumnStart style", () => {
-    setProp("gridColumnStart", 1);
-    expect(button().prop("style").gridColumnStart).toBe(1);
-    setProp("gridColumnStart", 2);
-    expect(button().prop("style").gridColumnStart).toBe(2);
+    wrapper.setProps({ gridColumnStart: 1 });
+    expect(DayDefaultComponent().getDOMNode().style.gridColumnStart).toBe("1");
+    wrapper.setProps({ gridColumnStart: 2 });
+    expect(DayDefaultComponent().getDOMNode().style.gridColumnStart).toBe("2");
   });
 });

@@ -3,7 +3,7 @@ import { mount } from "enzyme";
 
 import RangePicker from "../RangePicker";
 
-jest.mock("../../hooks/useShowDate");
+jest.mock("../../contexts/showDateContext");
 
 describe("Control", () => {
   let wrapper;
@@ -15,10 +15,18 @@ describe("Control", () => {
   const LeftButton = () => getByDataId(Control(), "control-left");
   const RightButton = () => getByDataId(Control(), "control-right");
 
+  const showDateContext = () => require("../../contexts/showDateContext");
+  const requireActual = () =>
+    jest.requireActual("../../contexts/showDateContext");
+
   beforeEach(() => {
-    require("../../hooks/useShowDate").default.mockImplementation(
-      jest.requireActual("../../hooks/useShowDate").default
-    );
+    const context = showDateContext();
+    const actual = requireActual();
+
+    for (const key in context) {
+      if (context[key].mockImplementation)
+        context[key].mockImplementation(actual[key]);
+    }
 
     wrapper = mount(<RangePicker />);
   });
@@ -38,12 +46,10 @@ describe("Control", () => {
   it("should call handler after click left button", () => {
     const prevMonthHandler = jest.fn();
 
-    require("../../hooks/useShowDate").default.mockImplementation(
-      (startDate) => ({
-        ...jest.requireActual("../../hooks/useShowDate").default(startDate),
-        prevMonthHandler,
-      })
-    );
+    showDateContext().useShowDateContext.mockImplementation(() => ({
+      ...requireActual().useShowDateContext(),
+      prevMonthHandler,
+    }));
 
     wrapper = mount(<RangePicker />);
 
@@ -55,12 +61,10 @@ describe("Control", () => {
   it("should call handler after click right button", () => {
     const nextMonthHandler = jest.fn();
 
-    require("../../hooks/useShowDate").default.mockImplementation(
-      (startDate) => ({
-        ...jest.requireActual("../../hooks/useShowDate").default(startDate),
-        nextMonthHandler,
-      })
-    );
+    showDateContext().useShowDateContext.mockImplementation(() => ({
+      ...requireActual().useShowDateContext(),
+      nextMonthHandler,
+    }));
 
     wrapper = mount(<RangePicker />);
 

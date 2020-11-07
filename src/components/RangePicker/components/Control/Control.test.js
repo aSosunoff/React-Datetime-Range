@@ -16,16 +16,9 @@ describe("Control", () => {
   const RightButton = () => getByDataId(Control(), "control-right");
 
   beforeEach(() => {
-    const useShowDate = require("../../hooks/useShowDate");
-
-    useShowDate.default.mockImplementation(() => ({
-      showDate: new Date(),
-      setShowDate: jest.fn(),
-      setMonthHandler: jest.fn(),
-      setYearHandler: jest.fn(),
-      nextMonthHandler: jest.fn(),
-      prevMonthHandler: jest.fn(),
-    }));
+    require("../../hooks/useShowDate").default.mockImplementation(
+      jest.requireActual("../../hooks/useShowDate").default
+    );
 
     wrapper = mount(<RangePicker />);
   });
@@ -45,16 +38,12 @@ describe("Control", () => {
   it("should call handler after click left button", () => {
     const prevMonthHandler = jest.fn();
 
-    const useShowDate = require("../../hooks/useShowDate");
-
-    useShowDate.default.mockImplementation(() => ({
-      showDate: new Date(),
-      setShowDate: jest.fn(),
-      setMonthHandler: jest.fn(),
-      setYearHandler: jest.fn(),
-      nextMonthHandler: jest.fn(),
-      prevMonthHandler,
-    }));
+    require("../../hooks/useShowDate").default.mockImplementation(
+      (startDate) => ({
+        ...jest.requireActual("../../hooks/useShowDate").default(startDate),
+        prevMonthHandler,
+      })
+    );
 
     wrapper = mount(<RangePicker />);
 
@@ -66,18 +55,14 @@ describe("Control", () => {
   it("should call handler after click right button", () => {
     const nextMonthHandler = jest.fn();
 
-    const useShowDate = require("../../hooks/useShowDate");
+    require("../../hooks/useShowDate").default.mockImplementation(
+      (startDate) => ({
+        ...jest.requireActual("../../hooks/useShowDate").default(startDate),
+        nextMonthHandler,
+      })
+    );
 
-    useShowDate.default.mockImplementation(() => ({
-      showDate: new Date(),
-      setShowDate: jest.fn(),
-      setMonthHandler: jest.fn(),
-      setYearHandler: jest.fn(),
-      nextMonthHandler,
-      prevMonthHandler: jest.fn(),
-    }));
-
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<RangePicker startDate={new Date()} />);
 
     RightButton().simulate("click");
 

@@ -1,46 +1,51 @@
 import React from "react";
 import { mount } from "enzyme";
 
-import WeekLine from "./WeekLine";
+import RangePicker from "../../../RangePicker";
+
 import { getWeeksNameLocales } from "../../../../utils/dateHalper";
 
 describe("WeekLine", () => {
-  let component;
+  let wrapper;
 
-  const getByDataId = (dataId) => component.find(`[data-test-id="${dataId}"]`);
-  const getProp = (prop) => component.prop(prop);
-  const setProp = (prop, value) => component.setProps({ [prop]: value });
+  const getByDataId = (wrapper, dataId) =>
+    wrapper.find(`[data-test-id="${dataId}"]`);
+  const WeekLine = () => wrapper.find("WeekLine").at(0);
+
+  /* const getProp = (prop) => component.prop(prop);
+  const setProp = (prop, value) => component.setProps({ [prop]: value }); */
 
   beforeEach(() => {
-    component = mount(<WeekLine />);
+    wrapper = mount(<RangePicker />);
   });
 
   it("should render", () => {
-    expect(component).toHaveLength(1);
+    expect(WeekLine()).toHaveLength(1);
   });
 
   it("should contain 7 div with name week - locales default", () => {
-    const defaultPropLocales = getProp('locales')
-    const weekLine = getWeeksNameLocales(defaultPropLocales);
-    const children = getByDataId("week-line").children();
+    const weekLine = getWeeksNameLocales(WeekLine().prop("locales"));
+    const weekName = WeekLine().children().children();
 
-    expect(children).toHaveLength(7);
+    expect(weekName).toHaveLength(7);
 
     for (let i = 0; i < weekLine.length; i++) {
-      expect(weekLine[i]).toBe(children.at(i).text());
+      expect(weekLine[i]).toBe(weekName.at(i).text());
     }
   });
 
   it("should contain 7 div with name week - locales (en)", () => {
-    setProp("locales", "en");
+    wrapper.setProps({ locales: "en" });
 
-    const weekLine = getWeeksNameLocales("en");
-    const children = getByDataId("week-line").children();
+    wrapper.update();
 
-    expect(children).toHaveLength(7);
+    const weekLine = getWeeksNameLocales(WeekLine().prop("locales"));
+    const weekName = WeekLine().children().children();
+
+    expect(weekName).toHaveLength(7);
 
     for (let i = 0; i < weekLine.length; i++) {
-      expect(weekLine[i]).toBe(children.at(i).text());
+      expect(weekLine[i]).toBe(weekName.at(i).text());
     }
   });
 });

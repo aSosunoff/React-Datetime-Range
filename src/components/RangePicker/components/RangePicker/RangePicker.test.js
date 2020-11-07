@@ -398,35 +398,3 @@ describe("BottomBar", () => {
     expect(ResetButton()).toHaveLength(1);
   });
 });
-
-describe("Control", () => {
-  let wrapper;
-
-  const getByDataId = (wrapper, dataId) =>
-    wrapper.find(`[data-test-id="${dataId}"]`);
-
-  const Control = () => wrapper.find("Control");
-  const LeftButton = () => getByDataId(Control(), 'control-left');
-  const RightButton = () => getByDataId(Control(), 'control-right');
-
-  const props = {
-    onRangeSelected: jest.fn(),
-    onClose: jest.fn(),
-  };
-
-  beforeEach(() => {
-    wrapper = mount(<RangePicker {...props} />);
-  });
-
-  it("should render", () => {
-    expect(Control()).toHaveLength(1);
-  });
-
-  it("should render left control", () => {
-    expect(LeftButton()).toHaveLength(1);
-  });
-
-  it("should render right control", () => {
-    expect(RightButton()).toHaveLength(1);
-  });
-});

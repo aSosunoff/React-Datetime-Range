@@ -130,53 +130,6 @@ describe("RangePicker", () => {
   });
 });
 
-describe("CalendarDefault", () => {
-  let wrapper;
-
-  const CalendarDefault = () => wrapper.find("CalendarDefault");
-
-  const props = {
-    startDate: new Date(2020, 0, 5),
-    endDate: new Date(2020, 0, 6),
-    onRangeSelected: jest.fn(),
-    onClose: jest.fn(),
-  };
-
-  beforeEach(() => {
-    wrapper = mount(<RangePicker {...props} />);
-  });
-
-  it("should render", () => {
-    CalendarDefault().forEach((calendar) => {
-      expect(calendar).toHaveLength(1);
-    });
-  });
-
-  it("should contain WeekLine", () => {
-    CalendarDefault().forEach((calendar) => {
-      expect(calendar.find("WeekLine")).toHaveLength(1);
-    });
-  });
-
-  it("should contain day container", () => {
-    CalendarDefault().forEach((calendar) => {
-      expect(
-        calendar.find("[data-test-id='calendar-default-day-container']")
-      ).toHaveLength(1);
-    });
-  });
-
-  it("should contain length 31 day", () => {
-    expect(
-      CalendarDefault()
-        .at(0)
-        .find("[data-test-id='calendar-default-day-container']")
-        .find("DayDefault")
-        .find({ isCurrentMonth: true })
-    ).toHaveLength(31);
-  });
-});
-
 describe("CalendarContainer", () => {
   let wrapper;
 

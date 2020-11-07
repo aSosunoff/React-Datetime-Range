@@ -1,52 +1,134 @@
 import React from "react";
 import { mount } from "enzyme";
 
-import DayDefault from "./DayDefault";
 import { withContext } from "../../../../HOC/withContext";
 import { HoverDayProvider } from "../../../../contexts/hoverDayContext";
 import { compose } from "../../../../utils/compose";
 import { RangeProvider } from "../../../../contexts/rangeContext";
 
-describe("Day", () => {
+jest.mock("../../../../contexts/rangeContext");
+jest.mock("../../../../contexts/hoverDayContext");
+
+const DayDefault = compose(
+  withContext(HoverDayProvider),
+  withContext(RangeProvider)
+)(require("./DayDefault").default);
+
+describe("DayDefault", () => {
   let wrapper;
 
-  const getByDataId = (wrapper, dataId) =>
-    wrapper.find(`[data-test-id="${dataId}"]`);
+  const DayDefaultWrapper = () => wrapper.find("DayDefault");
 
-  const DayDefaultComponent = () => wrapper.find("DayDefault");
+  const rangeContext = () => require("../../../../contexts/rangeContext");
+  const rangeContextActual = () =>
+    jest.requireActual("../../../../contexts/rangeContext");
 
-  const props = {
-    number: 1,
-    dateTimestamp: new Date(2020, 0, 1).getTime(),
-  };
+  const hoverDayContext = () => require("../../../../contexts/hoverDayContext");
+  const hoverDayContextActual = () =>
+    jest.requireActual("../../../../contexts/hoverDayContext");
 
   beforeEach(() => {
-    const WithHoverDayProvider = compose(
-      withContext(RangeProvider),
-      withContext(HoverDayProvider)
-    )(DayDefault);
-    wrapper = mount(<WithHoverDayProvider {...props} />);
+    const _rangeContext = rangeContext();
+    const _rangeContextActual = rangeContextActual();
+
+    for (const key in _rangeContext) {
+      if (_rangeContext[key].mockImplementation)
+        _rangeContext[key].mockImplementation(_rangeContextActual[key]);
+    }
+
+    const _hoverDayContext = hoverDayContext();
+    const _hoverDayContextActual = hoverDayContextActual();
+
+    for (const key in _hoverDayContext) {
+      if (_hoverDayContext[key].mockImplementation)
+        _hoverDayContext[key].mockImplementation(_hoverDayContextActual[key]);
+    }
+
+    wrapper = mount(
+      <DayDefault number={1} dateTimestamp={new Date(2020, 0, 1).getTime()} />
+    );
   });
 
   it("should render button", () => {
-    expect(DayDefaultComponent()).toHaveLength(1);
+    expect(DayDefaultWrapper()).toHaveLength(1);
   });
 
   it("should contain number", () => {
     wrapper.setProps({ number: 1 });
-    expect(DayDefaultComponent().text()).toBe("1");
+    expect(DayDefaultWrapper().text()).toBe("1");
 
     wrapper.setProps({ number: 2 });
-    expect(DayDefaultComponent().text()).toBe("2");
+    expect(DayDefaultWrapper().text()).toBe("2");
 
     wrapper.setProps({ number: 3 });
-    expect(DayDefaultComponent().text()).toBe("3");
+    expect(DayDefaultWrapper().text()).toBe("3");
   });
 
   it("should set gridColumnStart style", () => {
     wrapper.setProps({ gridColumnStart: 1 });
-    expect(DayDefaultComponent().getDOMNode().style.gridColumnStart).toBe("1");
+    expect(DayDefaultWrapper().getDOMNode().style.gridColumnStart).toBe("1");
+
     wrapper.setProps({ gridColumnStart: 2 });
-    expect(DayDefaultComponent().getDOMNode().style.gridColumnStart).toBe("2");
+    expect(DayDefaultWrapper().getDOMNode().style.gridColumnStart).toBe("2");
+  });
+
+  it("should call setRangeHandler aften click button", () => {
+    const setRangeHandler = jest.fn();
+
+    rangeContext().useRangeContext.mockImplementation(() => ({
+      ...rangeContextActual().useRangeContext(),
+      setRangeHandler,
+    }));
+
+    const dateTimestamp = new Date(2020, 0, 1).getTime();
+
+    wrapper = mount(
+      <DayDefault
+        number={1}
+        dateTimestamp={dateTimestamp}
+        isCurrentMonth={true}
+      />
+    );
+
+    DayDefaultWrapper().find("button").simulate("click");
+
+    expect(setRangeHandler).toHaveBeenCalled();
+
+    const [[result]] = setRangeHandler.mock.calls;
+
+    expect(result).toBe(dateTimestamp);
+  });
+
+  it("should call setHoverDayTimestamp after hover to button", () => {
+    jest.useFakeTimers();
+
+    const setHoverDayTimestamp = jest.fn();
+
+    hoverDayContext().useHoverDayContext.mockImplementation(() => ({
+      ...hoverDayContextActual().useHoverDayContext(),
+      setHoverDayTimestamp,
+    }));
+
+    const dateTimestamp = new Date(2020, 0, 1).getTime();
+
+    wrapper = mount(
+      <DayDefault
+        number={1}
+        dateTimestamp={dateTimestamp}
+        isCurrentMonth={true}
+      />
+    );
+
+    DayDefaultWrapper().find("button").simulate("mouseenter");
+
+    jest.advanceTimersByTime(80);
+
+    expect(setHoverDayTimestamp).toHaveBeenCalled();
+
+    const [[result]] = setHoverDayTimestamp.mock.calls;
+
+    expect(result).toBe(dateTimestamp);
+
+    jest.useRealTimers();
   });
 });

@@ -129,30 +129,3 @@ describe("RangePicker", () => {
     ).toBe(titleText);
   });
 });
-
-describe("CalendarContainer", () => {
-  let wrapper;
-
-  const CalendarContainer = () => wrapper.find("CalendarContainer");
-
-  const props = {
-    startDate: new Date(2020, 0, 5),
-    endDate: new Date(2020, 0, 6),
-    onRangeSelected: jest.fn(),
-    onClose: jest.fn(),
-  };
-
-  beforeEach(() => {
-    wrapper = mount(<RangePicker {...props} />);
-  });
-
-  it("should render", () => {
-    expect(CalendarContainer()).toHaveLength(1);
-  });
-
-  it("should contain style default", () => {
-    expect(CalendarContainer().getDOMNode().style.gridTemplateColumns).toBe(
-      "repeat(2, 1fr)"
-    );
-  });
-});

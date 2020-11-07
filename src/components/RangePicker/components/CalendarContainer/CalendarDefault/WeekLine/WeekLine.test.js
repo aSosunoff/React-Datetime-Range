@@ -8,12 +8,7 @@ import { getWeeksNameLocales } from "../../../../utils/dateHalper";
 describe("WeekLine", () => {
   let wrapper;
 
-  const getByDataId = (wrapper, dataId) =>
-    wrapper.find(`[data-test-id="${dataId}"]`);
   const WeekLine = () => wrapper.find("WeekLine").at(0);
-
-  /* const getProp = (prop) => component.prop(prop);
-  const setProp = (prop, value) => component.setProps({ [prop]: value }); */
 
   beforeEach(() => {
     wrapper = mount(<RangePicker />);

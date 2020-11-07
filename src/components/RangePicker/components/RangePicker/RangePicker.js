@@ -4,9 +4,9 @@ import cn from "classnames";
 
 import styles from "./RangePicker.module.scss";
 import variable from "./variable.module.scss";
-import BottomBar from "./../BottomBar/BottomBar";
-import TimePicker from "./../TimePicker/TimePicker";
-import CalendarContainer from "./../CalendarContainer";
+import BottomBar from "../BottomBar/";
+import TimePicker from "../TimePicker/";
+import CalendarContainer from "../CalendarContainer";
 import { withAnimation } from "../../HOC/withAnimation";
 import { compose } from "../../utils/compose";
 import Control from "../Control";

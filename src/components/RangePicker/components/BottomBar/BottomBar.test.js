@@ -4,6 +4,7 @@ import { mount } from "enzyme";
 import RangePicker from "../RangePicker";
 
 jest.mock("../../contexts/rangeContext");
+jest.mock("./BottomBar.js");
 
 const format = (locales, date) =>
   date.toLocaleString(locales, {
@@ -29,9 +30,17 @@ describe("BottomBar", () => {
   const rangeContext = () => require("../../contexts/rangeContext");
   const requireActual = () => jest.requireActual("../../contexts/rangeContext");
 
+  const BottomBarComponent = () => require("./BottomBar");
+  const BottomBarComponentRequireActual = () =>
+    jest.requireActual("./BottomBar");
+
   beforeEach(() => {
     const context = rangeContext();
     const actual = requireActual();
+
+    BottomBarComponent().default.mockImplementation(
+      BottomBarComponentRequireActual().default
+    );
 
     for (const key in context) {
       if (context[key].mockImplementation)
@@ -85,10 +94,23 @@ describe("BottomBar", () => {
   });
 
   it("should call applyHandler prop", () => {
-    const onRangeSelected = jest.fn();
-    wrapper.setProps({ onRangeSelected });
+    const applyHandler = jest.fn();
+
+    BottomBarComponent().default.mockImplementation(({ ...props }, ...arg) =>
+      BottomBarComponentRequireActual().default(
+        {
+          ...props,
+          applyHandler,
+        },
+        ...arg
+      )
+    );
+
+    wrapper = mount(<RangePicker />);
+
     ApplyButton().simulate("click");
-    expect(onRangeSelected).toHaveBeenCalled();
+
+    expect(applyHandler).toHaveBeenCalled();
   });
 
   it("should call resetHandler", () => {

@@ -26,13 +26,16 @@ describe("BottomBar", () => {
   const ApplyButton = () => getByDataId(BottomBar(), "bottom-bar-apply-button");
   const ResetButton = () => getByDataId(BottomBar(), "bottom-bar-clear-button");
 
-  beforeEach(() => {
-    const rangeContext = require("../../contexts/rangeContext");
-    const requireActual = jest.requireActual("../../contexts/rangeContext");
+  const rangeContext = () => require("../../contexts/rangeContext");
+  const requireActual = () => jest.requireActual("../../contexts/rangeContext");
 
-    for (const key in rangeContext) {
-      if (rangeContext[key].mockImplementation)
-        rangeContext[key].mockImplementation(requireActual[key]);
+  beforeEach(() => {
+    const context = rangeContext();
+    const actual = requireActual();
+
+    for (const key in context) {
+      if (context[key].mockImplementation)
+        context[key].mockImplementation(actual[key]);
     }
 
     wrapper = mount(<RangePicker />);
@@ -91,12 +94,10 @@ describe("BottomBar", () => {
   it("should call resetHandler", () => {
     const resetHandler = jest.fn();
 
-    require("../../contexts/rangeContext").useRangeContext.mockImplementation(
-      () => ({
-        ...jest.requireActual("../../contexts/rangeContext").useRangeContext(),
-        resetHandler,
-      })
-    );
+    rangeContext().useRangeContext.mockImplementation(() => ({
+      ...requireActual().useRangeContext(),
+      resetHandler,
+    }));
 
     wrapper = mount(<RangePicker />);
 

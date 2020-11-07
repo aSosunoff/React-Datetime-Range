@@ -41,9 +41,12 @@ describe("TimePicker", () => {
   it("should be toggle disabled prop startDate", () => {
     expect(StartInput().prop("disabled")).toBeTruthy();
 
-    wrapper.setProps({ startDate: new Date() });
+    rangeContext().useRangeContext.mockImplementation(() => ({
+      ...requireActual().useRangeContext(),
+      startDateTimestamp: 1,
+    }));
 
-    wrapper.update();
+    wrapper = mount(<RangePicker />);
 
     expect(StartInput().prop("disabled")).toBeFalsy();
   });
@@ -51,37 +54,52 @@ describe("TimePicker", () => {
   it("should be toggle disabled prop endDate", () => {
     expect(EndInput().prop("disabled")).toBeTruthy();
 
-    wrapper.setProps({ endDate: new Date() });
+    rangeContext().useRangeContext.mockImplementation(() => ({
+      ...requireActual().useRangeContext(),
+      endDateTimestamp: 1,
+    }));
 
-    wrapper.update();
+    wrapper = mount(<RangePicker />);
 
     expect(EndInput().prop("disabled")).toBeFalsy();
   });
 
   it("should be set value startDate", () => {
-    wrapper.setProps({ startDate: new Date(0, 0, 0, 10, 10, 10) });
+    rangeContext().useRangeContext.mockImplementation(() => ({
+      ...requireActual().useRangeContext(),
+      startTimeString: "10:10:10",
+    }));
 
-    wrapper.update();
+    wrapper = mount(<RangePicker />);
 
     expect(StartInput().prop("value")).toBe("10:10:10");
 
-    wrapper.setProps({ startDate: new Date(0, 0, 0, 20, 10, 10) });
+    rangeContext().useRangeContext.mockImplementation(() => ({
+      ...requireActual().useRangeContext(),
+      startTimeString: "20:10:10",
+    }));
 
-    wrapper.update();
+    wrapper = mount(<RangePicker />);
 
     expect(StartInput().prop("value")).toBe("20:10:10");
   });
 
   it("should be set value endDate", () => {
-    wrapper.setProps({ endDate: new Date(0, 0, 0, 10, 10, 10) });
+    rangeContext().useRangeContext.mockImplementation(() => ({
+      ...requireActual().useRangeContext(),
+      endTimeString: "10:10:10",
+    }));
 
-    wrapper.update();
+    wrapper = mount(<RangePicker />);
 
     expect(EndInput().prop("value")).toBe("10:10:10");
 
-    wrapper.setProps({ endDate: new Date(0, 0, 0, 20, 10, 10) });
+    rangeContext().useRangeContext.mockImplementation(() => ({
+      ...requireActual().useRangeContext(),
+      endTimeString: "20:10:10",
+    }));
 
-    wrapper.update();
+    wrapper = mount(<RangePicker />);
 
     expect(EndInput().prop("value")).toBe("20:10:10");
   });

@@ -121,7 +121,7 @@ describe("DayDefault", () => {
 
     DayDefaultWrapper().find("button").simulate("mouseenter");
 
-    jest.advanceTimersByTime(80);
+    jest.runOnlyPendingTimers();
 
     expect(setHoverDayTimestamp).toHaveBeenCalled();
 

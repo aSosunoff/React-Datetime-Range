@@ -1,0 +1,19 @@
+.arrow {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s all;
+
+  &::after {
+    transition: 0.3s all;
+    content: "";
+    border: 5px solid transparent;
+    border-right: 5px solid var(--grey);
+  }
+
+  &:hover::after {
+    border-right: 5px solid var(--dark-blue);
+  }
+}

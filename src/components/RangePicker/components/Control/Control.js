@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
-import styles from "./Control.module.scss";
 import { useShowDateContext } from "../../contexts/showDateContext";
 import { useEventListener } from "../../hooks/useEventListener";
+import { ArrowLeft, ArrowRight } from "../Arrow";
 
 const Control = ({ isOpen }) => {
   const { nextMonthHandler, prevMonthHandler } = useShowDateContext();
@@ -25,15 +25,19 @@ const Control = ({ isOpen }) => {
 
   return (
     <>
-      <div
-        className={styles.control_left}
+      <ArrowLeft
         onClick={prevMonthHandler}
-        data-test-id="control-left"
+        style={{
+          top: "17px",
+          left: "5px",
+        }}
       />
-      <div
-        className={styles.control_right}
+      <ArrowRight
         onClick={nextMonthHandler}
-        data-test-id="control-right"
+        style={{
+          top: "17px",
+          right: "5px",
+        }}
       />
     </>
   );

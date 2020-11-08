@@ -1,25 +1,41 @@
 import React from "react";
 import { mount } from "enzyme";
+import CalendarDefault from "./CalendarDefault";
 
-import RangePicker from "../../RangePicker";
+jest.mock("./DayDefault/", () => ({ index }) => (
+  <div className="DayDefault">{index}</div>
+));
 
 describe("CalendarDefault", () => {
   let wrapper;
 
+  const days = new Array(10).fill(null).map((_, index) => ({
+    index,
+  }));
+
+  const Title = () => <div className="Title">Title</div>;
+
   const getByDataId = (wrapper, dataId) =>
     wrapper.find(`[data-test-id="${dataId}"]`);
 
-  const CalendarDefault = () => wrapper.find("CalendarDefault").at(0);
+  const WeekLine = () => wrapper.find("WeekLine");
   const CalendarDefaultDayContainer = () =>
-    getByDataId(CalendarDefault(), "calendar-default-day-container");
-  const WeekLine = () => CalendarDefault().find("WeekLine");
+    getByDataId(wrapper, "calendar-default-day-container");
 
   beforeEach(() => {
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(
+      <CalendarDefault days={days}>
+        <Title />
+      </CalendarDefault>
+    );
   });
 
   it("should render", () => {
-    expect(CalendarDefault()).toHaveLength(1);
+    expect(wrapper).toHaveLength(1);
+  });
+
+  it("should contain Title", () => {
+    expect(wrapper.find(".Title")).toHaveLength(1);
   });
 
   it("should contain WeekLine", () => {
@@ -31,14 +47,6 @@ describe("CalendarDefault", () => {
   });
 
   it("should contain length 31 day", () => {
-    wrapper.setProps({ startDate: new Date(2020, 0), isOpen: true });
-
-    wrapper.update();
-
-    expect(
-      CalendarDefaultDayContainer()
-        .find("DayDefault")
-        .find({ isCurrentMonth: true })
-    ).toHaveLength(31);
+    expect(CalendarDefaultDayContainer().find(".DayDefault")).toHaveLength(10);
   });
 });

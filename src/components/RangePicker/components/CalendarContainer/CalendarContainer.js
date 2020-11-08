@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import PropTypes from "prop-types";
 import styles from "./CalendarContainer.module.scss";
 import {
@@ -8,7 +8,6 @@ import {
 import CalendarSelector from "./CalendarSelector/";
 import { useShowDateContext } from "../../contexts/showDateContext";
 import { withContext } from "../../HOC/withContext";
-import CalendarSimple from "./CalendarSimple/";
 import { useCalendar } from "../../hooks/useCalendar";
 
 const CalendarContainer = ({ locales }) => {
@@ -18,6 +17,14 @@ const CalendarContainer = ({ locales }) => {
 
   const calendars = useCalendar();
 
+  const changeMonthHandler = useCallback(
+    (calendarNumber, month) =>
+      calendarNumber === 0
+        ? setMonthHandler(month)
+        : setMonthHandler(month - calendarNumber),
+    [setMonthHandler]
+  );
+
   return (
     <div
       className={styles.calendar_container}
@@ -26,25 +33,16 @@ const CalendarContainer = ({ locales }) => {
         gridTemplateColumns: `repeat(${calendars.length}, 1fr)`,
       }}
     >
-      {calendars.map(({ date, days }, index) =>
-        index === 0 ? (
-          <CalendarSelector
-            key={index}
-            date={date}
-            days={days}
-            locales={locales}
-            changeMonthHandler={setMonthHandler}
-            changeYearHandler={setYearHandler}
-          />
-        ) : (
-          <CalendarSimple
-            key={index}
-            date={date}
-            days={days}
-            locales={locales}
-          />
-        )
-      )}
+      {calendars.map(({ date, days }, index) => (
+        <CalendarSelector
+          key={index}
+          date={date}
+          days={days}
+          locales={locales}
+          changeMonthHandler={changeMonthHandler.bind(this, index)}
+          changeYearHandler={setYearHandler}
+        />
+      ))}
     </div>
   );
 };

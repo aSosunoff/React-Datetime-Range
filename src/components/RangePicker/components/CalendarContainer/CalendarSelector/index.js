@@ -1,1 +1,1 @@
-export { default } from './CalendarDefault';
+export { default } from './CalendarSelector';

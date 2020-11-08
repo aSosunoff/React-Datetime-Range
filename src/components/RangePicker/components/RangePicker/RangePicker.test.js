@@ -16,17 +16,16 @@ describe("RangePicker", () => {
   const ControlLeft = () => getByDataId(Control(), "control-left");
 
   const CalendarContainer = () => wrapper.find("CalendarContainer");
+  const CalendarSelector = () => CalendarContainer().find("CalendarSelector");
+  const CalendarSimple = () => CalendarContainer().find("CalendarSimple");
+  const CalendarSimpleTitle = () =>
+    getByDataId(CalendarSimple(), "calendar-title");
+
   const TimePicker = () => wrapper.find("TimePicker");
 
   const BottomBar = () => wrapper.find("BottomBar");
   const BottomBarApplyButton = () =>
     getByDataId(BottomBar(), "bottom-bar-apply-button");
-
-  const CalendarSelector = () => CalendarContainer().find("CalendarSelector");
-
-  const CalendarSimple = () => CalendarContainer().find("CalendarSimple");
-  const CalendarSimpleTitle = () =>
-    getByDataId(CalendarSimple(), "calendar-title");
 
   const props = {
     startDate: new Date(2020, 0, 5),
@@ -57,11 +56,6 @@ describe("RangePicker", () => {
 
   it("should contain BottomBar", () => {
     expect(BottomBar()).toHaveLength(1);
-  });
-
-  it("should contain CalendarSelector and CalendarSimple", () => {
-    expect(CalendarSelector()).toHaveLength(1);
-    expect(CalendarSimple()).toHaveLength(1);
   });
 
   it("should raise range after apply", () => {

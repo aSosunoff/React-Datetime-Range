@@ -1,29 +1,27 @@
 import React from "react";
 import { mount } from "enzyme";
+import CalendarSelector from "./CalendarSelector";
 
-import RangePicker from "../../RangePicker";
+jest.mock("../CalendarDefault", () => ({ children }) => <div>{children}</div>);
 
 describe("CalendarSelector", () => {
   let wrapper;
 
-  const CalendarSelector = () => wrapper.find("CalendarSelector");
-
-  const props = {
-    startDate: new Date(2020, 0, 5),
-    endDate: new Date(2020, 0, 6),
-    onRangeSelected: jest.fn(),
-    onClose: jest.fn(),
-  };
-
   beforeEach(() => {
-    wrapper = mount(<RangePicker {...props} />);
+    wrapper = mount(
+      <CalendarSelector
+        changeMonthHandler={jest.fn()}
+        changeYearHandler={jest.fn()}
+        date={new Date(2020, 0)}
+      />
+    );
   });
 
   it("should render", () => {
-    expect(CalendarSelector()).toHaveLength(1);
+    expect(wrapper).toHaveLength(1);
   });
 
   it("should contain two select element", () => {
-    expect(CalendarSelector().find("select")).toHaveLength(2);
+    expect(wrapper.find("select")).toHaveLength(2);
   });
 });

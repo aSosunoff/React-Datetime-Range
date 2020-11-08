@@ -1,24 +1,20 @@
-import React, { useCallback } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import styles from "./CalendarContainer.module.scss";
 import {
   HoverDayProvider,
   useHoverDayContext,
 } from "../../contexts/hoverDayContext";
-import CalendarSelector from "./CalendarSelector/CalendarSelector";
+import CalendarSelector from "./CalendarSelector/";
 import { useShowDateContext } from "../../contexts/showDateContext";
 import { withContext } from "../../HOC/withContext";
-import CalendarSimple from "./CalendarSimple";
+import CalendarSimple from "./CalendarSimple/";
 import { useCalendar } from "../../hooks/useCalendar";
 
 const CalendarContainer = ({ locales }) => {
   const { setMonthHandler, setYearHandler } = useShowDateContext();
 
   const { setHoverDayTimestamp } = useHoverDayContext();
-
-  const changeMonthHandler = useCallback(setMonthHandler, [setMonthHandler]);
-
-  const changeYearHandler = useCallback(setYearHandler, [setYearHandler]);
 
   const calendars = useCalendar();
 
@@ -37,8 +33,8 @@ const CalendarContainer = ({ locales }) => {
             date={date}
             days={days}
             locales={locales}
-            changeMonthHandler={changeMonthHandler}
-            changeYearHandler={changeYearHandler}
+            changeMonthHandler={setMonthHandler}
+            changeYearHandler={setYearHandler}
           />
         ) : (
           <CalendarSimple

@@ -17,13 +17,11 @@ jest.mock("../../contexts/showDateContext", () => ({
   }),
 }));
 
-jest.mock("../../contexts/hoverDayContext", () => ({
-  useHoverDayContext: () => ({ setHoverDayTimestamp: jest.fn() }),
-}));
-
 jest.mock("./CalendarSelector", () => () => <div>CalendarSelector</div>);
 
 jest.mock("./CalendarSimple", () => () => <div>CalendarSimple</div>);
+
+jest.mock("../../contexts/hoverDayContext");
 
 jest.mock("../../hooks/useCalendar", () => ({
   useCalendar: () =>
@@ -36,7 +34,12 @@ jest.mock("../../hooks/useCalendar", () => ({
 describe("CalendarContainer", () => {
   let wrapper;
 
+  const rangeContext = () => require("../../contexts/hoverDayContext");
+
   beforeEach(() => {
+    rangeContext().useHoverDayContext.mockImplementation(() => ({
+      setHoverDayTimestamp: jest.fn(),
+    }));
     wrapper = mount(<CalendarContainer />);
   });
 
@@ -48,5 +51,23 @@ describe("CalendarContainer", () => {
     expect(wrapper.getDOMNode().style.gridTemplateColumns).toBe(
       "repeat(2, 1fr)"
     );
+  });
+
+  it("should call setHoverDayTimestamp after mouse leave", () => {
+    const setHoverDayTimestamp = jest.fn();
+
+    rangeContext().useHoverDayContext.mockImplementation(() => ({
+      setHoverDayTimestamp,
+    }));
+
+    wrapper = mount(<CalendarContainer />);
+
+    wrapper.simulate("mouseleave");
+
+    expect(setHoverDayTimestamp).toHaveBeenCalled();
+
+    const [[result]] = setHoverDayTimestamp.mock.calls;
+
+    expect(result).toBeNull();
   });
 });

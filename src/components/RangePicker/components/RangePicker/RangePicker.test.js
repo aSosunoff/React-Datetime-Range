@@ -12,8 +12,8 @@ describe("RangePicker", () => {
   const RangePickerComponent = () => wrapper.find("RangePicker");
 
   const Control = () => wrapper.find("Control");
-  const ControlRight = () => getByDataId(Control(), "control-right");
-  const ControlLeft = () => getByDataId(Control(), "control-left");
+  const ArrowRight = () => Control().find("ArrowRight");
+  const ArrowLeft = () => Control().find("ArrowLeft");
 
   const CalendarContainer = () => wrapper.find("CalendarContainer");
   const CalendarSelector = () => CalendarContainer().find("CalendarSelector");
@@ -89,7 +89,7 @@ describe("RangePicker", () => {
       })
     ).toBe(titleText);
 
-    ControlRight().simulate("click");
+    ArrowRight().simulate("click");
 
     titleText = CalendarSimpleTitle().text();
 
@@ -111,7 +111,7 @@ describe("RangePicker", () => {
       })
     ).toBe(titleText);
 
-    ControlLeft().simulate("click");
+    ArrowLeft().simulate("click");
 
     titleText = CalendarSimpleTitle().text();
 

@@ -1,10 +1,17 @@
 import React from "react";
 import { mount } from "enzyme";
+import { compose } from "../../utils/compose";
+import { withContext } from "../../HOC/withContext";
+import { RangeProvider } from "../../contexts/rangeContext";
 
-import RangePicker from "../RangePicker";
+/* import RangePicker from "../RangePicker"; */
 
 jest.mock("../../contexts/rangeContext");
-jest.mock("./BottomBar.js");
+/* jest.mock("./BottomBar.js"); */
+
+const BottomBar = compose(withContext(RangeProvider))(
+  require("./BottomBar").default
+);
 
 const format = (locales, date) =>
   date.toLocaleString(locales, {
@@ -22,36 +29,28 @@ describe("BottomBar", () => {
   const getByDataId = (wrapper, dataId) =>
     wrapper.find(`[data-test-id="${dataId}"]`);
 
-  const BottomBar = () => wrapper.find("BottomBar");
-  const Title = () => getByDataId(BottomBar(), "bottom-bar-title");
-  const ApplyButton = () => getByDataId(BottomBar(), "bottom-bar-apply-button");
-  const ResetButton = () => getByDataId(BottomBar(), "bottom-bar-clear-button");
+  /* const BottomBar = () => wrapper.find("BottomBar"); */
+  const Title = () => getByDataId(wrapper, "bottom-bar-title");
+  const ApplyButton = () => getByDataId(wrapper, "bottom-bar-apply-button");
+  const ResetButton = () => getByDataId(wrapper, "bottom-bar-clear-button");
 
   const rangeContext = () => require("../../contexts/rangeContext");
   const requireActual = () => jest.requireActual("../../contexts/rangeContext");
 
-  const BottomBarComponent = () => require("./BottomBar");
-  const BottomBarComponentRequireActual = () =>
-    jest.requireActual("./BottomBar");
-
   beforeEach(() => {
-    BottomBarComponent().default.mockImplementation(
-      BottomBarComponentRequireActual().default
-    );
+    const _rangeContext = rangeContext();
+    const _requireActual = requireActual();
 
-    const context = rangeContext();
-    const actual = requireActual();
-
-    for (const key in context) {
-      if (context[key].mockImplementation)
-        context[key].mockImplementation(actual[key]);
+    for (const key in _rangeContext) {
+      if (_rangeContext[key].mockImplementation)
+        _rangeContext[key].mockImplementation(_requireActual[key]);
     }
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<BottomBar />);
   });
 
   it("should render", () => {
-    expect(BottomBar()).toHaveLength(1);
+    expect(wrapper).toHaveLength(1);
   });
 
   it("should render without title", () => {
@@ -66,11 +65,11 @@ describe("BottomBar", () => {
       startDate,
     }));
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<BottomBar />);
 
     expect(Title()).toHaveLength(1);
 
-    expect(Title().text()).toBe(format(BottomBar().prop("locales"), startDate));
+    expect(Title().text()).toBe(format(wrapper.prop("locales"), startDate));
   });
 
   it("should render with title start and end date", () => {
@@ -83,13 +82,13 @@ describe("BottomBar", () => {
       endDate,
     }));
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<BottomBar />);
 
     expect(Title()).toHaveLength(1);
 
     expect(Title().text()).toBe(
-      `${format(BottomBar().prop("locales"), startDate)} - ${format(
-        BottomBar().prop("locales"),
+      `${format(wrapper.prop("locales"), startDate)} - ${format(
+        wrapper.prop("locales"),
         endDate
       )}`
     );
@@ -106,17 +105,7 @@ describe("BottomBar", () => {
   it("should call applyHandler prop", () => {
     const applyHandler = jest.fn();
 
-    BottomBarComponent().default.mockImplementation(({ ...props }, ...arg) =>
-      BottomBarComponentRequireActual().default(
-        {
-          ...props,
-          applyHandler,
-        },
-        ...arg
-      )
-    );
-
-    wrapper = mount(<RangePicker />);
+    wrapper.setProps({ applyHandler });
 
     ApplyButton().simulate("click");
 
@@ -131,7 +120,7 @@ describe("BottomBar", () => {
       resetHandler,
     }));
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<BottomBar />);
 
     ResetButton().simulate("click");
 

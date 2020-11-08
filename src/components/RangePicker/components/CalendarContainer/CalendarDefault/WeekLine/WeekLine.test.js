@@ -1,26 +1,24 @@
 import React from "react";
 import { mount } from "enzyme";
 
-import RangePicker from "../../../RangePicker";
-
 import { getWeeksNameLocales } from "../../../../utils/dateHalper";
+
+import WeekLine from './WeekLine';
 
 describe("WeekLine", () => {
   let wrapper;
 
-  const WeekLine = () => wrapper.find("WeekLine").at(0);
-
   beforeEach(() => {
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<WeekLine />);
   });
 
   it("should render", () => {
-    expect(WeekLine()).toHaveLength(1);
+    expect(wrapper).toHaveLength(1);
   });
 
   it("should contain 7 div with name week - locales default", () => {
-    const weekLine = getWeeksNameLocales(WeekLine().prop("locales"));
-    const weekName = WeekLine().children().children();
+    const weekLine = getWeeksNameLocales(wrapper.prop("locales"));
+    const weekName = wrapper.children().children();
 
     expect(weekName).toHaveLength(7);
 
@@ -34,8 +32,8 @@ describe("WeekLine", () => {
 
     wrapper.update();
 
-    const weekLine = getWeeksNameLocales(WeekLine().prop("locales"));
-    const weekName = WeekLine().children().children();
+    const weekLine = getWeeksNameLocales(wrapper.prop("locales"));
+    const weekName = wrapper.children().children();
 
     expect(weekName).toHaveLength(7);
 

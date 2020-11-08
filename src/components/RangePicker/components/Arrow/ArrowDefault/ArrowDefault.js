@@ -15,6 +15,7 @@ const ArrowDefault = ({ onClick, style, className }) => {
 
 ArrowDefault.defaultProps = {
   onClick: () => {},
+  style: null,
 };
 
 ArrowDefault.propTypes = {

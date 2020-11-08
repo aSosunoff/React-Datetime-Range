@@ -1,80 +1,40 @@
-/* import React from "react";
+import React from "react";
 import { mount } from "enzyme";
-import { compose } from "../../utils/compose";
-import { withContext } from "../../HOC/withContext";
-import { ShowDateProvider } from "../../contexts/showDateContext";
+import ArrowDefault from "./ArrowDefault";
 
-jest.mock("../../contexts/showDateContext");
-
-const Control = compose(withContext(ShowDateProvider))(
-  require("./Control").default
-);
-
-describe("Control", () => {
+describe("ArrowDefault", () => {
   let wrapper;
 
-  const getByDataId = (wrapper, dataId) =>
-    wrapper.find(`[data-test-id="${dataId}"]`);
-
-  const LeftButton = () => getByDataId(wrapper, "control-left");
-  const RightButton = () => getByDataId(wrapper, "control-right");
-
-  const showDateContext = () => require("../../contexts/showDateContext");
-  const requireActual = () =>
-    jest.requireActual("../../contexts/showDateContext");
-
   beforeEach(() => {
-    const context = showDateContext();
-    const actual = requireActual();
-
-    for (const key in context) {
-      if (context[key].mockImplementation)
-        context[key].mockImplementation(actual[key]);
-    }
-
-    wrapper = mount(<Control />);
+    wrapper = mount(<ArrowDefault />);
   });
 
   it("should render", () => {
     expect(wrapper).toHaveLength(1);
   });
 
-  it("should render left control", () => {
-    expect(LeftButton()).toHaveLength(1);
+  it("should call onClick", () => {
+    const onClick = jest.fn();
+    wrapper.setProps({ onClick });
+    wrapper.find("div").simulate("click");
+    expect(onClick).toHaveBeenCalled();
   });
 
-  it("should render right control", () => {
-    expect(RightButton()).toHaveLength(1);
+  it("should contain class", () => {
+    const className = "test_class";
+
+    wrapper.setProps({ className });
+
+    expect(wrapper.find("div").prop("className")).toEqual(
+      expect.stringContaining(className)
+    );
   });
 
-  it("should call handler after click left button", () => {
-    const prevMonthHandler = jest.fn();
+  it("should contain style", () => {
+    const style = { top: "1px" };
 
-    showDateContext().useShowDateContext.mockImplementation(() => ({
-      ...requireActual().useShowDateContext(),
-      prevMonthHandler,
-    }));
+    wrapper.setProps({ style });
 
-    wrapper = mount(<Control />);
-
-    LeftButton().simulate("click");
-
-    expect(prevMonthHandler).toHaveBeenCalled();
-  });
-
-  it("should call handler after click right button", () => {
-    const nextMonthHandler = jest.fn();
-
-    showDateContext().useShowDateContext.mockImplementation(() => ({
-      ...requireActual().useShowDateContext(),
-      nextMonthHandler,
-    }));
-
-    wrapper = mount(<Control />);
-
-    RightButton().simulate("click");
-
-    expect(nextMonthHandler).toHaveBeenCalled();
+    expect(wrapper.find("div").prop("style")).toEqual(style);
   });
 });
- */

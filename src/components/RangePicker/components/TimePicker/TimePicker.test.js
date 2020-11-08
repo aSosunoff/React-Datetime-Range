@@ -1,9 +1,14 @@
 import React from "react";
 import { mount } from "enzyme";
-
-import RangePicker from "../RangePicker";
+import { RangeProvider } from "../../contexts/rangeContext";
+import { compose } from "../../utils/compose";
+import { withContext } from "../../HOC/withContext";
 
 jest.mock("../../contexts/rangeContext");
+
+const TimePicker = compose(withContext(RangeProvider))(
+  require("./TimePicker").default
+);
 
 describe("TimePicker", () => {
   let wrapper;
@@ -11,9 +16,8 @@ describe("TimePicker", () => {
   const getByDataId = (wrapper, dataId) =>
     wrapper.find(`[data-test-id="${dataId}"]`);
 
-  const TimePicker = () => wrapper.find("TimePicker");
-  const StartInput = () => getByDataId(TimePicker(), "time-picker-start");
-  const EndInput = () => getByDataId(TimePicker(), "time-picker-end");
+  const StartInput = () => getByDataId(wrapper, "time-picker-start");
+  const EndInput = () => getByDataId(wrapper, "time-picker-end");
 
   const rangeContext = () => require("../../contexts/rangeContext");
   const requireActual = () => jest.requireActual("../../contexts/rangeContext");
@@ -27,15 +31,15 @@ describe("TimePicker", () => {
         context[key].mockImplementation(actual[key]);
     }
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<TimePicker />);
   });
 
   it("should render", () => {
-    expect(TimePicker()).toHaveLength(1);
+    expect(wrapper).toHaveLength(1);
   });
 
   it("should contain two input type time", () => {
-    expect(TimePicker().find('input[type="time"]')).toHaveLength(2);
+    expect(wrapper.find('input[type="time"]')).toHaveLength(2);
   });
 
   it("should be toggle disabled prop startDate", () => {
@@ -46,7 +50,7 @@ describe("TimePicker", () => {
       startDateTimestamp: 1,
     }));
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<TimePicker />);
 
     expect(StartInput().prop("disabled")).toBeFalsy();
   });
@@ -59,7 +63,7 @@ describe("TimePicker", () => {
       endDateTimestamp: 1,
     }));
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<TimePicker />);
 
     expect(EndInput().prop("disabled")).toBeFalsy();
   });
@@ -70,7 +74,7 @@ describe("TimePicker", () => {
       startTimeString: "10:10:10",
     }));
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<TimePicker />);
 
     expect(StartInput().prop("value")).toBe("10:10:10");
 
@@ -79,7 +83,7 @@ describe("TimePicker", () => {
       startTimeString: "20:10:10",
     }));
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<TimePicker />);
 
     expect(StartInput().prop("value")).toBe("20:10:10");
   });
@@ -90,7 +94,7 @@ describe("TimePicker", () => {
       endTimeString: "10:10:10",
     }));
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<TimePicker />);
 
     expect(EndInput().prop("value")).toBe("10:10:10");
 
@@ -99,7 +103,7 @@ describe("TimePicker", () => {
       endTimeString: "20:10:10",
     }));
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<TimePicker />);
 
     expect(EndInput().prop("value")).toBe("20:10:10");
   });
@@ -112,7 +116,7 @@ describe("TimePicker", () => {
       setStartTimeStringHandler,
     }));
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<TimePicker />);
 
     const value = "00:00:00";
 
@@ -133,7 +137,7 @@ describe("TimePicker", () => {
       setEndTimeStringHandler,
     }));
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<TimePicker />);
 
     const value = "00:00:00";
 

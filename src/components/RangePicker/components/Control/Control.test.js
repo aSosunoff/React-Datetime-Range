@@ -1,9 +1,14 @@
 import React from "react";
 import { mount } from "enzyme";
-
-import RangePicker from "../RangePicker";
+import { compose } from "../../utils/compose";
+import { withContext } from "../../HOC/withContext";
+import { ShowDateProvider } from "../../contexts/showDateContext";
 
 jest.mock("../../contexts/showDateContext");
+
+const Control = compose(withContext(ShowDateProvider))(
+  require("./Control").default
+);
 
 describe("Control", () => {
   let wrapper;
@@ -11,9 +16,8 @@ describe("Control", () => {
   const getByDataId = (wrapper, dataId) =>
     wrapper.find(`[data-test-id="${dataId}"]`);
 
-  const Control = () => wrapper.find("Control");
-  const LeftButton = () => getByDataId(Control(), "control-left");
-  const RightButton = () => getByDataId(Control(), "control-right");
+  const LeftButton = () => getByDataId(wrapper, "control-left");
+  const RightButton = () => getByDataId(wrapper, "control-right");
 
   const showDateContext = () => require("../../contexts/showDateContext");
   const requireActual = () =>
@@ -28,11 +32,11 @@ describe("Control", () => {
         context[key].mockImplementation(actual[key]);
     }
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<Control />);
   });
 
   it("should render", () => {
-    expect(Control()).toHaveLength(1);
+    expect(wrapper).toHaveLength(1);
   });
 
   it("should render left control", () => {
@@ -51,7 +55,7 @@ describe("Control", () => {
       prevMonthHandler,
     }));
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<Control />);
 
     LeftButton().simulate("click");
 
@@ -66,7 +70,7 @@ describe("Control", () => {
       nextMonthHandler,
     }));
 
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<Control />);
 
     RightButton().simulate("click");
 

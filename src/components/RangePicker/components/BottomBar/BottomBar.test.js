@@ -4,10 +4,7 @@ import { compose } from "../../utils/compose";
 import { withContext } from "../../HOC/withContext";
 import { RangeProvider } from "../../contexts/rangeContext";
 
-/* import RangePicker from "../RangePicker"; */
-
 jest.mock("../../contexts/rangeContext");
-/* jest.mock("./BottomBar.js"); */
 
 const BottomBar = compose(withContext(RangeProvider))(
   require("./BottomBar").default
@@ -29,7 +26,6 @@ describe("BottomBar", () => {
   const getByDataId = (wrapper, dataId) =>
     wrapper.find(`[data-test-id="${dataId}"]`);
 
-  /* const BottomBar = () => wrapper.find("BottomBar"); */
   const Title = () => getByDataId(wrapper, "bottom-bar-title");
   const ApplyButton = () => getByDataId(wrapper, "bottom-bar-apply-button");
   const ResetButton = () => getByDataId(wrapper, "bottom-bar-clear-button");

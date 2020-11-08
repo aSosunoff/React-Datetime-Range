@@ -1,23 +1,51 @@
 import React from "react";
 import { mount } from "enzyme";
+import CalendarContainer from "./CalendarContainer";
 
-import RangePicker from "../RangePicker";
+jest.mock("../../HOC/withContext.js", () => {
+  return {
+    withContext: () => (WrapperComponent) => (props) => (
+      <WrapperComponent {...props} />
+    ),
+  };
+});
+
+jest.mock("../../contexts/showDateContext", () => ({
+  useShowDateContext: () => ({
+    setMonthHandler: jest.fn(),
+    setYearHandler: jest.fn(),
+  }),
+}));
+
+jest.mock("../../contexts/hoverDayContext", () => ({
+  useHoverDayContext: () => ({ setHoverDayTimestamp: jest.fn() }),
+}));
+
+jest.mock("./CalendarSelector", () => () => <div>CalendarSelector</div>);
+
+jest.mock("./CalendarSimple", () => () => <div>CalendarSimple</div>);
+
+jest.mock("../../hooks/useCalendar", () => ({
+  useCalendar: () =>
+    new Array(2).fill(null).map((_, index) => ({
+      date: index,
+      days: index,
+    })),
+}));
 
 describe("CalendarContainer", () => {
   let wrapper;
 
-  const CalendarContainer = () => wrapper.find("CalendarContainer");
-
   beforeEach(() => {
-    wrapper = mount(<RangePicker />);
+    wrapper = mount(<CalendarContainer />);
   });
 
   it("should render", () => {
-    expect(CalendarContainer()).toHaveLength(1);
+    expect(wrapper).toHaveLength(1);
   });
 
   it("should contain style default", () => {
-    expect(CalendarContainer().getDOMNode().style.gridTemplateColumns).toBe(
+    expect(wrapper.getDOMNode().style.gridTemplateColumns).toBe(
       "repeat(2, 1fr)"
     );
   });

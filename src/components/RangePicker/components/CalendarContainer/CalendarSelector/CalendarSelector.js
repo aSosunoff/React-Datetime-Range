@@ -4,6 +4,7 @@ import { getMonthNames, getYearList } from "../../../utils/dateHalper";
 import CalendarDefault from "../CalendarDefault";
 import styles from "./CalendarSelector.module.scss";
 import useDateSplit from "../../../hooks/useDateSplit";
+import Select from "../../Select/";
 
 const CalendarSelector = ({
   changeMonthHandler,
@@ -13,11 +14,20 @@ const CalendarSelector = ({
 }) => {
   const { year, month } = useDateSplit(date);
 
-  const yearList = useMemo(() => getYearList(), []);
+  const yearList = useMemo(
+    () => getYearList().map((year) => ({ id: year, value: year })),
+    []
+  );
 
-  const monthNames = useMemo(() => getMonthNames(props.locales), [
-    props.locales,
-  ]);
+  const monthNames = useMemo(
+    () =>
+      getMonthNames(props.locales).map((name, index) => ({
+        id: index,
+        value: index,
+        text: name,
+      })),
+    [props.locales]
+  );
 
   const changeMonthHandlerLocal = useCallback(
     ({ target: { options } }) =>
@@ -34,21 +44,17 @@ const CalendarSelector = ({
   return (
     <CalendarDefault {...props}>
       <div className={styles.title}>
-        <select value={month} onChange={changeMonthHandlerLocal}>
-          {monthNames.map((name, index) => (
-            <option key={index} value={index}>
-              {name}
-            </option>
-          ))}
-        </select>
+        <Select
+          value={month}
+          onChange={changeMonthHandlerLocal}
+          items={monthNames}
+        />
 
-        <select value={year} onChange={changeYearHandlerLocal}>
-          {yearList.map((year) => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
+        <Select
+          value={year}
+          onChange={changeYearHandlerLocal}
+          items={yearList}
+        />
       </div>
     </CalendarDefault>
   );

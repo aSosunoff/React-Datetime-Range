@@ -16,10 +16,7 @@ describe("RangePicker", () => {
   const ArrowLeft = () => Control().find("ArrowLeft");
 
   const CalendarContainer = () => wrapper.find("CalendarContainer");
-  const CalendarSelector = () => CalendarContainer().find("CalendarSelector");
-  const CalendarSimple = () => CalendarContainer().find("CalendarSimple");
-  const CalendarSimpleTitle = () =>
-    getByDataId(CalendarSimple(), "calendar-title");
+  const CalendarSelectors = () => CalendarContainer().find("CalendarSelector");
 
   const TimePicker = () => wrapper.find("TimePicker");
 
@@ -59,13 +56,15 @@ describe("RangePicker", () => {
   });
 
   it("should raise range after apply", () => {
-    CalendarSelector()
+    CalendarSelectors()
+      .at(0)
       .find("DayDefault")
       .find({ number: 1, isCurrentMonth: true })
       .find("button")
       .simulate("click");
 
-    CalendarSelector()
+    CalendarSelectors()
+      .at(0)
       .find("DayDefault")
       .find({ number: 10, isCurrentMonth: true })
       .find("button")
@@ -79,47 +78,69 @@ describe("RangePicker", () => {
     expect(endDate.getTime()).toBe(new Date(2020, 0, 10).getTime());
   });
 
-  it("should set next calendar", () => {
-    let titleText = CalendarSimpleTitle().text();
+  it("should set next month", () => {
+    let monthName = () =>
+      CalendarSelectors()
+        .at(0)
+        .find("Select")
+        .at(0)
+        .prop("items")
+        .find(
+          ({ value }) =>
+            value ===
+            CalendarSelectors().at(0).find("Select").at(0).prop("value")
+        ).text;
+
+    const date = CalendarSelectors().at(0).prop("date");
 
     expect(
-      new Date(2020, 1, 1).toLocaleString("ru", {
+      date.toLocaleString("ru", {
         month: "long",
-        year: "numeric",
       })
-    ).toBe(titleText);
+    ).toBe(monthName());
 
     ArrowRight().simulate("click");
 
-    titleText = CalendarSimpleTitle().text();
-
     expect(
-      new Date(2020, 2, 1).toLocaleString("ru", {
-        month: "long",
-        year: "numeric",
-      })
-    ).toBe(titleText);
+      new Date(date.getFullYear(), date.getMonth() + 1, 1).toLocaleString(
+        "ru",
+        {
+          month: "long",
+        }
+      )
+    ).toBe(monthName());
   });
 
   it("should set prev calendar", () => {
-    let titleText = CalendarSimpleTitle().text();
+    let monthName = () =>
+      CalendarSelectors()
+        .at(0)
+        .find("Select")
+        .at(0)
+        .prop("items")
+        .find(
+          ({ value }) =>
+            value ===
+            CalendarSelectors().at(0).find("Select").at(0).prop("value")
+        ).text;
+
+    const date = CalendarSelectors().at(0).prop("date");
 
     expect(
-      new Date(2020, 1, 1).toLocaleString("ru", {
+      date.toLocaleString("ru", {
         month: "long",
-        year: "numeric",
       })
-    ).toBe(titleText);
+    ).toBe(monthName());
 
     ArrowLeft().simulate("click");
 
-    titleText = CalendarSimpleTitle().text();
-
     expect(
-      new Date(2020, 0, 1).toLocaleString("ru", {
-        month: "long",
-        year: "numeric",
-      })
-    ).toBe(titleText);
+      new Date(date.getFullYear(), date.getMonth() - 1, 1).toLocaleString(
+        "ru",
+        {
+          month: "long",
+        }
+      )
+    ).toBe(monthName());
   });
 });

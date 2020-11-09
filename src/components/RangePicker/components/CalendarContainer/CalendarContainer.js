@@ -15,13 +15,10 @@ const CalendarContainer = ({ locales }) => {
 
   const { setHoverDayTimestamp } = useHoverDayContext();
 
-  const calendars = useCalendar();
+  const calendars = useCalendar(2);
 
   const changeMonthHandler = useCallback(
-    (calendarNumber, month) =>
-      calendarNumber === 0
-        ? setMonthHandler(month)
-        : setMonthHandler(month - calendarNumber),
+    (calendarNumber, month) => setMonthHandler(month - calendarNumber),
     [setMonthHandler]
   );
 

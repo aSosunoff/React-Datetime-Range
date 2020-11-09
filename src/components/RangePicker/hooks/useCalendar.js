@@ -7,19 +7,19 @@ import { prepareCalendar } from "../utils/prepareCalendar";
 import { prepareHoverMonth } from "../utils/prepareHoverMonth";
 import { useCalendarVisible } from "./useCalendarVisible";
 
-export const useCalendar = () => {
+export const useCalendar = (countCalendars) => {
   const { showDate } = useShowDateContext();
 
   const showCalendars = useMemo(
     () =>
-      new Array(2)
+      new Array(countCalendars)
         .fill(null)
         .reduce(
           (res) =>
             !res ? [showDate] : [...res, getNextMonth(res.slice(-1)[0])],
           null
         ),
-    [showDate]
+    [showDate, countCalendars]
   );
 
   const { startDateTimestamp, endDateTimestamp } = useRangeContext();

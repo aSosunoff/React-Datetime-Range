@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useMemo } from "react";
 import PropTypes from "prop-types";
 import { getMonthNames, getYearList } from "../../../utils/dateHalper";
 import CalendarDefault from "../CalendarDefault";
@@ -29,32 +29,16 @@ const CalendarSelector = ({
     [props.locales]
   );
 
-  const changeMonthHandlerLocal = useCallback(
-    ({ target: { options } }) =>
-      changeMonthHandler(options[options.selectedIndex].value),
-    [changeMonthHandler]
-  );
-
-  const changeYearHandlerLocal = useCallback(
-    ({ target: { options } }) =>
-      changeYearHandler(options[options.selectedIndex].value),
-    [changeYearHandler]
-  );
-
   return (
     <CalendarDefault {...props}>
       <div className={styles.title}>
         <Select
           value={month}
-          onChange={changeMonthHandlerLocal}
+          onChange={changeMonthHandler}
           items={monthNames}
         />
 
-        <Select
-          value={year}
-          onChange={changeYearHandlerLocal}
-          items={yearList}
-        />
+        <Select value={year} onChange={changeYearHandler} items={yearList} />
       </div>
     </CalendarDefault>
   );

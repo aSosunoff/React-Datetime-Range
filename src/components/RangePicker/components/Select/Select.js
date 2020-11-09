@@ -4,9 +4,20 @@ import styles from "./Select.module.scss";
 import { ArrowBottom } from "../Arrow/";
 
 const Select = ({ value, onChange, items }) => {
+  const [valueCurrent, setValue] = useState(value);
+
   const [isVisible, setVisible] = useState(false);
   const showHandler = useCallback(() => setVisible(true), []);
   const hideHandler = useCallback(() => setVisible(false), []);
+
+  const changeHandler = useCallback(
+    ({ target: { options } }) => {
+      const value = options[options.selectedIndex].value;
+      setValue(value);
+      onChange(value);
+    },
+    [onChange]
+  );
 
   return (
     <div
@@ -14,7 +25,11 @@ const Select = ({ value, onChange, items }) => {
       onMouseOver={showHandler}
       onMouseOut={hideHandler}
     >
-      <select className={styles.select} value={value} onChange={onChange}>
+      <select
+        className={styles.select}
+        value={valueCurrent}
+        onChange={changeHandler}
+      >
         {items.map((item) => (
           <option key={item.id} value={item.value}>
             {item.text || item.value}

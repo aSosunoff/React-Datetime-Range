@@ -1,11 +1,12 @@
 {
-  "name": "@asosunoff/react-range-picker",
-  "version": "0.1.0",
+  "name": "react-range-datetime-picker",
+  "version": "1.0.0",
   "homepage": "https://asosunoff.github.io/React-Range-Picker/",
   "author": {
     "name": "Alexander Sosunov",
     "url": "https://github.com/aSosunoff"
   },
+  "main": "src/RangePicker/index.js",
   "bugs": {
     "url": "https://github.com/aSosunoff/React-Range-Picker/issues"
   },
@@ -16,9 +17,6 @@
     "url": "git://github.com/aSosunoff/React-Range-Picker.git"
   },
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
     "classnames": "^2.2.6",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",

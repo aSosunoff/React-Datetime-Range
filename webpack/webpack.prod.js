@@ -9,13 +9,15 @@ const commonWebpack = require("./webpack.common.js");
 
 const filename = (ext) => `[name].[contenthash].${ext}`;
 
+const isDeploy = process.env.GP_DEPLOY === "true";
+
 module.exports = merge(commonWebpack, {
   mode: "production",
 
   devtool: "source-map",
 
   output: {
-    publicPath: "/",
+    publicPath: isDeploy ? "/React-Range-Picker" : "/",
     filename: filename("js"),
     path: path.resolve(__dirname, "../build"),
   },

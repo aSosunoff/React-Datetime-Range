@@ -14,3 +14,9 @@ cd React-Range-Picker
 npm i
 npm run start
 ```
+
+### Test project:
+
+```
+npm test
+```

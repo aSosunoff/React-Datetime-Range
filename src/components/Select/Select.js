@@ -1,10 +1,14 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import styles from "./Select.module.scss";
 import { ArrowBottom } from "../Arrow/";
 
 const Select = ({ value, onChange, items }) => {
   const [valueCurrent, setValue] = useState(value);
+
+  useEffect(() => {
+    setValue((prev) => (prev !== value ? value : undefined));
+  }, [value]);
 
   const [isVisible, setVisible] = useState(false);
   const showHandler = useCallback(() => setVisible(true), []);

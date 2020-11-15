@@ -5,10 +5,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Debug CRA Tests",
+      "name": "JEST",
       "type": "node",
       "request": "launch",
-      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-scripts",
+      "runtimeExecutable": "npm",
       "args": ["test", "--runInBand", "--no-cache", "--watchAll=false"],
       "cwd": "${workspaceFolder}",
       "protocol": "inspector",
@@ -18,30 +18,11 @@
       "disableOptimisticBPs": true
     },
     {
-      "name": "RangePicker",
+      "name": "webpack",
       "type": "node",
       "request": "launch",
-      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-scripts",
-      "args": [
-        "test",
-        "--runInBand",
-        "--no-cache",
-        "--watchAll=false",
-        "--testPathPattern=RangePicker"
-      ],
-      "cwd": "${workspaceFolder}",
-      "protocol": "inspector",
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "env": { "CI": "true" },
-      "disableOptimisticBPs": true
-    },
-    {
-      "name": "All",
-      "type": "node",
-      "request": "launch",
-      "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-scripts",
-      "args": ["test", "--runInBand", "--no-cache", "--watchAll=false"],
+      "runtimeExecutable": "npm",
+      "args": ["run", "build"],
       "cwd": "${workspaceFolder}",
       "protocol": "inspector",
       "console": "integratedTerminal",

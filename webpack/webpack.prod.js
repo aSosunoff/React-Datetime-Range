@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const path = require("path");
 const { merge } = require("webpack-merge");
 const TerserPlugin = require("terser-webpack-plugin");
@@ -10,6 +12,7 @@ const commonWebpack = require("./webpack.common.js");
 const filename = (ext) => `[name].[contenthash].${ext}`;
 
 const isDeploy = process.env.GP_DEPLOY === "true";
+const publicUrl = process.env.PUBLIC_URL;
 
 module.exports = merge(commonWebpack, {
   mode: "production",
@@ -17,7 +20,7 @@ module.exports = merge(commonWebpack, {
   devtool: "source-map",
 
   output: {
-    publicPath: isDeploy ? "/React-Range-Picker" : "/",
+    publicPath: isDeploy ? publicUrl : "/",
     filename: filename("js"),
     path: path.resolve(__dirname, "../build"),
   },

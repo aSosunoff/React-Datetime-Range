@@ -1,23 +1,27 @@
 require("dotenv").config();
 
 const path = require("path");
-const { merge } = require("webpack-merge");
 const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const commonWebpack = require("./webpack.common.js");
 
 const filename = (ext) => `[name].[contenthash].${ext}`;
 
 const isDeploy = process.env.GP_DEPLOY === "true";
 const publicUrl = process.env.PUBLIC_URL;
 
-module.exports = merge(commonWebpack, {
+module.exports = {
   mode: "production",
 
+  context: path.resolve(__dirname, "../demo"),
+
   devtool: "source-map",
+
+  entry: {
+    main: ["./index.js"],
+  },
 
   output: {
     publicPath: isDeploy ? publicUrl : "/",
@@ -44,5 +48,21 @@ module.exports = merge(commonWebpack, {
         collapseWhitespace: true,
       },
     }),
-  ].filter(Boolean),
-});
+  ],
+
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+        },
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
+    ],
+  },
+};

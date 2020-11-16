@@ -1,16 +1,21 @@
 const path = require("path");
-const { merge } = require("webpack-merge");
+
 const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const HTMLWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const commonWebpack = require("./webpack.common.js");
 
 const fileName = (ext) => `[name].${ext}`;
 
-module.exports = merge(commonWebpack, {
+module.exports = {
   mode: "development",
 
+  context: path.resolve(__dirname, "../demo"),
+
   devtool: "eval-source-map",
+
+  entry: {
+    main: ["./index.js"],
+  },
 
   output: {
     filename: fileName("js"),
@@ -37,5 +42,24 @@ module.exports = merge(commonWebpack, {
         collapseWhitespace: false,
       },
     }),
-  ].filter(Boolean),
-});
+  ],
+
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            plugins: [require.resolve("react-refresh/babel")],
+          },
+        },
+      },
+      {
+        test: /\.s[ac]ss$/i,
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
+    ],
+  },
+};

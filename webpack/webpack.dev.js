@@ -37,5 +37,5 @@ module.exports = merge(commonWebpack, {
         collapseWhitespace: false,
       },
     }),
-  ],
+  ].filter(Boolean),
 });

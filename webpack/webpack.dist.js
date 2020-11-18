@@ -19,7 +19,13 @@ module.exports = {
 
   output: {
     filename: fileName("js"),
-    path: path.resolve(__dirname, "../component"),
+    path: path.resolve(__dirname, "../dist"),
+    libraryTarget: "umd",
+  },
+
+  externals: {
+    react: "umd react",
+    "react-dom": "umd react-dom",
   },
 
   optimization: {

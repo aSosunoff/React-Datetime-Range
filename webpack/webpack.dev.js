@@ -19,7 +19,7 @@ module.exports = {
 
   output: {
     filename: fileName("js"),
-    path: path.resolve(__dirname, "../dist"),
+    path: path.resolve(__dirname, "../distServer"),
   },
 
   devServer: {
@@ -27,7 +27,7 @@ module.exports = {
     hot: true,
     compress: true,
     publicPath: "/",
-    contentBase: path.join(__dirname, "../dist"),
+    contentBase: path.join(__dirname, "../distServer"),
     historyApiFallback: true,
     writeToDisk: false,
     stats: "minimal",

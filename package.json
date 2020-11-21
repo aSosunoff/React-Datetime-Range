@@ -74,7 +74,8 @@
     "test": "jest --watchAll",
     "predeploy": "cross-env GP_DEPLOY=true NODE_ENV=production webpack --config ./webpack/webpack.prod.js --mode production",
     "deploy": "gh-pages -d build",
-    "prepublish": "npm prune"
+    "prepublish": "npm prune",
+    "run_all": "npm run dist && git add . && git commit -m \"run dist\" && git push && npm run deploy && npm publish"
   },
   "keywords": [
     "calendar",

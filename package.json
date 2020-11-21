@@ -1,6 +1,6 @@
 {
   "name": "@asosunoff/react-datetime-range",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "datetime range picker component",
   "homepage": "https://asosunoff.github.io/React-Datetime-Range/",
   "author": {
@@ -17,12 +17,12 @@
     "url": "git://github.com/aSosunoff/React-Datetime-Range.git"
   },
   "peerDependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0"
   },
   "devDependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "prop-types": "^15.7.2",
     "react-transition-group": "^4.4.1",
     "classnames": "^2.2.6",

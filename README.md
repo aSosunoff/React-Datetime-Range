@@ -6,6 +6,12 @@
 
 [https://asosunoff.github.io/React-Range-Picker/](https://asosunoff.github.io/React-Range-Picker/)
 
+### Install component
+
+```
+npm i @asosunoff/react-datetime-range
+```
+
 ### Launch project:
 
 ```

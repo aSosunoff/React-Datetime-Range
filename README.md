@@ -8,9 +8,7 @@
 
 ### Install component
 
-```
-npm i @asosunoff/react-datetime-range
-```
+[npm i @asosunoff/react-datetime-range](https://www.npmjs.com/package/@asosunoff/react-datetime-range)
 
 ### Launch project:
 

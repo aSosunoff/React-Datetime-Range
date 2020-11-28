@@ -1,6 +1,6 @@
 {
   "name": "@asosunoff/react-datetime-range",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "datetime range picker component",
   "homepage": "https://asosunoff.github.io/React-Datetime-Range/",
   "author": {
@@ -75,7 +75,7 @@
     "predeploy": "cross-env GP_DEPLOY=true NODE_ENV=production webpack --config ./webpack/webpack.prod.js --mode production",
     "deploy": "gh-pages -d build",
     "prepublish": "npm prune",
-    "run_all": "npm run dist && git add . && git commit -m \"run dist\" && git push && npm run deploy && npm publish"
+    "run_all": "npm run dist && npm run deploy && npm publish && git add . && git commit -m \"run dist\" && git push"
   },
   "keywords": [
     "calendar",

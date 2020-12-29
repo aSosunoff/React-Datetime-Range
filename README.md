@@ -10,6 +10,11 @@
 
 [npm i @asosunoff/react-datetime-range](https://www.npmjs.com/package/@asosunoff/react-datetime-range)
 
+### environment
+
+> node 14.15.3
+
+
 ### Launch project:
 
 ```
